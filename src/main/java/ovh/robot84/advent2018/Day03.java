@@ -3,6 +3,9 @@ package ovh.robot84.advent2018;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Day03 {
     final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
@@ -12,8 +15,9 @@ public class Day03 {
 
     MyReader myReader = new MyReader();
     HashMap<Character, Integer> hm1 = new HashMap();
-    ArrayList<String> boxID = new ArrayList<>();
+    ArrayList<Elf> elfs = new ArrayList<>();
     String s;
+    int[][] fabric = new int[10000][10000];
 
     Day03(String input_file) {
         myReader.open_file(input_file);
@@ -30,6 +34,9 @@ public class Day03 {
         System.out.println("Result: " + result);
     }
 
+    void printResult(int result) {
+        System.out.println("Result: " + result);
+    }
 
     void initializeCollection(Collection collection, int collectionSize) {
         for (int i = 0; i < collectionSize; i++) {
@@ -58,13 +65,46 @@ public class Day03 {
     }
 
 
-    void doForEachLineOfInput() {
-        while ((s = myReader.read_string(" ")) != null) {
-            System.out.println("Input string: " + s);
-            initializeCharKeyHashMap(hm1, 0);
-            forEachCharOfString(s);
-            printCharKeyHashMap(hm1);
-        }
+    void doForEachLineOfInput(String line) {
+        /*
+        #1 @ 817,273: 26x26
+         */
+
+        String s1 = myReader.read_string(" ").substring(1);
+        String s2 = myReader.read_string(" ");
+        String s3 = myReader.read_string(" ").replaceFirst(",", " ").replaceFirst(":", "");
+        String s4 = myReader.read_string(" ").replaceFirst("x", " ");
+//
+//            int numOfSlice = Integer.valueOf(s1.substring(1));
+//
+        Scanner ss3 = new Scanner(s3);
+        Scanner ss4 = new Scanner(s4);
+        int lineNum = Integer.valueOf(s1);
+        int fromLeft = ss3.nextInt();
+        int fromTop = ss3.nextInt();
+        int width = ss4.nextInt();
+        int height = ss4.nextInt();
+        elfs.add(new Elf(lineNum, fromLeft, fromTop, width, height));
+        // addToFabric(fromLeft,fromTop,width,height);
+
+        //   System.out.println("Input string: " + line);
+        //  System.out.printf("!%s!\n",s3);
+        // System.out.printf("!%s!\n",s4);
+
+
+        //Pattern p = Pattern.compile("#(\\d+) @ (\\d+),(\\d+): (\\d+)x(\\d+)");
+//        Pattern p = Pattern.compile("( )");
+//        Matcher m = p.matcher(line);
+//        for (int i = 1; i <= 2; i++) {
+//            System.out.println(i+" "+m.group(1));
+//        }
+
+        //    System.out.printf("!%d!%d!%d!%d\n\n",fromLeft,fromTop,width,height);
+        //    System.exit(0);
+//            initializeCharKeyHashMap(hm1, 0);
+//            forEachCharOfString(s);
+//            printCharKeyHashMap(hm1);
+
     }
 
 
@@ -83,40 +123,74 @@ public class Day03 {
 
 
     void star1start() {
-        while (myReader.get_line() != null) {
-            doForEachLineOfInput();
+        String line;
+        while ((line = myReader.get_line()) != null) {
+            doForEachLineOfInput(line);
         }
-        printResult(Integer.toString(5));
+
+        System.out.printf("number of Elfs read: " + elfs.size());
+
+        for (Elf elf : elfs) {
+            addToFabric(elf);
+        }
+
+        System.out.println("star 1 result");
+        printResult(numOfFabricFieldWithTwoOrMoreElfs());
+
+        System.out.println("star 2 result");
+        for (Elf elf : elfs)
+            if (!isElfOverlappingWithAnotherInFabric(elf))
+                System.out.println("Elf " + elf.elfID + " not overlaps on fabric");
     }
 
 
-    void star2start() {
+    void addToFabric(int fromLeft, int fromTop, int width, int height) {
+        for (int y = fromTop; y < fromTop + height; y++) {
+            for (int x = fromLeft; x < fromLeft + width; x++) {
+                fabric[y][x]++;
 
-        while (myReader.get_line() != null) {
-            while ((s = myReader.read_string(" ")) != null) {
-                boxID.add(s);
             }
         }
+    }
 
-        for (int thisBoxNum = 0; thisBoxNum < boxID.size() - 1; thisBoxNum++) {
-            System.out.println("");
-            for (int boxNum = thisBoxNum; boxNum < boxID.size(); boxNum++) {
-                System.out.print(".");
-                int numOfLettersTheSame = 0;
-                for (int i = 0; i < boxID.get(0).length(); i++) {
-                    if (boxID.get(thisBoxNum).charAt(i) == boxID.get(boxNum).charAt(i)) {
-                        numOfLettersTheSame++;
-                    }
+    void addToFabric(Elf elf) {
+        addToFabric(elf.fromLeft, elf.fromTop, elf.width, elf.height);
+    }
+
+    boolean isElfOverlappingWithAnotherInFabric(Elf elf) {
+        for (int y = elf.fromTop; y < (elf.fromTop + elf.height); y++) {
+            for (int x = elf.fromLeft; x < (elf.fromLeft + elf.width); x++) {
+                if (fabric[y][x] > 1) return true;
                 }
-                if (numOfLettersTheSame == 25) {
-                    System.out.println("");
-                    System.out.println("Success. I found two valid BoxIDs:");
-                    System.out.println(boxID.get(thisBoxNum));
-                    System.out.println(boxID.get(boxNum));
-                    return;
-                }
+        }
+        System.out.println("FALSE for elf" + elf.elfID);
+        return false;
+    }
+
+
+    int numOfFabricFieldWithTwoOrMoreElfs() {
+        int count = 0;
+        for (int y = 0; y < 10000; y++) {
+            for (int x = 0; x < 10000; x++) {
+                if (fabric[y][x] > 1) count++;
             }
         }
+        return count;
+    }
 
+    class Elf {
+        int elfID;
+        int fromLeft;
+        int fromTop;
+        int width;
+        int height;
+
+        Elf(int elfID, int fromLeft, int fromTop, int width, int height) {
+            this.elfID = elfID;
+            this.fromLeft = fromLeft;
+            this.fromTop = fromTop;
+            this.width = width;
+            this.height = height;
+        }
     }
 }

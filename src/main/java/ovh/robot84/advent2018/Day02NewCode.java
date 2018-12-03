@@ -74,14 +74,17 @@ public class Day02NewCode {
 
 
     void forEachCharOfString(String string) {
-        for (int i = 0; i < s.length(); i++) {
+        /*
+        count num of occurencies of each char
+         */
+        for (int i = 0; i < string.length(); i++) {
             //System.out.print("Parsing char:'"+s.charAt(i)+"'");
-            if (hm1.get(((s.charAt(i)))) != 0) {
-                hm1.put(s.charAt(i), hm1.get(s.charAt(i)) + 1);
+            if (hm1.get(((string.charAt(i)))) != 0) {
+                hm1.put(string.charAt(i), hm1.get(string.charAt(i)) + 1);
                 //   System.out.println(hm1.get(((s.charAt(i)))));
             } else {
 
-                hm1.put(s.charAt(i), 1);
+                hm1.put(string.charAt(i), 1);
                 //  System.out.println(hm1.get(((s.charAt(i)))));
             }
         }

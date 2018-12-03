@@ -3,11 +3,11 @@ package ovh.robot84.advent2018;
 
 import java.util.ArrayList;
 
-public class Day01Star1 {
+public class Day01 {
     public static void main(String[] args) {
-        Day01Star1 day01Star1 = new Day01Star1();
-        // day01Star1.start();
-        day01Star1.star2start();
+        Day01 day01 = new Day01();
+        // day01.start();
+        day01.star2start();
 
     }
 

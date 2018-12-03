@@ -28,7 +28,7 @@ public class MyReader {
             file = new FileReader(file_path);
             bufferedReader = new BufferedReader(file);
         } catch (Exception zd) {
-            System.out.println("File '" + path + "' not found. Exiting...");
+            System.out.println("Input file not found. Exiting...");
             System.exit(1);
             zd.printStackTrace();
         }
@@ -60,7 +60,6 @@ public class MyReader {
         }
 
     }
-
     String read_string(String delimeter) {
         if (sc == null) {
 
