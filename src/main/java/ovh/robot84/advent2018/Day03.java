@@ -1,23 +1,20 @@
 package ovh.robot84.advent2018;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Day03 {
     final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
             "src\\main\\resources\\day03input1.txt";
     final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
             "src\\main\\resources\\day03input2.txt";
+    final static int ARRAY_MAX_X = 10_000;
+    final static int ARRAY_MAX_Y = 10_000;
 
     MyReader myReader = new MyReader();
-    HashMap<Character, Integer> hm1 = new HashMap();
     ArrayList<Elf> elfs = new ArrayList<>();
-    String s;
-    int[][] fabric = new int[10000][10000];
+
+    int[][] fabric = new int[ARRAY_MAX_Y][ARRAY_MAX_X];
 
     Day03(String input_file) {
         myReader.open_file(input_file);
@@ -26,42 +23,10 @@ public class Day03 {
     public static void main(String[] args) {
         Day03 dayStar1 = new Day03(INPUT_FILE1);
         dayStar1.star1start();
-        //Day03 dayStar2=new Day03(INPUT_FILE2);
-        //dayStar2.star2start();
-    }
-
-    void printResult(String result) {
-        System.out.println("Result: " + result);
     }
 
     void printResult(int result) {
         System.out.println("Result: " + result);
-    }
-
-    void initializeCollection(Collection collection, int collectionSize) {
-        for (int i = 0; i < collectionSize; i++) {
-            collection.add(0);
-        }
-    }
-
-
-    void initializeCharKeyHashMap(HashMap hashMap, int initializer) {
-        final int charactersInAlphabet = 26;
-        final char firstLetterInAlphabet = 'a';
-
-        for (int i = 0; i < charactersInAlphabet; i++) {
-            hashMap.put((char) (firstLetterInAlphabet + i), initializer);
-            System.out.print(hashMap.get((char) (firstLetterInAlphabet + i)));
-        }
-    }
-
-
-    void printCharKeyHashMap(HashMap hashMap) {
-        final int charactersInAlphabet = 26;
-        final char firstLetterInAlphabet = 'a';
-        for (int i = 0; i < charactersInAlphabet; i++) {
-            System.out.print(hashMap.get((char) (firstLetterInAlphabet + i)));
-        }
     }
 
 
@@ -69,14 +34,12 @@ public class Day03 {
         /*
         #1 @ 817,273: 26x26
          */
-
+        String notUsed = line;
         String s1 = myReader.read_string(" ").substring(1);
         String s2 = myReader.read_string(" ");
         String s3 = myReader.read_string(" ").replaceFirst(",", " ").replaceFirst(":", "");
         String s4 = myReader.read_string(" ").replaceFirst("x", " ");
-//
-//            int numOfSlice = Integer.valueOf(s1.substring(1));
-//
+
         Scanner ss3 = new Scanner(s3);
         Scanner ss4 = new Scanner(s4);
         int lineNum = Integer.valueOf(s1);
@@ -85,46 +48,24 @@ public class Day03 {
         int width = ss4.nextInt();
         int height = ss4.nextInt();
         elfs.add(new Elf(lineNum, fromLeft, fromTop, width, height));
-        // addToFabric(fromLeft,fromTop,width,height);
 
-        //   System.out.println("Input string: " + line);
-        //  System.out.printf("!%s!\n",s3);
-        // System.out.printf("!%s!\n",s4);
-
-
-        //Pattern p = Pattern.compile("#(\\d+) @ (\\d+),(\\d+): (\\d+)x(\\d+)");
-//        Pattern p = Pattern.compile("( )");
-//        Matcher m = p.matcher(line);
-//        for (int i = 1; i <= 2; i++) {
-//            System.out.println(i+" "+m.group(1));
-//        }
-
-        //    System.out.printf("!%d!%d!%d!%d\n\n",fromLeft,fromTop,width,height);
-        //    System.exit(0);
-//            initializeCharKeyHashMap(hm1, 0);
-//            forEachCharOfString(s);
-//            printCharKeyHashMap(hm1);
 
     }
 
-
-    void forEachCharOfString(String string) {
-        for (int i = 0; i < s.length(); i++) {
-            //System.out.print("Parsing char:'"+s.charAt(i)+"'");
-            if (hm1.get(((s.charAt(i)))) != 0) {
-                hm1.put(s.charAt(i), hm1.get(s.charAt(i)) + 1);
-                //   System.out.println(hm1.get(((s.charAt(i)))));
-            } else {
-                hm1.put(s.charAt(i), 1);
-                //  System.out.println(hm1.get(((s.charAt(i)))));
-            }
+    void doForEachLineOfInputNewVersion(String line) {
+        String[] foundByFindRegexMethod;
+        foundByFindRegexMethod = FindRegex.findRegex("(\\d+)", line);
+        Integer[] numbers = new Integer[foundByFindRegexMethod.length];
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = Integer.valueOf(foundByFindRegexMethod[i]);
         }
+        elfs.add(new Elf(numbers));
     }
-
 
     void star1start() {
         String line;
         while ((line = myReader.get_line()) != null) {
+            //doForEachLineOfInputNewVersion(line);
             doForEachLineOfInput(line);
         }
 
@@ -134,7 +75,7 @@ public class Day03 {
             addToFabric(elf);
         }
 
-        System.out.println("star 1 result");
+        System.out.println("\nstar 1 result");
         printResult(numOfFabricFieldWithTwoOrMoreElfs());
 
         System.out.println("star 2 result");
@@ -161,36 +102,21 @@ public class Day03 {
         for (int y = elf.fromTop; y < (elf.fromTop + elf.height); y++) {
             for (int x = elf.fromLeft; x < (elf.fromLeft + elf.width); x++) {
                 if (fabric[y][x] > 1) return true;
-                }
+            }
         }
-        System.out.println("FALSE for elf" + elf.elfID);
         return false;
     }
 
 
-    int numOfFabricFieldWithTwoOrMoreElfs() {
+    private int numOfFabricFieldWithTwoOrMoreElfs() {
         int count = 0;
-        for (int y = 0; y < 10000; y++) {
-            for (int x = 0; x < 10000; x++) {
+        for (int y = 0; y < ARRAY_MAX_Y; y++) {
+            for (int x = 0; x < ARRAY_MAX_X; x++) {
                 if (fabric[y][x] > 1) count++;
             }
         }
         return count;
     }
 
-    class Elf {
-        int elfID;
-        int fromLeft;
-        int fromTop;
-        int width;
-        int height;
 
-        Elf(int elfID, int fromLeft, int fromTop, int width, int height) {
-            this.elfID = elfID;
-            this.fromLeft = fromLeft;
-            this.fromTop = fromTop;
-            this.width = width;
-            this.height = height;
-        }
-    }
 }

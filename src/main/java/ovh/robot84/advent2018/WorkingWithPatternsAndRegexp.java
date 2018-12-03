@@ -7,18 +7,18 @@ import java.util.regex.Pattern;
 public class WorkingWithPatternsAndRegexp {
 
     public static void main(String[] args) {
-        WorkingWithPatternsAndRegexp main = new WorkingWithPatternsAndRegexp();
-        main.usePatternSplit();
+        WorkingWithPatternsAndRegexp main1 = new WorkingWithPatternsAndRegexp();
+        main1.usePatternSplit();
         System.out.println("");
 
-        main.useMatcherFind();
+        main1.useMatcherFind();
 
         System.out.println("");
         System.out.println("FindRegex() method written by me:");
         String[] foundByFindRegexMethod;
-        foundByFindRegexMethod = main.findRegex("(\\d+)", "#20 @ 214,215 216: 217x218");
-        for (int i = 0; i < foundByFindRegexMethod.length; i++) {
-            System.out.println(foundByFindRegexMethod[i]);
+        foundByFindRegexMethod = main1.findRegex("(\\d+)", "#20 @ 214,215 216: 217x218");
+        for (String s : foundByFindRegexMethod) {
+            System.out.println(s);
         }
     }
 
@@ -29,7 +29,7 @@ public class WorkingWithPatternsAndRegexp {
         System.out.println(line);
 
         //Pattern p = Pattern.compile("#(\\d+) @ (\\d+),(\\d+): (\\d+)x(\\d+)");
-        Pattern delimeter = Pattern.compile("(#|@| |,|:|x)+");
+        Pattern delimeter = Pattern.compile("([#@ ,:x])+");
         System.out.println("Using Pattern.split(); Matches:");
         String[] finding = delimeter.split(line);
         for (int i = 0; i < finding.length; i++) {
