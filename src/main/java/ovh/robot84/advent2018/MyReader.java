@@ -34,6 +34,18 @@ public class MyReader {
         }
     }
 
+
+    void close_file() {
+        try {
+            bufferedReader.close();
+        } catch (IOException e) {
+            System.out.println("Cannot close a file. Exiting...");
+            System.exit(1);
+            e.printStackTrace();
+        }
+    }
+
+
     String get_line() {
         try {
             currentLine = bufferedReader.readLine();
@@ -44,6 +56,20 @@ public class MyReader {
         }
         sc = null;
         return currentLine;
+    }
+
+    String readLine() {
+        return get_line();
+    }
+
+    int read() {
+        try {
+            return bufferedReader.read();
+        } catch (IOException e) {
+            System.out.println("Exception occured: Cannot read char. Exiting.");
+            e.printStackTrace();
+        }
+        return Integer.parseInt(null);
     }
 
     String read_char() {
