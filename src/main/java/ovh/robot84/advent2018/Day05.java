@@ -57,36 +57,53 @@ public class Day05 {
 
     private void star1start() {
 
-        StringBuffer out = new StringBuffer(myReader.get_line());
+        StringBuffer out1 = new StringBuffer(myReader.get_line());
         //StringBuffer out=new StringBuffer("aAbBdCcCabcAcCaCBAcCcaDA");
-        StringBuffer outOld = out;
         int counter = 1;
-        System.out.printf("LEN: %d", out.toString().length());
-        //System.out.flush();
+        ArrayList<Integer> results = new ArrayList<>();
 
-        DotCounter dotCounter = new DotCounter(250, "!.");
-        dotCounter.start();
+        for (byte i = 0; i < 26; i++) {
+            byte c1 = 'a', c2 = 'A';
+            String regex = "" + "[" + (char) (c1 + i);
+            regex += (char) (c2 + i) + "]";
+            System.out.println(regex);
+            StringBuffer out = new StringBuffer(out1.toString().replaceAll(regex, ""));
+            StringBuffer outOld = out;
 
-        long startGlobal = System.nanoTime();
-        do {
-            outOld = out;
-            //System.out.printf("\n%d: ",out.length());
+            System.out.printf("%c LEN: %d\n", c1 + i, out.toString().length());
+            //System.out.flush();
 
-            //System.out.printf("\n%d: %s\n",out.length(),out.substring(0,50));
-            out = doForEachLineOfInput(outOld);
-            //System.out.println(out.toString().compareTo(outOld.toString()));
-/*
-            if((counter%50)==0) {
-                System.out.println();
-                System.out.printf(" i:%d (Len:%d) ",counter,out.length());
-            }*/
-            counter++;
-            dotCounter.check();
+            DotCounter dotCounter = new DotCounter(250, "!.");
+            dotCounter.start();
+
+            long startGlobal = System.nanoTime();
+            do {
+                outOld = out;
+                //System.out.printf("\n%d: ",out.length());
+                //System.out.printf("\n%d: %s\n",out.length(),out.substring(0,50));
+                out = doForEachLineOfInput(outOld);
+                //System.out.println(out.toString().compareTo(outOld.toString()));
+                counter++;
+                dotCounter.check();
+            }
+            while ((outOld.length() != out.length()));
+            System.out.print("\n[t:" + (System.nanoTime() - startGlobal) / 1000_000 + " ms]\n");
+            HelperMethods.printResult(outOld.length());
+            results.add(outOld.length());
+            //HelperMethods.printResult(out.toString());
         }
-        while ((outOld.length() != out.length()));
-        System.out.print("\n[t:" + (System.nanoTime() - startGlobal) / 1000_000 + " ms]\n");
-        HelperMethods.printResult(outOld.length());
-        //HelperMethods.printResult(out.toString());
+
+        int max = 0;
+        for (int i = 0; i < results.size(); i++) {
+            if (results.get(i) > max) max = results.get(i);
+        }
+
+        int min = results.get(0);
+        for (int i = 0; i < results.size(); i++) {
+            if (results.get(i) < min) min = results.get(i);
+        }
+        HelperMethods.printResult(min);
+        HelperMethods.printResult(results.indexOf(min));
 
     }
 }
