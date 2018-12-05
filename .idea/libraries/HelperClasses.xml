@@ -2,6 +2,7 @@
   <library name="HelperClasses">
     <CLASSES>
       <root url="file://$USER_HOME$/Documents/java/HelperClasses" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/AdventOfCode2018Helpers_jar/AdventOfCode2018.jar!/ovh/robot84/advent2018" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

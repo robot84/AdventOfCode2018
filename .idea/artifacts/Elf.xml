@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Elf">
+    <output-path>$PROJECT_DIR$/out/artifacts/Elf</output-path>
+    <root id="archive" name="Elf.jar">
+      <element id="directory" name="ovh.robot84.advent">
+        <element id="file-copy" path="$PROJECT_DIR$/out/production/AdventOfCode2018/ovh/robot84/advent2018/Elf.class" />
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/artifacts/Elf/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

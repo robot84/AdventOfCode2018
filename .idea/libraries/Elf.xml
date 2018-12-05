@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Elf">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/Elf/Elf.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
