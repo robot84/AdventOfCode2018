@@ -35,9 +35,11 @@ public class Day05 {
             if (c1.compareToIgnoreCase(c2) == 0 && c1.compareTo(c2) != 0) {
                 //System.out.printf("%s__%s",output,line.substring(i+2));
                 output.append(line.substring(i + 2));
+/*
                 System.out.printf("\n**%s-%s**",
                         output.toString().substring(i - 20 > 0 ? i - 20 : 0, i - 1 > 0 ? i - 1 : 0),
                         output.toString().substring(i, i + 20 < line.length() ? i + 20 : i));
+*/
                 return output;
             } else {
                 // System.out.printf("!%s%s ",c1,c2);
@@ -47,7 +49,7 @@ public class Day05 {
         }
 
         output.append(c2);
-        System.out.printf("NOTHING %s", output);
+//        System.out.printf("NOTHING %s", output);
         //System.out.printf("returned len: %d \n",output.length());
         return output;
 
@@ -62,7 +64,10 @@ public class Day05 {
         System.out.printf("LEN: %d", out.toString().length());
         //System.out.flush();
 
-        long start = System.nanoTime();
+        DotCounter dotCounter = new DotCounter(250, "!.");
+        dotCounter.start();
+
+        long startGlobal = System.nanoTime();
         do {
             outOld = out;
             //System.out.printf("\n%d: ",out.length());
@@ -76,9 +81,10 @@ public class Day05 {
                 System.out.printf(" i:%d (Len:%d) ",counter,out.length());
             }*/
             counter++;
+            dotCounter.check();
         }
         while ((outOld.length() != out.length()));
-        System.out.print("\n[t:" + (System.nanoTime() - start) / 1000_000 + " ms]\n");
+        System.out.print("\n[t:" + (System.nanoTime() - startGlobal) / 1000_000 + " ms]\n");
         HelperMethods.printResult(outOld.length());
         //HelperMethods.printResult(out.toString());
 
