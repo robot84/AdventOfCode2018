@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 public class HelperMethods {
 
+
     void initializeCollection(Collection collection, int collectionSize) {
         for (int i = 0; i < collectionSize; i++) {
             collection.add(0);
@@ -67,5 +68,6 @@ public class HelperMethods {
         LOG.info("Method took: " + timer.stop());
     }
 */
+
 
 }
