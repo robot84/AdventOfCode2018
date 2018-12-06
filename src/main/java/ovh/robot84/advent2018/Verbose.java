@@ -66,7 +66,7 @@ public class Verbose {
 
 
     public static void printf(String format, Object... args) {
-        if (!VERBOSE_ENABLE) {
+        if (VERBOSE_ENABLE) {
             setColor();
             System.out.format(format, args);
             resetColor();
