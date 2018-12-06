@@ -5,23 +5,24 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Day07 {
+public class Day08 {
     final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
-            "src\\main\\resources\\day07input2.txt";
+            "src\\main\\resources\\day08input2.txt";
     final static int ARRAY_MAX_X = 2_000;
     final static int ARRAY_MAX_Y = 2_000;
     private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
-            "src\\main\\resources\\day07input1.txt";
+            "src\\main\\resources\\day08input1.txt";
     HashMap<Character, Integer> hm1 = new HashMap();
     ArrayList<String> boxID = new ArrayList<>();
     private MyReader myReader = new MyReader();
 
-    private Day07(String input_file) {
+    private Day08(String input_file) {
         myReader.open_file(input_file);
     }
 
+
     public static void main(String[] args) {
-        Day07 dayStar1 = new Day07(INPUT_FILE1);
+        Day08 dayStar1 = new Day08(INPUT_FILE1);
         System.out.println("ARGS:" + args.length);
         if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
         dayStar1.star1start();
