@@ -5,6 +5,7 @@ import java.io.PrintStream;
 public class Verbose {
 
     private static boolean VERBOSE_ENABLE;
+    private static boolean VERBOSE_MUTED;
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -25,6 +26,7 @@ public class Verbose {
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
     private static String actualColor = ANSI_CYAN;
 
+
     public static void enableVerbose() {
         VERBOSE_ENABLE = true;
     }
@@ -35,9 +37,20 @@ public class Verbose {
     }
 
 
+    public static void mute() {
+        VERBOSE_MUTED = true;
+    }
+
+
+    public static void unmute() {
+        VERBOSE_MUTED = false;
+    }
+
+
     private static void setColor() {
         System.out.print(actualColor);
     }
+
 
     public static void setColor(String color) {
         actualColor = color;
@@ -50,7 +63,7 @@ public class Verbose {
 
 
     public static void print(String... s) {
-        if (VERBOSE_ENABLE) {
+        if (VERBOSE_ENABLE && !VERBOSE_MUTED) {
             setColor();
             for (int i = 0; i < s.length; i++) {
                 System.out.println(s[i]);
@@ -59,6 +72,7 @@ public class Verbose {
         }
     }
 
+
     public static void println(String... s) {
         print(s);
         System.out.println();
@@ -66,7 +80,7 @@ public class Verbose {
 
 
     public static void printf(String format, Object... args) {
-        if (VERBOSE_ENABLE) {
+        if (VERBOSE_ENABLE && !VERBOSE_MUTED) {
             setColor();
             System.out.format(format, args);
             resetColor();
