@@ -5,7 +5,8 @@ import java.sql.SQLOutput;
 public class Verbose {
 
     private static final int DEFAULT_ENABLED_ON_LEVEL_NUM = 1;
-    private static final int DEFAULT_VERBOSE_LEVEL_FOR_UNMODIFIED_BY_setVerboseLevelForNextPrint_METHOD_USER_PRINTS = 1;
+    private static final int
+            DEFAULT_VERBOSE_LEVEL_FOR_UNMODIFIED_BY_setVerboseLevelForNextPrint_METHOD_USER_PRINTS = 1;
     private static final int spaceForPrompt = 1;
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -78,7 +79,6 @@ public class Verbose {
 
 
     public static void print(String s) {
-        if (VERBOSE_ENABLE && !VERBOSE_MUTED) {
             if (VERBOSE_ENABLE && !VERBOSE_MUTED) {
                 if (Verbose.verboseLevelForNextPrintF <= Verbose.enabledOnLevel) {
                     Verbose.printInColor(s);
@@ -88,7 +88,6 @@ public class Verbose {
                 return;
             }
             return;
-        }
     }
 
 
@@ -109,9 +108,9 @@ public class Verbose {
                     objectsWithPromptBeforeThey[i + 1] = args[i];
                 }
                 printInColor(formatWithPrompt, objectsWithPromptBeforeThey);
-                Verbose.verboseLevelForNextPrintF =
-                        DEFAULT_VERBOSE_LEVEL_FOR_UNMODIFIED_BY_setVerboseLevelForNextPrint_METHOD_USER_PRINTS;
             }
+            Verbose.verboseLevelForNextPrintF =
+                    DEFAULT_VERBOSE_LEVEL_FOR_UNMODIFIED_BY_setVerboseLevelForNextPrint_METHOD_USER_PRINTS;
             return;
         }
         return;
