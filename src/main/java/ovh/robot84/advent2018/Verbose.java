@@ -77,20 +77,23 @@ public class Verbose {
     }
 
 
-    public static void print(String... s) {
+    public static void print(String s) {
         if (VERBOSE_ENABLE && !VERBOSE_MUTED) {
-            setColor();
-            for (int i = 0; i < s.length; i++) {
-                System.out.print(s[i]);
+            if (VERBOSE_ENABLE && !VERBOSE_MUTED) {
+                if (Verbose.verboseLevelForNextPrintF <= Verbose.enabledOnLevel) {
+                    Verbose.printInColor(s);
+                    Verbose.verboseLevelForNextPrintF =
+                            DEFAULT_VERBOSE_LEVEL_FOR_UNMODIFIED_BY_setVerboseLevelForNextPrint_METHOD_USER_PRINTS;
+                }
+                return;
             }
-            resetColor();
+            return;
         }
     }
 
 
-    public static void println(String... s) {
-        print(s);
-        System.out.println();
+    public static void println(String s) {
+        print(s + "\n");
     }
 
 
@@ -118,6 +121,12 @@ public class Verbose {
     private static void printInColor(String format, Object[] args) {
         setColor();
         System.out.format(format, args);
+        resetColor();
+    }
+
+    private static void printInColor(String text) {
+        setColor();
+        System.out.print(text);
         resetColor();
     }
 
