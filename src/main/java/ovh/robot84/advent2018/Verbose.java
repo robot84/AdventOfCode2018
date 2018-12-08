@@ -1,11 +1,12 @@
 package ovh.robot84.advent2018;
 
-import java.io.PrintStream;
-
 public class Verbose {
 
     private static boolean VERBOSE_ENABLE;
     private static boolean VERBOSE_MUTED;
+    private static boolean MULTI_LEVEL_VERBOSE_ENABLED;
+
+
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -25,25 +26,32 @@ public class Verbose {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
     private static String actualColor = ANSI_CYAN;
+    private static Object[] prompt = {"*** "};
+    private static int enabledOnLevel = 1;
+    private static int verboseLevelForNextPrintF;
 
 
     public static void enableVerbose() {
         VERBOSE_ENABLE = true;
+        printInColor("%sVerbose enabled.\n", prompt);
     }
 
 
     public static void disableVerbose() {
         VERBOSE_ENABLE = false;
+        printInColor("%sVerbose disabled.\n", prompt);
     }
 
 
     public static void mute() {
         VERBOSE_MUTED = true;
+        printInColor("%sVerbose muted.\n", prompt);
     }
 
 
     public static void unmute() {
         VERBOSE_MUTED = false;
+        printInColor("%sVerbose unmuted.\n", prompt);
     }
 
 
@@ -81,10 +89,48 @@ public class Verbose {
 
     public static void printf(String format, Object... args) {
         if (VERBOSE_ENABLE && !VERBOSE_MUTED) {
-            setColor();
-            System.out.format(format, args);
-            resetColor();
+            if (Verbose.verboseLevelForNextPrintF <= Verbose.enabledOnLevel) {
+                Verbose.verboseLevelForNextPrintF = 0;
+                printInColor(format, args);
+            }
+            return;
         }
+        return;
     }
 
+    private static void printInColor(String format, Object[] args) {
+        setColor();
+        System.out.format(format, args);
+        resetColor();
+    }
+
+
+    public static void enableMultiLevelVerbose(int level) {
+        enableVerbose();
+        Verbose.enabledOnLevel = level;
+        printInColor("%sMulti level verbose enabled.\n", prompt);
+    }
+
+    public static void disableMultiLevelVerbose() {
+        MULTI_LEVEL_VERBOSE_ENABLED = false;
+    }
+
+
+    public static void setVerboseLevelForNextPrint(int verboseLevel) {
+        Verbose.verboseLevelForNextPrintF = verboseLevel;
+    }
+
+
+    public static int getVerboseLevelForNextPrintF() {
+        return Verbose.verboseLevelForNextPrintF;
+    }
+
+
+    public static void enableTwoLevelVerbose() {
+        enableMultiLevelVerbose(2);
+    }
+
+    public static void enableThreeLevelVerbose() {
+        enableMultiLevelVerbose(3);
+    }
 }
