@@ -148,6 +148,7 @@ public class Day06 {
     }
 
     void dividingLandsToPeople() {
+        int someBigNumber = 9876;
         DotCounter dotCounter1 = new DotCounter(300);
         dotCounter1.start();
         for (int y = 0; y < maxY; y++) {
@@ -155,13 +156,13 @@ public class Day06 {
                 dotCounter1.check();
                 Point actualIteratedFieldOnMap = new Point(x, y);
                 playersDistance.clear();
-                playersDistance.add(10000);
+                playersDistance.add(someBigNumber);
                 for (int userNum = 1; userNum <= numOfPlayers; userNum++) {
-                    playersDistance.add(manhattanDistance(actualIteratedFieldOnMap, input.get(userNum)));
+                    playersDistance.add(ManhattanDistance.compute(actualIteratedFieldOnMap, input.get(userNum)));
                     Verbose.printf("ManDist to field (%s,%s) for player %s on (%s,%s) is %s\n", x, y, userNum, input.get(userNum).x, input.get(userNum).y, playersDistance.get(userNum));
                 }
 
-                int min = 10000;
+                int min = someBigNumber;
                 for (int i = 1; i <= numOfPlayers; i++) {
                     if (playersDistance.get(i) < min) min = playersDistance.get(i);
                 }
@@ -188,14 +189,6 @@ public class Day06 {
         }
     }
 
-    private int manhattanDistance(Point p1, Point p2) {
-        // kto ma najblizej do tego punktu na mapie?
-        int x0 = p1.x, x1 = p2.x, y0 = p1.y, y1 = p2.y;
-        int distance = Math.abs(x1 - x0) + Math.abs(y1 - y0);
-        //Verbose.printf("Welcome in Manhattan project!\n");
-        //Verbose.printf("(%s,%s) (%s,%s) -> %s\n",x0,y0,x1,y1,distance);
-        return distance;
-    }
 
     void initPositions(Integer numOfPlayers) {
         for (int i = 1; i <= numOfPlayers; i++) {
