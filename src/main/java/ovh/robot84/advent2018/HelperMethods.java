@@ -8,6 +8,7 @@ import java.net.CookieHandler;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class HelperMethods {
@@ -125,7 +126,7 @@ public class HelperMethods {
         CookieHandler.setDefault(cookieHandler);
     }
 
-    public Integer maxInArray(ArrayList<Integer> someData) {
+    public static Integer maxInArray(ArrayList<Integer> someData) {
         Integer max = 0;
         for (int i = 0; i < someData.size(); i++) {
             if (someData.get(i) > max) max = someData.get(i);
@@ -133,7 +134,7 @@ public class HelperMethods {
         return max;
     }
 
-    public Integer minInArray(ArrayList<Integer> someData) {
+    public static Integer minInArray(ArrayList<Integer> someData) {
         /* min value on list */
         Integer min = someData.get(0);
         for (int i = 0; i < someData.size(); i++) {
@@ -151,6 +152,38 @@ public class HelperMethods {
         return sum;
     }
 
+
+    static String getCurrentTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date();
+        return (dateFormat.format(date));
+    }
+
+    static int getElapsedTimeInMiliSeconds(Date startDate) {
+        Date endDate = new Date();
+        int elapsedTime = (int) (endDate.getTime() - startDate.getTime());
+        return ((elapsedTime));
+    }
+
+    static int getElapsedTimeInSeconds(Date startDate) {
+        return getElapsedTimeInMiliSeconds(startDate) / 1_000;
+    }
+
+    static String getElapsedTimeAsHHmmss(Date startDate) {
+        int time = getElapsedTimeInSeconds(startDate);
+        int hh, mm, ss;
+        String hhStr, mmStr, ssStr;
+
+        ss = time % 60;
+        mm = (time - ss) % 60;
+        hh = (time - ss - mm * 60) % 24;
+
+        hhStr = hh < 10 ? "0" + hh : Integer.toString(hh);
+        mmStr = mm < 10 ? "0" + mm : Integer.toString(mm);
+        ssStr = ss < 10 ? "0" + ss : Integer.toString(ss);
+
+        return hhStr + ":" + mmStr + ":" + ssStr;
+    }
 /*
     void performanceTestWithGuava(){
         import com.google.common.base.Stopwatch;
