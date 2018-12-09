@@ -35,7 +35,7 @@ public class Verbose {
     private static Object[] promptForVerboseClassEvents = {"*** "};
     private static Object[] promptsForUserPrints = {">", ">>", ">>>"};
     private static int enabledOnLevel = DEFAULT_ENABLED_ON_LEVEL_NUM;
-    private static int verboseLevelForNextPrintF;
+    private static int verboseLevelForNextPrintF = DEFAULT_VERBOSE_LEVEL_FOR_UNMODIFIED_BY_setVerboseLevelForNextPrint_METHOD_USER_PRINTS;
 
 
 
