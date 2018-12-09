@@ -1,7 +1,7 @@
 package ovh.robot84.advent2018;
 
 public class DotCounter {
-    private String dotSymbol = ".,";
+    private String dotSymbol = ".";
     private long start;
     private int intervalInMiliSec = 500;
     private boolean started;
