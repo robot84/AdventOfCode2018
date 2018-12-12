@@ -18,11 +18,16 @@ import java.util.regex.Pattern;
 public class Day07 {
     private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
             "src\\main\\resources\\day07input1.txt";
+private final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
+        "src\\main\\resources\\day07input2.txt";
+private static final int DEFAULT_BIG_VALUE = 99_999;
+private static final int NOT_AN_ENTRY_POINT = 99999;
     private ArrayList<Integer> alphabet = new ArrayList<>();
+private ArrayList<Integer> result = new ArrayList<>();
     private MyReader myReader = new MyReader();
     private int inSize;
     private int alphabetSize;
-    private int[][] in = new int[100][2];
+private int[][] in = new int[101][2];
 
     /* zaczynamy od C ii bierzemy wszystkie jego raczki i wybieramy z nich wg sort()
         szukamy litery przed ktora zadna inna litera nie musi byc powstawiona,
@@ -33,7 +38,7 @@ public class Day07 {
     }
 
     public static void main(String[] args) {
-        Day07 dayStar1 = new Day07(INPUT_FILE1);
+        Day07 dayStar1 = new Day07(INPUT_FILE2);
         dayStar1.parsingProgramArguments(args);
         Verbose.mute();
         dayStar1.star1start();
@@ -102,39 +107,56 @@ public class Day07 {
         Verbose.setVerboseLevelForNextPrint(1);
         Verbose.printf("Displaying alphabet\n");
         Verbose.setVerboseLevelForNextPrint(1);
-        Verbose.printf("Alphabet is ");
         for (Integer b : alphabet) {
             Verbose.setVerboseLevelForNextPrint(1);
-            Verbose.printf(" %c", b);
+            Verbose.printf("%c", b);
         }
 
         Verbose.setVerboseLevelForNextPrint(1);
         Verbose.printf("\n");
 
         Verbose.unmute();
-
+        int someBigValue = NOT_AN_ENTRY_POINT, bestArm = someBigValue;
         int entryPoint;
-        while ((entryPoint = findEntryPoint()) != (-1)) {
 
+        // System.exit(1);
+        while ((entryPoint = findEntryPoint()) != (someBigValue)) {
+            result.add(entryPoint);
             Verbose.printf("Entering entry point. deleting all references to it\n");
             //noinspection SuspiciousMethodCalls
             alphabet.remove((Object) entryPoint);
-            alphabetSize = alphabet.size();
+            alphabetSize--;
             ArrayList<Pair<Integer, Integer>> in2 = new ArrayList<>();
+            int in3[][] = new int[inSize][2];
+
             /*
              (in[i][0]!=0) don;t make an action when array cell has nothing inside
              (its value==default value of empty cell)
              */
             //noinspection ForLoopReplaceableByForEach
-            for (int i = 0; i < in.length; i++)
-                if ((in[i][0] != entryPoint) && (in[i][0] != 0)) in2.add(new Pair<>(in[i][0], in[i][1]));
-            Object[] pairs = in2.toArray();
-            System.out.println("A->B means: A is dependency of B");
-            for (Object pair : pairs) //noinspection MalformedFormatString
-                System.out.printf("%c->%c\n", ((Pair) pair).getKey(), ((Pair) pair).getValue());
+            int ii = 0;
+            for (int i = 0; i < inSize; i++)
+                if ((in[i][0] != entryPoint) && (in[i][0] != 0)) {
+                    in3[ii][0] = in[i][0];
+                    in3[ii][1] = in[i][1];
+                    ii++;
+                }
+            inSize = ii;
+            for (int i = 0; i < inSize; i++) {
+                in[i][0] = in3[i][0];
+                in[i][1] = in3[i][1];
+            }
+
+            Verbose.setVerboseLevelForNextPrint(3);
+            Verbose.println("A->B means: A is dependency of B");
+            for (int i = 0; i < inSize; i++) {
+                Verbose.setVerboseLevelForNextPrint(3);
+                Verbose.printf("%c->%c\n", in[i][0], in[i][1]);
+            }
 
             Verbose.println("Find all arms and select first in alphabetic order");
-            int someBigValue = 9999, bestArm = someBigValue, newArm;
+           /* int newArm;
+            bestArm = someBigValue;
             for (int i = 0; i < inSize; i++) {
                 Verbose.setVerboseLevelForNextPrint(3);
                 Verbose.printf("Parsing %d \n", in[i][0]);
@@ -148,7 +170,11 @@ public class Day07 {
                 }
             }
             Verbose.printf("%c is the best choice to go now\n", ((bestArm)));
+            entryPoint=bestArm;*/
+
         }
+        for (Integer letter : result) System.out.printf("%c", letter);
+        System.out.println();
     }
 
 
@@ -164,14 +190,13 @@ public class Day07 {
         in alphabetical order
          */
         Verbose.println("Looking for entry point letter");
-        int NOT_AN_ENTRY_POINT = 99999;
         int entryPoint = NOT_AN_ENTRY_POINT;
         HERE:
         for (int letter = 0; letter < alphabetSize; letter++) {
             for (int i = 0; i < inSize; i++) {
                 if (alphabet.get(letter) == in[i][1]) {
                     Verbose.setVerboseLevelForNextPrint(3);
-                    Verbose.printf("%d is not an entry point\n", alphabet.get(letter));
+                    Verbose.printf("%c is not an entry point\n", alphabet.get(letter));
                     continue HERE;
                 }
             }
@@ -184,7 +209,7 @@ public class Day07 {
             Verbose.printf("%c IS THE entry point. ", ((entryPoint)));
             return entryPoint;
         } else
-            return -1;
+            return NOT_AN_ENTRY_POINT;
     }
 }
 /*
