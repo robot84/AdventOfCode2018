@@ -15,35 +15,36 @@ import java.util.regex.Pattern;
  * @since 2018-12-01
  */
 public class Day08 {
-    final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
-            "src\\main\\resources\\day08input2.txt";
-    final static int ARRAY_MAX_X = 2_000;
-    final static int ARRAY_MAX_Y = 2_000;
-    private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
-            "src\\main\\resources\\day08input1.txt";
-    HashMap<Character, Integer> hm1 = new HashMap();
-    ArrayList<String> boxID = new ArrayList<>();
-    private MyReader myReader = new MyReader();
-
-    private Day08(String input_file) {
-        myReader.open_file(input_file);
-    }
+final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
+        "src\\main\\resources\\day08input2.txt";
+final static int ARRAY_MAX_X = 2_000;
+final static int ARRAY_MAX_Y = 2_000;
+private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
+        "src\\main\\resources\\day08input1.txt";
+HashMap<Character, Integer> hm1 = new HashMap();
+ArrayList<String> boxID = new ArrayList<>();
+private MyReader myReader = new MyReader();
 
 
-    public static void main(String[] args) {
-        Day08 dayStar1 = new Day08(INPUT_FILE1);
-        dayStar1.parsingProgramArguments(args);
-        //Verbose.mute();
-        dayStar1.star1start();
-    }
+private Day08(String input_file) {
+    myReader.open_file(input_file);
+}
 
 
-    private void star1start() {
-        String line = null;
+public static void main(String[] args) {
+    Day08 dayStar1 = new Day08(INPUT_FILE1);
+    dayStar1.parsingProgramArguments(args);
+    //Verbose.mute();
+    dayStar1.star1start();
+}
 
-        /*        Read input         */
-        while ((line = myReader.get_line()) != null) {
-            Verbose.print("Line: " + line);
+
+private void star1start() {
+    String line = null;
+
+    /*        Read input         */
+    while ((line = myReader.get_line()) != null) {
+        Verbose.print("Line: " + line);
             /*while ((c = myReader.read()) != -1) {
                 Verbose.print("!" + (char) c);
             */
@@ -79,16 +80,17 @@ public class Day08 {
                 Verbose.printf("%d:%s\n", i, finding[i]);
             }
             */
-        }
     }
+}
 
-    private void parsingProgramArguments(String[] args) {
-        System.out.println("Program ARGS num:" + args.length + " ARGS:" + args);
-        if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
-        if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
-        if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
-        if (args.length > 0 && args[0].equals("--create-input-file"))
-            HelperMethods.getInputFileFromWWW(Integer.valueOf(this.getClass().getSimpleName().substring(3)), INPUT_FILE1);
-    }
+
+private void parsingProgramArguments(String[] args) {
+    System.out.println("Program ARGS num:" + args.length + " ARGS:" + args);
+    if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
+    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
+    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
+    if (args.length > 0 && args[0].equals("--create-input-file"))
+        HelperMethods.getInputFileFromWWW(Integer.valueOf(this.getClass().getSimpleName().substring(3)), INPUT_FILE1);
+}
 
 }

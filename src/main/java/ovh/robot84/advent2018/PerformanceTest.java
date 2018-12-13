@@ -4,11 +4,9 @@ public class PerformanceTest {
 private long startTime;
 
 
-
 public void startPerformanceTest() {
     startTime = System.nanoTime();
 }
-
 
 
 public void stopPerformanceTest() {

@@ -9,7 +9,6 @@ BufferedWriter fileWriter;
 String mapFilePath;
 
 
-
 void openMap(String mapFilePath) {
     this.mapFilePath = mapFilePath;
     fileWriter = null;
@@ -21,7 +20,6 @@ void openMap(String mapFilePath) {
 }
 
 
-
 void closeMap() {
 
     try {
@@ -30,7 +28,6 @@ void closeMap() {
         e.printStackTrace();
     }
 }
-
 
 
 void writeMap(Boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText) {
@@ -62,7 +59,6 @@ void writeMap(Boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
         }
     }
 }
-
 
 
 void writeMap(Integer[][] mapa, int mapXsize, int mapYsize, String mapHeaderText) {

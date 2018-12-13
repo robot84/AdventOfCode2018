@@ -9,11 +9,9 @@ private Node tail;
 private int size;
 
 
-
 public DoubleLinkedListImpl() {
     size = 0;
 }
-
 
 
 public static void main(String a[]) {
@@ -30,7 +28,6 @@ public static void main(String a[]) {
 }
 
 
-
 /**
  * returns the size of the linked list
  *
@@ -41,7 +38,6 @@ public int size() {
 }
 
 
-
 /**
  * return whether the list is empty or not
  *
@@ -50,7 +46,6 @@ public int size() {
 public boolean isEmpty() {
     return size == 0;
 }
-
 
 
 /**
@@ -70,7 +65,6 @@ public void addFirst(E element) {
     size++;
     System.out.println("adding: " + element);
 }
-
 
 
 /**
@@ -93,7 +87,6 @@ public void addLast(E element) {
 }
 
 
-
 /**
  * this method walks forward through the linked list
  */
@@ -108,7 +101,6 @@ public void iterateForward() {
 }
 
 
-
 /**
  * this method walks backward through the linked list
  */
@@ -121,7 +113,6 @@ public void iterateBackward() {
         tmp = tmp.prev;
     }
 }
-
 
 
 /**
@@ -140,7 +131,6 @@ public E removeFirst() {
 }
 
 
-
 /**
  * this method removes element from the end of the linked list
  *
@@ -157,7 +147,6 @@ public E removeLast() {
 }
 
 
-
 /**
  * this class keeps track of each element information
  *
@@ -167,7 +156,6 @@ private class Node {
     E element;
     Node next;
     Node prev;
-
 
 
     public Node(E element, Node next, Node prev) {

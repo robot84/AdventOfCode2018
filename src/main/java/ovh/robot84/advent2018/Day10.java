@@ -39,11 +39,9 @@ private MyReader myReader = new MyReader();
 private int inputSize;
 
 
-
 private Day10(String input_file) {
     myReader.open_file(input_file);
 }
-
 
 
 public static void main(String[] args) {
@@ -52,7 +50,6 @@ public static void main(String[] args) {
     //Verbose.mute();
     dayStar1.star1start();
 }
-
 
 
 private void star1start() {
@@ -158,7 +155,6 @@ private void star1start() {
 }
 
 
-
 private void parsingProgramArguments(String[] args) {
     System.out.println("Program ARGS num:" + args.length + " ARGS:" + args);
     if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
@@ -171,7 +167,6 @@ private void parsingProgramArguments(String[] args) {
 }
 
 
-
 void openMap() {
     wri = null;
     try {
@@ -182,7 +177,6 @@ void openMap() {
 }
 
 
-
 void closeMap() {
 
     try {
@@ -191,7 +185,6 @@ void closeMap() {
         e.printStackTrace();
     }
 }
-
 
 
 void writeMap(int mapXsize, int mapYsize, int iteration) {
@@ -229,7 +222,6 @@ void writeMap(int mapXsize, int mapYsize, int iteration) {
         dc.check();
     }
 }
-
 
 
 class IntPair extends Pair {
