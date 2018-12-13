@@ -112,13 +112,17 @@ public static void disablePrompts() {
         if (VERBOSE_ENABLE && !VERBOSE_MUTED) {
             if (Verbose.verboseLevelForNextPrintF <= Verbose.enabledOnLevel) {
                 // TODO change String to StringBuilder
-                String formatWithPrompt = "%s ".concat(format);
-                Object[] objectsWithPromptBeforeThey = new Object[args.length + spaceForPrompt];
-                objectsWithPromptBeforeThey[0] = promptsForUserPrints[Verbose.verboseLevelForNextPrintF - 1];
-                for (int i = 0; i < args.length; i++) {
-                    objectsWithPromptBeforeThey[i + 1] = args[i];
+                if (PROMPTS_ENABLED) {
+                    String formatWithPrompt = "%s ".concat(format);
+                    Object[] objectsWithPromptBeforeThey = new Object[args.length + spaceForPrompt];
+                    objectsWithPromptBeforeThey[0] = promptsForUserPrints[Verbose.verboseLevelForNextPrintF - 1];
+                    for (int i = 0; i < args.length; i++) {
+                        objectsWithPromptBeforeThey[i + 1] = args[i];
+                    }
+                    printInColor(formatWithPrompt, objectsWithPromptBeforeThey);
+                } else {
+                    printInColor(format, args);
                 }
-                printInColor(formatWithPrompt, objectsWithPromptBeforeThey);
             }
             Verbose.verboseLevelForNextPrintF =
                     DEFAULT_VERBOSE_LEVEL_FOR_UNMODIFIED_BY_setVerboseLevelForNextPrint_METHOD_USER_PRINTS;
@@ -130,10 +134,7 @@ public static void disablePrompts() {
 
     private static void printInColor(String format, Object[] args) {
         setColor();
-        if (PROMPTS_ENABLED)
-            System.out.format(format, args);
-        else
-            System.out.format(format.substring(2), args);
+        System.out.format(format, args);
         resetColor();
     }
 
