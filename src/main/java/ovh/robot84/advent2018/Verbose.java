@@ -30,6 +30,7 @@ public class Verbose {
     private static boolean VERBOSE_ENABLE;
     private static boolean VERBOSE_MUTED;
     private static boolean MULTI_LEVEL_VERBOSE_ENABLED;
+private static boolean PROMPTS_ENABLED = true;
 
     private static String actualColor = ANSI_CYAN;
     private static Object[] promptForVerboseClassEvents = {"*** "};
@@ -38,6 +39,16 @@ public class Verbose {
     private static int verboseLevelForNextPrintF = DEFAULT_VERBOSE_LEVEL_FOR_UNMODIFIED_BY_setVerboseLevelForNextPrint_METHOD_USER_PRINTS;
 
 
+
+public static void enablePrompts() {
+    PROMPTS_ENABLED = true;
+}
+
+
+
+public static void disablePrompts() {
+    PROMPTS_ENABLED = false;
+}
 
     public static void enableVerbose() {
         VERBOSE_ENABLE = true;
@@ -119,7 +130,10 @@ public class Verbose {
 
     private static void printInColor(String format, Object[] args) {
         setColor();
-        System.out.format(format, args);
+        if (PROMPTS_ENABLED)
+            System.out.format(format, args);
+        else
+            System.out.format(format.substring(2), args);
         resetColor();
     }
 
