@@ -1,0 +1,66 @@
+-----------------------------
+WNIOSKI:
+-----------------------------
+add() wstawia tak, zeby po wstawieniu wywolanie next() dalo taki sam wynik, jakiby dalo bez wywolania .add()
+.remove() taka jak wyzej
+czyli oba nie ruszaja wskaznika iteratora!
+Add dodaje przed (z lewej strony) wskaznikiem, a remove usuwa to co znajdzie przed (z lewej strony) wskaznikiem.
+
+.listIterator(list.size()) nie wskaze nam ostatniego elementu! tak jak w tablicy 10elementowej indeksy sa od 0 do 9
+czyli od 0 do size()-1, tak samo tu.
+Aby ustawic wskaznik listy (iterator) na ostatni element listy, musimy uzyc .listIterator(list.size()-1)
+
+--------------------------------
+Procedura testowa:
+-------------------------------
+
+"C:\Program Files\Java\jdk1.8.0_151\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.3\lib\idea_rt.jar=27291:C:\Program Files\JetBrains\IntelliJ IDEA 2018.3\bin" -Dfile.encoding=UTF-8 -classpath "C:\Users\qtcj47\.IntelliJIdea2018.3\system\compile-server\adventofcode2018_2c07b5bf\scratches\out;C:\Program Files\Java\jdk1.8.0_151\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext\zipfs.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\rt.jar;C:\Users\qtcj47\IdeaProjects\bitbay\jsonp_1.1_api;C:\Users\qtcj47\IdeaProjects\AdventOfCode2018\out\production\AdventOfCode2018;C:\Users\qtcj47\Documents\java\HelperClasses;C:\Users\qtcj47\IdeaProjects\AdventOfCode2018\out\artifacts\Elf\Elf.jar;C:\Program Files\Java\commons-io-2.6.jar" ovh.robot84.advent2018.LinkedListIteratorTest
+Indexes test.
+ indexes: previous: -1 next: 0 hasPrevious(): false
+0
+ indexes: previous: 0 next: 1
+1
+ indexes: previous: 1 next: 2
+V
+ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19   (1)  1
+                                                  ^
+ indexes: previous: 19 next: 20  hasNext():false
+
+
+Remove test.
+ indexes: previous: -1 next: 0
+ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+^
+a=li.next(); a=0
+ indexes: previous: 0 next: 1
+ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19   (0)  0
+  ^
+a=li.next(); a=1
+ indexes: previous: 1 next: 2
+ 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19   (1)  1
+    ^
+.remove()
+ indexes: previous: 0 next: 1
+ 0 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19   (0)  0
+  ^
+a=li.next(); a=2
+ indexes: previous: 1 next: 2
+ 0 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19   (1)  2
+    ^
+li.add(88);
+ indexes: previous: 2 next: 3
+ 0 2 88 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19   (2)  88
+       ^
+Cannot remove() directly after add(). We must use .next() first
+a=li.next(); a=3
+ indexes: previous: 3 next: 4
+ 0 2 88 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19   (3)  3
+         ^
+.remove()
+ indexes: previous: 2 next: 3
+ 0 2 88 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19   (2)  88
+       ^
+
+Process finished with exit code 0
+
+
