@@ -2,6 +2,7 @@ package ovh.robot84.advent2018;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +33,7 @@ private Day08(String input_file) {
 
 
 public static void main(String[] args) {
-    Day08 dayStar1 = new Day08(INPUT_FILE1);
+    Day08 dayStar1 = new Day08(INPUT_FILE2);
     dayStar1.parsingProgramArguments(args);
     //Verbose.mute();
     dayStar1.star1start();
@@ -43,15 +44,14 @@ private void star1start() {
     String line = null;
 
     /*        Read input         */
-    while ((line = myReader.get_line()) != null) {
+    if ((line = myReader.get_line()) != null) {
         Verbose.print("Line: " + line);
-            /*while ((c = myReader.read()) != -1) {
-                Verbose.print("!" + (char) c);
-            */
+    }
 
-        /*
-        Parse input
-         */
+    Scanner scanner = new Scanner(line);
+    readNode(scanner);
+
+    System.out.println("Result is: " + readNode(scanner));
 
            /* Pattern p = Pattern.compile("^#(\\d+) @ (\\d+),(\\d+): (\\d+)x(\\d+)$");
             Matcher m = p.matcher(line);
@@ -80,7 +80,33 @@ private void star1start() {
                 Verbose.printf("%d:%s\n", i, finding[i]);
             }
             */
+
+}
+
+
+private int readNode(Scanner scanner) {
+    int numOfChilds = 0;
+    int numOfMetadata = 0;
+    int sumOfMedata = 0;
+
+
+    if (scanner.hasNextInt()) numOfChilds = scanner.nextInt();
+    else System.out.println("ERROR: End of input in readNode()");
+    Verbose.printf("numOfchilds: %d ", numOfChilds);
+    if (scanner.hasNextInt()) numOfMetadata = scanner.nextInt();
+    else System.out.println("ERROR: End of input in readNode()");
+    Verbose.printf("Number of metadata fields: %d\n", numOfMetadata);
+    for (int childNum = 0; childNum < numOfChilds; childNum++) {
+        sumOfMedata += readNode(scanner);
     }
+    Verbose.printf("sumOfMedata+=readNode(scanner): %d", sumOfMedata);
+    for (int metadataNum = 0; metadataNum < numOfMetadata; metadataNum++) {
+        if (scanner.hasNextInt()) sumOfMedata += scanner.nextInt();
+        else System.out.println("ERROR: End of input in readNode()");
+    }
+    Verbose.printf("returning sumOfMedatada: %d\n", sumOfMedata);
+    return sumOfMedata;
+
 }
 
 
