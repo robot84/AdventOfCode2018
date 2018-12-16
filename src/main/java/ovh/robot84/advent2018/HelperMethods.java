@@ -14,55 +14,17 @@ import java.util.*;
 public class HelperMethods {
 
 
-void initializeCollection(Collection collection, int collectionSize) {
-    for (int i = 0; i < collectionSize; i++) {
-        collection.add(0);
-    }
-}
-
-
-void initializeCharKeyHashMap(HashMap hashMap, int initializer) {
-    final int charactersInAlphabet = 26;
-    final char firstLetterInAlphabet = 'a';
-
-    for (int i = 0; i < charactersInAlphabet; i++) {
-        hashMap.put((char) (firstLetterInAlphabet + i), initializer);
-        System.out.print(hashMap.get((char) (firstLetterInAlphabet + i)));
-    }
-}
-
-
-void printCharKeyHashMap(HashMap hashMap) {
-    final int charactersInAlphabet = 26;
-    final char firstLetterInAlphabet = 'a';
-    for (int i = 0; i < charactersInAlphabet; i++) {
-        System.out.print(hashMap.get((char) (firstLetterInAlphabet + i)));
-    }
-}
-
-
-static void printResult(String result) {
+public static void printResult(String result) {
     System.out.println("\nResult: " + result);
 }
 
 
-static void printResult(int result) {
+public static void printResult(int result) {
     System.out.println("\nResult: " + result);
 }
 
 
-public static Integer[] findAllNumbersInLine(String line) {
-    String[] foundByFindRegexMethod;
-    foundByFindRegexMethod = FindRegex.findRegex("(\\d+)", line);
-    Integer[] numbers = new Integer[foundByFindRegexMethod.length];
-    for (int i = 0; i < numbers.length; i++) {
-        numbers[i] = Integer.valueOf(foundByFindRegexMethod[i]);
-    }
-    return numbers;
-}
-
-
-static boolean getInputFileFromWWW(int day, String path) {
+public static boolean getInputFileFromWWW(int day, String path) {
     URL url = null;
     System.out.println("Connecting to https://adventofcode2018.com...");
     try {
@@ -88,7 +50,7 @@ static boolean getInputFileFromWWW(int day, String path) {
 }
 
 
-static CookieHandler buildCookieFromFinalValues() {
+public static CookieHandler buildCookieFromFinalValues() {
     CookieHandler cookieHandler = new CookieHandler() {
 
         @Override
@@ -120,8 +82,38 @@ static CookieHandler buildCookieFromFinalValues() {
 }
 
 
-static void useBuiltCookieForAllSites(CookieHandler cookieHandler) {
+public static void useBuiltCookieForAllSites(CookieHandler cookieHandler) {
     CookieHandler.setDefault(cookieHandler);
+}
+
+
+public static Integer[] findAllNumbersInLine(String line) {
+    String[] foundByFindRegexMethod;
+    foundByFindRegexMethod = FindRegex.findRegex("(\\d+)", line);
+    Integer[] numbers = new Integer[foundByFindRegexMethod.length];
+    for (int i = 0; i < numbers.length; i++) {
+        numbers[i] = Integer.valueOf(foundByFindRegexMethod[i]);
+    }
+    return numbers;
+}
+
+
+public static String getCurrentTime() {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+    Date date = new Date();
+    return (dateFormat.format(date));
+}
+
+
+public static int getElapsedTimeInMiliSeconds(Date startDate) {
+    Date endDate = new Date();
+    int elapsedTime = (int) (endDate.getTime() - startDate.getTime());
+    return ((elapsedTime));
+}
+
+
+public static int getElapsedTimeInSeconds(Date startDate) {
+    return getElapsedTimeInMiliSeconds(startDate) / 1_000;
 }
 
 
@@ -154,26 +146,7 @@ public Integer sumInArray(ArrayList<Integer> someData) {
 }
 
 
-static String getCurrentTime() {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-    Date date = new Date();
-    return (dateFormat.format(date));
-}
-
-
-static int getElapsedTimeInMiliSeconds(Date startDate) {
-    Date endDate = new Date();
-    int elapsedTime = (int) (endDate.getTime() - startDate.getTime());
-    return ((elapsedTime));
-}
-
-
-static int getElapsedTimeInSeconds(Date startDate) {
-    return getElapsedTimeInMiliSeconds(startDate) / 1_000;
-}
-
-
-static String getElapsedTimeAsHHmmss(Date startDate) {
+public static String getElapsedTimeAsHHmmss(Date startDate) {
     int time = getElapsedTimeInSeconds(startDate);
     int hh, mm, ss;
     String hhStr, mmStr, ssStr;
@@ -187,6 +160,33 @@ static String getElapsedTimeAsHHmmss(Date startDate) {
     ssStr = ss < 10 ? "0" + ss : Integer.toString(ss);
 
     return hhStr + ":" + mmStr + ":" + ssStr;
+}
+
+
+public void initializeCollection(Collection collection, int collectionSize) {
+    for (int i = 0; i < collectionSize; i++) {
+        collection.add(0);
+    }
+}
+
+
+public void initializeCharKeyHashMap(HashMap hashMap, int initializer) {
+    final int charactersInAlphabet = 26;
+    final char firstLetterInAlphabet = 'a';
+
+    for (int i = 0; i < charactersInAlphabet; i++) {
+        hashMap.put((char) (firstLetterInAlphabet + i), initializer);
+        System.out.print(hashMap.get((char) (firstLetterInAlphabet + i)));
+    }
+}
+
+
+public void printCharKeyHashMap(HashMap hashMap) {
+    final int charactersInAlphabet = 26;
+    final char firstLetterInAlphabet = 'a';
+    for (int i = 0; i < charactersInAlphabet; i++) {
+        System.out.print(hashMap.get((char) (firstLetterInAlphabet + i)));
+    }
 }
 
 
