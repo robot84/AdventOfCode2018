@@ -41,6 +41,7 @@ void closeMap() {
 }
 
 
+@Deprecated
 void writeMap(Boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText) {
     try {
         fileWriter.write("\n" + mapHeaderText + "\n");
@@ -72,6 +73,39 @@ void writeMap(Boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
 }
 
 
+void writeMap(Boolean[][] mapa, String mapHeaderText) {
+    int mapXsize = mapa[0].length, mapYsize = mapa.length;
+    try {
+        fileWriter.write("\n" + mapHeaderText + "\n");
+    } catch (IOException e) {
+        System.out.println("Exception: Cannot write to map file " + this.mapFilePath);
+        e.printStackTrace();
+    }
+    for (int y = 0; y < mapYsize; y++) {
+        for (int x = 0; x < mapXsize; x++) {
+            try {
+                if (!mapa[y][x])
+                    fileWriter.write(('.'));
+                else {
+                    fileWriter.write(('X'));
+                }
+            } catch (IOException e) {
+                System.out.println("Exception: Cannot write value '" +
+                        mapa[y][x] + "' to map file " + this.mapFilePath);
+                e.printStackTrace();
+            }
+        }
+        try {
+            fileWriter.write("\n");
+        } catch (IOException e) {
+            System.out.println("Exception: Cannot write new line character to map file " + this.mapFilePath);
+            e.printStackTrace();
+        }
+    }
+}
+
+
+@Deprecated
 void writeMap(boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText) {
     try {
         fileWriter.write("\n" + mapHeaderText + "\n");
@@ -103,7 +137,68 @@ void writeMap(boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
 }
 
 
+void writeMap(boolean[][] mapa, String mapHeaderText) {
+    int mapXsize = mapa[0].length, mapYsize = mapa.length;
+    try {
+        fileWriter.write("\n" + mapHeaderText + "\n");
+    } catch (IOException e) {
+        System.out.println("Exception: Cannot write to map file " + this.mapFilePath);
+        e.printStackTrace();
+    }
+    for (int y = 0; y < mapYsize; y++) {
+        for (int x = 0; x < mapXsize; x++) {
+            try {
+                if (!mapa[y][x])
+                    fileWriter.write(('.'));
+                else {
+                    fileWriter.write(('X'));
+                }
+            } catch (IOException e) {
+                System.out.println("Exception: Cannot write value '" +
+                        mapa[y][x] + "' to map file " + this.mapFilePath);
+                e.printStackTrace();
+            }
+        }
+        try {
+            fileWriter.write("\n");
+        } catch (IOException e) {
+            System.out.println("Exception: Cannot write new line character to map file " + this.mapFilePath);
+            e.printStackTrace();
+        }
+    }
+}
+
+
+@Deprecated
 void writeMap(Integer[][] mapa, int mapXsize, int mapYsize, String mapHeaderText) {
+    try {
+        fileWriter.write("\n" + mapHeaderText + "\n");
+    } catch (IOException e) {
+        System.out.println("Exception: Cannot write to map file " + this.mapFilePath);
+        e.printStackTrace();
+    }
+    for (int y = 0; y < mapXsize; y++) {
+        for (int x = 0; x < mapYsize; x++) {
+            try {
+                fileWriter.write((mapa[y][x] + '.'));
+            } catch (IOException e) {
+                System.out.println("Exception: Cannot write value '" +
+                        mapa[y][x] + "' to map file " + this.mapFilePath);
+                e.printStackTrace();
+            }
+        }
+        try {
+            fileWriter.write("\n");
+        } catch (IOException e) {
+            System.out.println("Exception: Cannot write new line character to map file " + this.mapFilePath);
+            e.printStackTrace();
+        }
+    }
+}
+
+
+void writeMap(Integer[][] mapa, String mapHeaderText) {
+    int mapXsize = mapa[0].length, mapYsize = mapa.length;
     try {
         fileWriter.write("\n" + mapHeaderText + "\n");
     } catch (IOException e) {
