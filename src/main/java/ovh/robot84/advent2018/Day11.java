@@ -51,13 +51,17 @@ private void star1start() {
         Parse input
          */
 
-           /* Pattern p = Pattern.compile("^#(\\d+) @ (\\d+),(\\d+): (\\d+)x(\\d+)$");
+           /*
+           // look out when input has [ ] symbols. Quote them! Then in trouble start with:
+           //Pattern p = Pattern.compile("\\s*(.*)\\s*");
+           Pattern p = Pattern.compile("^#\\s*(\\d+)\\s*@\\s*(\\d+),(\\d+):\\s*(\\d+)x(\\d+)$");
             Matcher m = p.matcher(line);
             if (m.matches()) {
                 for (int i = 1; i <= m.groupCount(); i++) {
                     Verbose.printf("m.group(%s): %s\n", i, m.group(i));
                 }
-            }*/
+            }
+            */
 
 
            /*
