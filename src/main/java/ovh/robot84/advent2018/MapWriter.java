@@ -3,10 +3,21 @@ package ovh.robot84.advent2018;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
 
 public class MapWriter {
 BufferedWriter fileWriter;
 String mapFilePath;
+
+
+MapWriter(String path) {
+    mapFilePath = path;
+}
+
+
+void openMap() {
+    if (mapFilePath != null) openMap(mapFilePath);
+}
 
 
 void openMap(String mapFilePath) {
@@ -37,8 +48,39 @@ void writeMap(Boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
         System.out.println("Exception: Cannot write to map file " + this.mapFilePath);
         e.printStackTrace();
     }
-    for (int y = 0; y < mapXsize; y++) {
-        for (int x = 0; x < mapYsize; x++) {
+    for (int y = 0; y < mapYsize; y++) {
+        for (int x = 0; x < mapXsize; x++) {
+            try {
+                if (!mapa[y][x])
+                    fileWriter.write(('.'));
+                else {
+                    fileWriter.write(('X'));
+                }
+            } catch (IOException e) {
+                System.out.println("Exception: Cannot write value '" +
+                        mapa[y][x] + "' to map file " + this.mapFilePath);
+                e.printStackTrace();
+            }
+        }
+        try {
+            fileWriter.write("\n");
+        } catch (IOException e) {
+            System.out.println("Exception: Cannot write new line character to map file " + this.mapFilePath);
+            e.printStackTrace();
+        }
+    }
+}
+
+
+void writeMap(boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText) {
+    try {
+        fileWriter.write("\n" + mapHeaderText + "\n");
+    } catch (IOException e) {
+        System.out.println("Exception: Cannot write to map file " + this.mapFilePath);
+        e.printStackTrace();
+    }
+    for (int y = 0; y < mapYsize; y++) {
+        for (int x = 0; x < mapXsize; x++) {
             try {
                 if (!mapa[y][x])
                     fileWriter.write(('.'));
