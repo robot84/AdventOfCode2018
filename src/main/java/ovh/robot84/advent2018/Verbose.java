@@ -73,7 +73,7 @@ public static void unmute() {
 }
 
 
-private static void setColor() {
+public static void setColor() {
     System.out.print(actualColor);
 }
 
@@ -83,7 +83,7 @@ public static void setColor(String color) {
 }
 
 
-private static void resetColor() {
+public static void resetColor() {
     System.out.print(ANSI_RESET);
 }
 
