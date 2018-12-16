@@ -1,0 +1,49 @@
+This file is located:
+C:\Users\XXXXXXX\.IntelliJIdea2018.3\config\scratches\IntelliJ Idea shortcuts.txt
+
+Ctrl+Alt+T      = sorrounds selected code with if,for,while, ... etc
+F1+Shift        = API Documentation for class name under cursor
+F1+Crtl         = View a description of the error or warning at the caret.
+CtrL+Shift+F12  = maximize Source Editor Windows and hide others
+Alt+Left/Right  = navigate between Tabs (open files)
+Ctrl+W          = extend selection of text to the whole block  { } or more (+shift = shrink)
+Ctrl+Shift+F    = find in a project or in multiple files
+Ctrl+F          = find in this file
+Alt+J           = find next occurence of word under cursor (Alt+Wheel Up/Down = the same)
+Ctrl+Shif+Alt+J = highlight all occurences of word under cursor
+Ctrl+Alt+F7     = find all usages
+Ctrl+Shft/Alt+N = search for file name/ class name/method name/ other symbol name (push shift twice=the same)
+Ctrl_Shift+F7   = highlight all finding of word under cursor
+F3,Shift+F3     = navigate between highlights
+Alt+Ctrl+Shif+C = copy file and line number under the cursor, like:
+                    ovh/robot84/advent2018/MyReader.java:68
+Ctrl+Shift+V    = paste from history
+Ctrl+/          = un/comment selected line
+Ctrl+Shift+/    = comments selected block of code
+Shift+Alt+Up/Dn = move a line up/down
+Ctrl+Alt+L      = reformat code pretty :)
+Ctrl+Q          = quick documentation
+Ctrl+J          = suggestion list of Live Templates
+Code ->Generate->Constructor...
+Alt+Ctrl+T
+Ctrl+Shitf+'    = maximize run window
+Ctrl+Shift+F12  = hide/display all tool windows already on screen
+Ctrl+Alt+Left/Ri= jump to previous cursor position
+Ctrl+Shift+Enter= Inserts the required trailing comma
+
+if you want to quickly replace the target of your search in the whole file,
+press Ctrl+Shift+Alt+J and type a new string.
+
+Delete {   } from inside a body:
+//CtrlW until you select the body, then CtrlX then CtrlW, then CtrlC
+Alt+`           = CVS menu with all operations
+Ctrl+Alt+L      = reformat selected code
+
+
+
+
+How to disable file from Version Control?
+Go to Settings | Version Control | Confirmation, then check the Show options before adding to version control setting under the When files are created section. Alternatively, you could check Do not add. It is mandatory that you do not check Add silently.
+Delete the file you don't want to be tracked by VCS.
+Press Ctrl + Z to undo the removal of the file. If IDE shows a popup window which lets you choose whether or not to add the new file to VCS, click No.
+Commit your local changes, and the files are removed from VCS.
