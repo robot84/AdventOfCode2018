@@ -1,13 +1,11 @@
 package ovh.robot84.advent2018;
 
 
-import javafx.util.Pair;
-
 import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,21 +21,12 @@ import java.util.regex.Pattern;
 public class Day10 {
 final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
         "src\\main\\resources\\day10input2.txt";
-final static int ARRAY_MAX_X = 2_000;
-final static int ARRAY_MAX_Y = 2_000;
 private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
         "src\\main\\resources\\day10input1.txt";
 private final static String MAP_FILE = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
         "src\\main\\resources\\mapDay10star1.txt";
-Boolean[][] mapa = new Boolean[1000][1000];
-int mapXsize = 2000;
-int mapYsize = 2000;
 BufferedWriter wri;
-Integer maxX, minX, maxY, minY;
-Integer vmaxX, vminX, vmaxY, vminY;
 private MyReader myReader = new MyReader();
-private int inputSize;
-
 
 private Day10(String input_file) {
     myReader.open_file(input_file);
@@ -53,10 +42,40 @@ public static void main(String[] args) {
 
 
 private void star1start() {
-    String line = null;
-    ArrayList<Pair<Integer, Integer>> position = new ArrayList<>();
-    ArrayList<Pair<Integer, Integer>> velocity = new ArrayList<>();
+    Galaxy galaxy = new Galaxy();
 
+    createGalaxy(galaxy);
+    long galaxyArea = galaxy.getArea();
+    long previousGalaxyArea;
+    int iteration = 0;
+    MapWriter mapWriter = new MapWriter(MAP_FILE);
+    mapWriter.openMap();
+
+    System.out.printf("Starting with galaxy with %d stars, dimensions %dx%d and area of %d\n",
+            galaxy.countStars(), galaxy.getYdimension(), galaxy.getXdimension(), galaxy.getArea());
+    for (int counter = 0; iteration < Integer.MAX_VALUE - 1; iteration++) {
+        previousGalaxyArea = galaxyArea;
+        galaxy.moveStarsByTheirVelocity();
+        galaxyArea = galaxy.getArea();
+        if (previousGalaxyArea < galaxyArea) counter++;
+        if (counter > 3) break;
+    }
+
+    System.out.printf("After %d iteration galaxy started to raise. Galaxy area: %d\n", iteration, galaxyArea);
+    System.out.printf("Ending with galaxy with %d stars, dimensions %dx%d and area of %d\n",
+            galaxy.countStars(), galaxy.getYdimension(), galaxy.getXdimension(), galaxy.getArea());
+    MapUtils mapUtils = new MapUtils();
+    //boolean[][]compressedMap=mapUtils.shrinkTwice(galaxy.createBooleanMap(), 1);
+
+    //mapWriter.writeMap(compressedMap,"MY GALAXY (and not a Samsung ;)");
+    mapWriter.writeMap(galaxy.createBooleanMap(), "MY GALAXY (and not a Samsung ;)");
+    //galaxy.printGalaxyMap();
+    mapWriter.closeMap();
+}
+
+
+void createGalaxy(Galaxy galaxy) {
+    String line = null;
     /*        Read input         */
     while ((line = myReader.get_line()) != null) {
         Verbose.setVerboseLevelForNextPrint(3);
@@ -68,92 +87,14 @@ private void star1start() {
                 Verbose.setVerboseLevelForNextPrint(3);
                 Verbose.printf("m.group(%s): %s %d\n", i, m.group(i), Integer.valueOf(m.group(i)));
             }
-            position.add(new Pair(Integer.valueOf(m.group(1)), Integer.valueOf(m.group(2))));
-            velocity.add(new Pair(Integer.valueOf(m.group(3)), Integer.valueOf(m.group(4))));
+            galaxy.addStar(new Star(Integer.valueOf(m.group(1)), Integer.valueOf(m.group(2)),
+                    Integer.valueOf(m.group(3)), Integer.valueOf(m.group(4))));
+
         } else {
             System.out.println("DUPA. Cos nie maczuje");
         }
     } // end of while
-
-    inputSize = position.size() - 1;
-    maxX = 0;
-    maxY = 0;// because Integer maxX,maxY; NOT initialize var with 0!!
-    Verbose.printf("Number of lines in input file: %d\n", inputSize);
-    for (int i = 0; i < inputSize; i++) {
-        if (position.get(0).getKey() > maxX) maxX = position.get(0).getKey();
-    }
-    for (int i = 0; i < inputSize; i++) {
-        if (position.get(i).getValue() > maxY) maxY = position.get(i).getValue();
-    }
-    Verbose.println("position maxX: " + maxX.toString() + " maxY: " + maxY.toString());
-    minX = 9999;
-    minY = 9999;
-    for (int i = 0; i < inputSize; i++) {
-        if (position.get(i).getKey() < minX) minX = position.get(i).getKey();
-    }
-    for (int i = 0; i < inputSize; i++) {
-        if (position.get(i).getValue() < minY) minY = position.get(i).getValue();
-    }
-    Verbose.println("position minX: " + minX.toString() + " minY: " + minY.toString());
-    minY = Math.abs(minY);
-    minX = Math.abs(minX);
-
-    vmaxX = 0;
-    vmaxY = 0;// because Integer maxX,maxY; NOT initialize var with 0!!
-    for (int i = 0; i < inputSize; i++) {
-        if (velocity.get(0).getKey() > vmaxX) vmaxX = velocity.get(0).getKey();
-    }
-    for (int i = 0; i < inputSize; i++) {
-        if (velocity.get(i).getValue() > vmaxY) vmaxY = velocity.get(i).getValue();
-    }
-    Verbose.println("velocity vmaxX: " + vmaxX.toString() + " vmaxY: " + vmaxY.toString());
-    vminX = 9999;
-    vminY = 9999;
-    for (int i = 0; i < inputSize; i++) {
-        if (velocity.get(i).getKey() < vminX) vminX = velocity.get(i).getKey();
-    }
-    for (int i = 0; i < inputSize; i++) {
-        if (velocity.get(i).getValue() < vminY) vminY = velocity.get(i).getValue();
-    }
-    Verbose.println("velocity: vminX: " + vminX.toString() + " vminY: " + vminY.toString());
-    vminY = Math.abs(vminY);
-    vminX = Math.abs(vminX);
-    mapXsize = 70000;
-    mapYsize = 70000;
-    Verbose.printf("Allocating map[%d][%d]...\n", mapYsize, mapXsize);
-    mapa = new Boolean[mapYsize][mapXsize];
-    for (int y = 0; y < mapYsize; y++) {
-        for (int x = 0; x < mapXsize; x++) {
-            mapa[y][x] = false;
-        }
-    }
-    Verbose.printf("Map allocated.\n");
-    openMap();
-    int x, y;
-    // main loop
-    int someLittleValueChoosedByMe = 300;
-    int timestamp = someLittleValueChoosedByMe;
-    for (int j = 0; j < timestamp; j++) {
-        for (int y1 = 0; y1 < mapYsize; y1++) {
-            for (int x1 = 0; x1 < mapXsize; x1++) {
-                mapa[y1][x1] = false;
-            }
-        }
-        for (int i = 0; i < inputSize; i++) {
-            x = mapXsize / 2 + position.get(i).getKey();
-            y = mapYsize / 2 + position.get(i).getValue();
-            //if(i==0)
-            // Verbose.printf("Timestamp: %d. Write to mapa[%d][%d] %d %d\n", i, y, x,position.get(i).getKey(),position.get(i).getValue());
-            mapa[y][x] = true;
-
-            position.set(i, new Pair(position.get(i).getKey() + velocity.get(i).getKey(),
-                    position.get(i).getValue() + velocity.get(i).getValue()));
-        }
-        writeMap(mapXsize, mapYsize, j);
-    }
-    closeMap();
 }
-
 
 private void parsingProgramArguments(String[] args) {
     System.out.println("Program ARGS num:" + args.length + " ARGS:" + args);
@@ -167,66 +108,146 @@ private void parsingProgramArguments(String[] args) {
 }
 
 
-void openMap() {
-    wri = null;
-    try {
-        wri = new BufferedWriter(new FileWriter(MAP_FILE));
-    } catch (IOException e) {
-        e.printStackTrace();
+class Star {
+    int positionX, positionY, velocityX, velocityY;
+
+
+    Star(int positionX, int positionY, int velocityX, int velocityY) {
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
+    }
+
+
+}
+
+class Galaxy {
+    ArrayList<Star> stars = new ArrayList<>();
+    ArrayList<Integer> starsDimX = new ArrayList<>();
+    ArrayList<Integer> starsDimY = new ArrayList<>();
+    int maxX;
+    int maxY;
+    int minX;
+    int minY;
+
+
+    public void addStar(Star star) {
+        stars.add(star);
+        this.recalculateDimensionsAfterAddingStar(star);
+    }
+
+
+    private void recalculateDimensionsAfterAddingStar(Star star) {
+        starsDimX.add(star.positionX);
+        starsDimY.add(star.positionY);
+        maxX = Collections.max(starsDimX);
+        maxY = Collections.max(starsDimY);
+        minX = Collections.min(starsDimX);
+        minY = Collections.min(starsDimY);
+    }
+
+
+    private void recalculateDimenstionsAfterMovingStars() {
+        starsDimX.clear();
+        starsDimY.clear();
+        for (Star star : stars) {
+            starsDimX.add(star.positionX);
+            starsDimY.add(star.positionY);
+        }
+        maxX = Collections.max(starsDimX);
+        maxY = Collections.max(starsDimY);
+        minX = Collections.min(starsDimX);
+        minY = Collections.min(starsDimY);
+    }
+
+
+    public void moveStarsByTheirVelocity() {
+        ListIterator<Star> iterator = stars.listIterator();
+        while (iterator.hasNext()) {
+            Star star = iterator.next();
+            star.positionX += star.velocityX;
+            star.positionY += star.velocityY;
+        }
+
+        recalculateDimenstionsAfterMovingStars();
+    }
+
+
+    public long getArea() {
+        return (getXdimension()) * (getYdimension());
+    }
+
+
+    public int getXdimension() {
+        return Math.abs(minX) + Math.abs(maxX);
+    }
+
+
+    public int getYdimension() {
+        return Math.abs(minY) + Math.abs(maxY);
+    }
+
+
+    boolean[][] createBooleanMap() {
+        boolean[][] map = new boolean[getYdimension() + 1][getXdimension() + 1];
+        for (int i = 0; i < getYdimension(); i++) {
+            Arrays.fill(map[i], false);
+        }
+        for (Star star : stars) {
+            map[Math.abs(minY) + star.positionY][Math.abs(minX) + star.positionX] = true;
+        }
+        return map;
+    }
+
+
+    void printGalaxyMap() {
+        boolean[][] map = createBooleanMap();
+        for (int y = 0; y < getYdimension(); y++) {
+            for (int x = 0; x < getXdimension(); x++) {
+                if (map[y][x]) System.out.print("X");
+                else System.out.print(".");
+            }
+            System.out.println();
+        }
+    }
+
+
+    public int countStars() {
+        return stars.size();
     }
 }
 
+class MapUtils {
 
-void closeMap() {
+    boolean[][] shrinkTwice(boolean[][] map, int threshold) {
+        final int SHRINK_FACTOR = 2;
+        int density = 0;
+        int xSize = map[0].length;
+        int ySize = map.length;
+        boolean[][] shrinkedMap = new boolean[ySize / SHRINK_FACTOR][xSize / SHRINK_FACTOR];
+        System.out.printf("Input map xSize %d, ySize %d\n", xSize, ySize);
+        System.out.printf("Shrinked map xSize %d, ySize %d\n", xSize / 2, ySize / 2);
+        if (threshold < 1) threshold = 1;
+        else if (threshold > 4) threshold = 4;
 
-    try {
-        wri.close();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
-
-
-void writeMap(int mapXsize, int mapYsize, int iteration) {
-
-    DotCounter dc = new DotCounter(300);
-    dc.start();
-
-    try {
-        wri.write("\nMapa number " + iteration + "\n");
-    } catch (IOException e) {
-        System.out.println("Exception: Cannot write to map file.");
-        e.printStackTrace();
-    }
-    Verbose.setVerboseLevelForNextPrint(3);
-    Verbose.printf("Writing map to file.\n");
-    for (int y = 0; y < mapXsize; y++) {
-        for (int x = 0; x < mapYsize; x++) {
-            try {
-                if (!mapa[y][x]) wri.write(('.'));
-                else {
-                    //wri.write((mapa[y][x] + 'X' ));
-                    wri.write(('X'));
-                    //Verbose.printf("%d %d\n",y,x);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
+        for (int y = 0; y < ySize / SHRINK_FACTOR; y++) {
+            for (int x = 0; x < xSize / SHRINK_FACTOR; x++) {
+                density = 0;
+                if (map[y * 2][x * 2]) density++;
+                if (map[y * 2 + 1][x * 2]) density++;
+                if (map[y * 2][x * 2 + 1]) density++;
+                if (map[y * 2 + 1][x * 2 + 1]) density++;
+                if (density >= threshold) shrinkedMap[y][x] = true;
+                else shrinkedMap[y][x] = false;
             }
         }
-        try {
-            wri.write("\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        dc.check();
+        return shrinkedMap;
     }
-}
 
 
-class IntPair extends Pair {
-    IntPair(Integer x, Integer y) {
-        super(x, y);
+    boolean[][] shrinkTwice(boolean[][] map) {
+        return shrinkTwice(map, 2);
     }
 }
 
