@@ -225,4 +225,35 @@ void writeMap(Integer[][] mapa, String mapHeaderText) {
 }
 
 
+boolean[][] shrinkTwice(boolean[][] map, int threshold) {
+    final int SHRINK_FACTOR = 2;
+    int density = 0;
+    int xSize = map[0].length;
+    int ySize = map.length;
+    boolean[][] shrinkedMap = new boolean[ySize / SHRINK_FACTOR][xSize / SHRINK_FACTOR];
+    System.out.printf("Input map xSize %d, ySize %d\n", xSize, ySize);
+    System.out.printf("Shrinked map xSize %d, ySize %d\n", xSize / 2, ySize / 2);
+    if (threshold < 1) threshold = 1;
+    else if (threshold > 4) threshold = 4;
+
+    for (int y = 0; y < ySize / SHRINK_FACTOR; y++) {
+        for (int x = 0; x < xSize / SHRINK_FACTOR; x++) {
+            density = 0;
+            if (map[y * 2][x * 2]) density++;
+            if (map[y * 2 + 1][x * 2]) density++;
+            if (map[y * 2][x * 2 + 1]) density++;
+            if (map[y * 2 + 1][x * 2 + 1]) density++;
+            if (density >= threshold) shrinkedMap[y][x] = true;
+            else shrinkedMap[y][x] = false;
+        }
+    }
+    return shrinkedMap;
+}
+
+
+boolean[][] shrinkTwice(boolean[][] map) {
+    return shrinkTwice(map, 2);
+}
+
+
 }
