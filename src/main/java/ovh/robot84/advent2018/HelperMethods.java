@@ -117,6 +117,7 @@ public static int getElapsedTimeInSeconds(Date startDate) {
 }
 
 
+@Deprecated
 public static Integer maxInArray(ArrayList<Integer> someData) {
     Integer max = 0;
     for (int i = 0; i < someData.size(); i++) {
@@ -126,6 +127,7 @@ public static Integer maxInArray(ArrayList<Integer> someData) {
 }
 
 
+@Deprecated
 public static Integer minInArray(ArrayList<Integer> someData) {
     /* min value on list */
     Integer min = someData.get(0);
