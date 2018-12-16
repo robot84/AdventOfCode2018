@@ -3,6 +3,8 @@ package ovh.robot84.advent2018;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,6 +46,7 @@ public static void main(String[] args) {
     dayStar1.parsingProgramArguments(args);
     Verbose.mute();
     dayStar1.star1start();
+
 }
 
 
@@ -60,10 +63,6 @@ private void parsingProgramArguments(String[] args) {
 private void star1start() {
     String line;
     int c3, c4;
-
-        /*
-        Read input
-         */
     int a = 0;
     Verbose.println("Mapping Input file to memory data structure (array)...");
     while ((line = myReader.get_line()) != null) {
@@ -116,13 +115,17 @@ private void star1start() {
 
     Verbose.setVerboseLevelForNextPrint(1);
     Verbose.printf("\n");
-
     Verbose.unmute();
+    Verbose.disablePrompts();
+    DependencyTree dependencyTree = new DependencyTree(alphabet);
+    dependencyTree.printDependencyTree();
+
+
     int someBigValue = NOT_AN_ENTRY_POINT, bestArm = someBigValue;
     int entryPoint;
 
     // System.exit(1);
-    while ((entryPoint = findEntryPoint()) != (someBigValue)) {
+    while ((entryPoint = findEntryPoint()) != (NOT_AN_ENTRY_POINT)) {
         result.add(entryPoint);
         Verbose.printf("Entering entry point. deleting all references to it\n");
         //noinspection SuspiciousMethodCalls
@@ -157,30 +160,19 @@ private void star1start() {
         }
 
         Verbose.println("Find all arms and select first in alphabetic order");
-           /* int newArm;
-            bestArm = someBigValue;
-            for (int i = 0; i < inSize; i++) {
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.printf("Parsing %d \n", in[i][0]);
-                if ((in[i][0]) == entryPoint) {
-                    // we have an arm :)
-                    newArm = in[i][1];
-                    Verbose.setVerboseLevelForNextPrint(2);
-                    Verbose.printf("%c is an arm of %c\n", ((newArm)), entryPoint);
-                    // trying if it is the best arm
-                    if (newArm < bestArm) bestArm = newArm;
-                }
-            }
-            Verbose.printf("%c is the best choice to go now\n", ((bestArm)));
-            entryPoint=bestArm;*/
-
+        dependencyTree.printDependencyTree(entryPoint);
+        dependencyTree = new DependencyTree(alphabet);
     }
     for (Integer letter : result) System.out.printf("%c", letter);
     System.out.println();
+    dependencyTree = new DependencyTree(alphabet);
+    dependencyTree.printDependencyTree();
+
 }
 
 
 private int findEntryPoint() {
+    ArrayList<Integer> entryPointsList = new ArrayList<>();
           /* entry point is the letter that has no dependencies.
         so it is _always_  the FIRST letter in pair (A,B)
         where the pair is compiled from sentence:
@@ -202,16 +194,110 @@ private int findEntryPoint() {
                 continue HERE;
             }
         }
+        // new way to do the same:
+        entryPointsList.add(alphabet.get(letter));
+        // old way to this:
         Verbose.setVerboseLevelForNextPrint(2);
         Verbose.printf("%c IS an potential  entry point\n", (alphabet.get(letter)));
         if (alphabet.get(letter) < entryPoint) entryPoint = alphabet.get(letter);
 
     }
+// new way to do the same:
+    Collections.sort(entryPointsList);
+
+    Verbose.disablePrompts();
+    Verbose.printf("\n-->");
+    for (Integer ep : entryPointsList) Verbose.printf("%c", ep);
+    Verbose.printf("\n");
+
+    // if(entryPointsList.isEmpty()) return NOT_AN_ENTRY_POINT; else return entryPointsList.get(0);
     if (entryPoint != NOT_AN_ENTRY_POINT) {
         Verbose.printf("%c IS THE entry point. ", ((entryPoint)));
         return entryPoint;
     } else
         return NOT_AN_ENTRY_POINT;
+}
+
+
+class DependencyTree {
+
+    ArrayList<Integer> alphabet = new ArrayList<Integer>() {
+        @Override
+        public Object clone() {
+            return super.clone();
+        }
+    };
+    ArrayList<ArrayList<Integer>> dependencyTree;
+
+
+    public DependencyTree(ArrayList<Integer> alphabet) {
+        this.dependencyTree = new ArrayList<>();
+        this.alphabet = (ArrayList<Integer>) alphabet.clone();
+        for (Integer letter : this.alphabet)
+            this.dependencyTree.add(buildDependencyList(letter));
+    }
+
+
+    void printDependencyList(ArrayList<Integer> dependencyList) {
+        Verbose.printf("-->");
+        for (Integer letter : dependencyList) {
+            Verbose.printf("%c", letter);
+        }
+        Verbose.printf("\n");
+    }
+
+
+    void printDependencyList(ArrayList<Integer> dependencyList, int highlightMe) {
+        Verbose.printf("-->");
+        for (Integer letter : dependencyList) {
+            if (letter == highlightMe) {
+                Verbose.setColor(Verbose.ANSI_RED);
+                Verbose.printf("%c", letter);
+                Verbose.setColor(Verbose.ANSI_CYAN);
+            } else {
+                Verbose.printf("%c", letter);
+            }
+        }
+        Verbose.printf("\n");
+    }
+
+
+    void printDependencyTree() {
+        ListIterator<Integer> iter = alphabet.listIterator();
+        for (ArrayList<Integer> letterList : this.dependencyTree) {
+            if (iter.hasNext()) Verbose.printf("%c", iter.next());
+            printDependencyList(letterList);
+        }
+    }
+
+
+    void printDependencyTree(int highlightMe) {
+        ListIterator<Integer> iter = alphabet.listIterator();
+        for (ArrayList<Integer> letterList : this.dependencyTree) {
+            if (iter.hasNext()) Verbose.printf("%c", iter.next());
+            printDependencyList(letterList, highlightMe);
+        }
+    }
+
+
+    ArrayList<Integer> buildDependencyList(Integer letter) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < inSize; i++) {
+            if (in[i][1] == letter) list.add(in[i][0]);
+        }
+        return list;
+    }
+
+
+    ArrayList<Integer> buildDeepDependencyList(Integer letter, ArrayList<ArrayList<Integer>> tree) {
+        ArrayList<Integer> deepList = new ArrayList<>();
+        if (tree.get(letter) == null) deepList.add(letter);
+        else
+            for (Integer dependency : tree.get(letter)) {
+                deepList.addAll(buildDeepDependencyList(dependency, tree));
+            }
+        return deepList;
+    }
 }
 }
 /*

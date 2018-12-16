@@ -24,7 +24,9 @@ private final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\Adve
         "src\\main\\resources\\day07input2.txt";
 private static final int DEFAULT_BIG_VALUE = 99_999;
 private static final int NOT_AN_ENTRY_POINT = 99999;
-private static final int REAL_WORK_TIME = 60 + 1;
+private static final int REAL_WORK_TIME = 60;
+//ABGYKMWCEVDHOFQUPILTSNZRJX 60
+//ABGYKMWCEVDHOFQUPILTSNZRJX 61
 ListIterator<Integer> entryPointListIterator;
 ArrayList<Integer> entryPoints = new ArrayList<>();
 int someBigValue = NOT_AN_ENTRY_POINT, bestArm = someBigValue;
@@ -62,86 +64,117 @@ private void mainLoop() {
     for (int time = 0; time < 10000; time++) {
         Verbose.printf("\n[%3d]  ", time);
         workDoneInThisSecond = false;
+
         forEachWorker();
 
         Verbose.printf("\t");
         for (Integer letter : result) Verbose.printf("%c", letter);
 
-        if (workDoneInThisSecond) {
-            ArrayList<Integer> copy = new ArrayList<>();
-            while (entryPointListIterator.hasPrevious()) entryPointListIterator.previous();
-            while (entryPointListIterator.hasNext()) copy.add(entryPointListIterator.next());
-
-            entryPoints = findEntryPoints();
-            if (entryPoints != null) {
-                for (int i = 0; i < workers; i++) {
-                    if (!workerIdle[i]) {
-                        entryPoints.remove(workerWorkingOn[i]);
-                    }
-                }
-                System.out.print("->");
-                for (Integer ii : entryPoints) System.out.printf("%c", ii);
-                System.out.println();
-                entryPointListIterator = entryPoints.listIterator();
-            } else
-                return;
-        }
+        if (workDoneInThisSecond)
+            if (!newEntryPointListIterator()) return;
     }
 
+}
+
+
+private boolean newEntryPointListIterator() {
+    ArrayList<Integer> copy = new ArrayList<>();
+    while (entryPointListIterator.hasPrevious()) entryPointListIterator.previous();
+    while (entryPointListIterator.hasNext()) copy.add(entryPointListIterator.next());
+
+    entryPoints = findEntryPoints();
+
+    System.out.print("->");
+    if (entryPoints != null)
+        for (Integer ii : entryPoints) System.out.printf("%c", ii);
+    if (entryPoints != null) {
+        for (int i = 0; i < workers; i++) {
+            if (!workerIdle[i]) {
+                entryPoints.remove(workerWorkingOn[i]);
+            }
+        }
+        System.out.print(" -->");
+        if (entryPoints != null)
+            for (Integer ii : entryPoints) System.out.printf("%c", ii);
+
+        entryPointListIterator = entryPoints.listIterator();
+    } else
+        return false;
+    return true;
+}
+
+
+private String getEntryPointsAsString(ArrayList<Integer> entryPoints) {
+    String resultAsString = "";
+    if (entryPoints != null) {
+        for (Integer letter : entryPoints) resultAsString.concat(Integer.toString(letter));
+        return resultAsString;
+    }
+    return null;
 
 }
 
 
 private void forEachWorker() {
     for (int workerNum = 0; workerNum < workers; workerNum++) {
-        if (workerIdle[workerNum]) {
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.printf("Worker %d is idle.\n", workerNum);
-
-            LOOP_01_HEAD:
-            while (entryPointListIterator.hasNext()) {
-                int ep;
-                ep = entryPointListIterator.next();
-                entryPointListIterator.remove();
-                Verbose.setVerboseLevelForNextPrint(2);
-                Verbose.printf("Oh, yes! We have letter %c for worker %d\n", ep, workerNum);
-                boolean isSomebodyWorkingOnit = false;
-                for (int j = 0; j < workers; j++) {
-                    if (workerWorkingOn[j] == ep) {
-                        isSomebodyWorkingOnit = true;
-                        Verbose.setVerboseLevelForNextPrint(2);
-                        Verbose.printf("Ktos pracuje na literze %c. Nie daje jej nikomu.\n", ep);
-                        continue LOOP_01_HEAD;
-                    }
-                }
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.printf("It looks like nobody is working on letter %c\n", ep);
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.printf("Worker %d, come here. I have work for you.\n", workerNum);
-                workerIdle[workerNum] = false;
-                workerWorkingOn[workerNum] = ep;
-                workerWillBeIdleAfterSeconds[workerNum] = ep - 'A' + REAL_WORK_TIME;
-                Verbose.setVerboseLevelForNextPrint(2);
-                Verbose.printf("worker %d will work for %d seconds on letter %c (%d)\n", workerNum, workerWillBeIdleAfterSeconds[workerNum] + 1, ep, ep);
-                break LOOP_01_HEAD;
-            }
-
-        } else {
-            workerWillBeIdleAfterSeconds[workerNum]--;
-            if (workerWillBeIdleAfterSeconds[workerNum] <= 0) {
-                result.add(workerWorkingOn[workerNum]);
-                removeLetterAndAllReferencesToItFromVariables(workerWorkingOn[workerNum]);
-                Verbose.setVerboseLevelForNextPrint(2);
-                Verbose.printf("Worker %d finish his work on letter %c\n", workerNum, workerWorkingOn[workerNum]);
-                workerIdle[workerNum] = true;
-                workerWorkingOn[workerNum] = 46;
-
-            } else {
-                Verbose.setVerboseLevelForNextPrint(2);
-                Verbose.printf("Worker %d will working hard on letter %c for next %d seconds\n", workerNum, workerWorkingOn[workerNum], workerWillBeIdleAfterSeconds[workerNum]);
-            }
-        }
+        if (workerIdle[workerNum]) giveWorkerWorkIfPossible(workerNum);
+        else checkIsHeDoneWithHisWork(workerNum);
         Verbose.printf("%c\t", workerWorkingOn[workerNum]);
+    }
+}
+
+
+private void checkIsHeDoneWithHisWork(int workerNum) {
+    workerWillBeIdleAfterSeconds[workerNum]--;
+    if (workerWillBeIdleAfterSeconds[workerNum] <= 0) {
+        result.add(workerWorkingOn[workerNum]);
+        removeLetterAndAllReferencesToItFromVariables(workerWorkingOn[workerNum]);
+        Verbose.setVerboseLevelForNextPrint(1);
+        Verbose.printf("%c", workerWorkingOn[workerNum]);
+        workerIdle[workerNum] = true;
+        workerWorkingOn[workerNum] = (int) '.';
+    } else {
+        Verbose.setVerboseLevelForNextPrint(2);
+        Verbose.printf("%d_", workerWillBeIdleAfterSeconds[workerNum]);
+
+    }
+
+}
+
+
+private void giveWorkerWorkIfPossible(int workerNum) {
+    {
+        Verbose.setVerboseLevelForNextPrint(3);
+        Verbose.printf("Worker %d is idle.\n", workerNum);
+
+        LOOP_01_HEAD:
+        while (entryPointListIterator.hasNext()) {
+            int ep;
+            ep = entryPointListIterator.next();
+            entryPointListIterator.remove();
+            Verbose.setVerboseLevelForNextPrint(2);
+            Verbose.printf("Oh, yes! We have letter %c for worker %d\n", ep, workerNum);
+            boolean isSomebodyWorkingOnit = false;
+            for (int j = 0; j < workers; j++) {
+                if (workerWorkingOn[j] == ep) {
+                    isSomebodyWorkingOnit = true;
+                    Verbose.setVerboseLevelForNextPrint(2);
+                    Verbose.printf("Ktos pracuje na literze %c. Nie daje jej nikomu.\n", ep);
+                    continue LOOP_01_HEAD;
+                }
+            }
+            Verbose.setVerboseLevelForNextPrint(3);
+            Verbose.printf("It looks like nobody is working on letter %c\n", ep);
+            Verbose.setVerboseLevelForNextPrint(3);
+            Verbose.printf("Worker %d, come here. I have work for you.\n", workerNum);
+            workerIdle[workerNum] = false;
+            workerWorkingOn[workerNum] = ep;
+            workerWillBeIdleAfterSeconds[workerNum] = ep - 'A' + REAL_WORK_TIME;
+            Verbose.setVerboseLevelForNextPrint(2);
+            Verbose.printf("worker %d will work for %d seconds on letter %c (%d)\n", workerNum, workerWillBeIdleAfterSeconds[workerNum] + 1, ep, ep);
+            break LOOP_01_HEAD;
+        }
+
     }
 }
 
@@ -213,11 +246,6 @@ private ArrayList<Integer> findEntryPoints() {
         Verbose.printf("%c IS the entry point for workers\n", (alphabet.get(letter)));
     }
     Collections.sort(entryPoints);
-    Verbose.setVerboseLevelForNextPrint(2);
-    Verbose.println("Sorted entryPoints:");
-    System.out.println();
-    for (Integer letter : entryPoints) System.out.printf("%c", letter);
-    System.out.println();
 
     if (entryPoints.isEmpty()) return null;
     else
@@ -244,7 +272,6 @@ private void initializationOfStructures() {
 
     entryPoints = findEntryPoints();
     entryPointListIterator = entryPoints.listIterator();
-    Verbose.printf("\n[%3d]  ", 0);
 }
 
 
