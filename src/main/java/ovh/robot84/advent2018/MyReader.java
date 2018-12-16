@@ -15,17 +15,17 @@ BufferedReader bufferedReader = null;
 String currentLine = null;
 
 
-MyReader() {
+public MyReader() {
 
 }
 
 
-MyReader(String path) {
+public MyReader(String path) {
     this.open_file(path);
 }
 
 
-void open_file(String path) {
+public void open_file(String path) {
     try {
         file_path = new File(path);
         file = new FileReader(file_path);
@@ -38,7 +38,7 @@ void open_file(String path) {
 }
 
 
-void close_file() {
+public void close_file() {
     try {
         bufferedReader.close();
     } catch (IOException e) {
@@ -49,7 +49,7 @@ void close_file() {
 }
 
 
-String get_line() {
+public String get_line() {
     try {
         currentLine = bufferedReader.readLine();
     } catch (IOException e) {
@@ -62,12 +62,12 @@ String get_line() {
 }
 
 
-String readLine() {
+public String readLine() {
     return get_line();
 }
 
 
-int read() {
+public int read() {
     try {
         return bufferedReader.read();
     } catch (IOException e) {
@@ -78,7 +78,7 @@ int read() {
 }
 
 
-String read_char() {
+public String read_char() {
     int i = 0;
     try {
         i = bufferedReader.read();
@@ -94,7 +94,7 @@ String read_char() {
 }
 
 
-String read_string(String delimeter) {
+public String read_string(String delimeter) {
     if (sc == null) {
 
         if (currentLine == null) {
@@ -118,7 +118,7 @@ String read_string(String delimeter) {
 }
 
 
-Integer read_int(String delimeter) {
+public Integer read_int(String delimeter) {
     if (sc == null) {
         if (currentLine == null) {
             System.out.println("Exception: Use get_line() method before reading from file.");
@@ -141,7 +141,7 @@ Integer read_int(String delimeter) {
 }
 
 
-Double read_double(String delimeter) {
+public Double read_double(String delimeter) {
     if (sc == null) {
         if (currentLine == null) {
             System.out.println("Exception: Use get_line() method before reading from file.");
