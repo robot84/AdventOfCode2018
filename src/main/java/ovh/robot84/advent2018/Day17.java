@@ -69,7 +69,6 @@ private void processing(ArrayList<Clay> clays) {
     clay2 = clays.get(2);
     Collections.sort(clays);
 
-    //if (clay1 < clay2) System.out.println();
 }
 
 
