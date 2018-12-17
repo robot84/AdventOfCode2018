@@ -23,13 +23,20 @@ final static int ARRAY_MAX_X = 2_000;
 final static int ARRAY_MAX_Y = 2_000;
 private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
         "src\\main\\resources\\day17input1.txt";
+private static final int MAP_MAX_Y = 20;
+private static final int MAP_MAX_X = 100;
+private static final int MAP_X_SHIFT = 500 - (MAP_MAX_X / 2);
 HashMap<Character, Integer> hm1 = new HashMap();
 ArrayList<String> boxID = new ArrayList<>();
 private MyReader myReader = new MyReader();
+int[][] map = new int[MAP_MAX_Y][MAP_MAX_X];
+int springX = 500;
+int springY = 0;
 
 
 private Day17(String input_file) {
     myReader.open_file(input_file);
+
 }
 
 
@@ -45,25 +52,63 @@ public static void main(String[] args) {
 private void star1start() {
     ArrayList<Clay> clays = new ArrayList<Clay>();
 
+
     readInput(clays);
 
     // print input
     for (Clay clay : clays) {
         Verbose.println(clay.toString());
     }
+    buildMap(clays);
+    printMap();
 
     processing(clays);
 
 }
 
 
+private void printMap() {
+    for (int y = 0; y < MAP_MAX_Y; y++) {
+        for (int x = 0; x < MAP_MAX_X; x++) {
+            switch (map[y][x]) {
+                case '#':
+                    Verbose.printf("#");
+                    break;
+                case '+':
+                    Verbose.printf("+");
+                    break;
+                case 0:
+                    Verbose.printf(" ");
+                    break;
+                default:
+
+            }
+        }
+        Verbose.println("");
+    }
+}
+
+
+private void buildMap(ArrayList<Clay> clays) {
+    map[springY][springX - MAP_X_SHIFT] = '+';
+    for (Clay clay : clays) {
+
+        for (int y = clay.getFirstY(); y < clay.getLastY() + 1; y++) {
+            for (int x = clay.getFirstX(); x < clay.getLastX() + 1; x++) {
+                map[y][x - MAP_X_SHIFT] = '#';
+            }
+        }
+    }
+}
+
+
 private void processing(ArrayList<Clay> clays) {
-    int springX = 500;
-    int springY = 0;
+
     // two ways of doing the same
     Clay deepestClay1 = Collections.max(clays, clays.get(0).getComparator());
     Clay deepestClay2 = Collections.max(clays, new ClayCoordYComparator());
     int deep = deepestClay2.getLastY();
+    Verbose.println("Deep of the map: " + deep);
     Clay clay1, clay2;
     clay1 = clays.get(1);
     clay2 = clays.get(2);
