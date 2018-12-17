@@ -11,7 +11,12 @@ import java.util.HashMap;
  * @author Robert Ząbkiewicz
  * @version 0.1.0
  * @since 2018-12-01
+ *
+ * If you don't have or don't want to use Verbose class, you can
+ * change all Verbose.printf() to System.out.printf()
+ * and delete calls to other Verbose methods.
  */
+
 public class Template {
 final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
         "src\\main\\resources\\day08input2.txt";
@@ -57,6 +62,7 @@ private void star1start() {
            Pattern p = Pattern.compile("^#\\s*(\\d+)\\s*@\\s*(\\d+),(\\d+):\\s*(\\d+)x(\\d+)$");
             Matcher m = p.matcher(line);
             if (m.matches()) {
+            Verbose.println();
                 for (int i = 1; i <= m.groupCount(); i++) {
                     Verbose.printf("m.group(%s): %s\n", i, m.group(i));
                 }
