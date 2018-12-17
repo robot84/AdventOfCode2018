@@ -226,8 +226,8 @@ class MapUtils {
         int xSize = map[0].length;
         int ySize = map.length;
         boolean[][] shrinkedMap = new boolean[ySize / SHRINK_FACTOR][xSize / SHRINK_FACTOR];
-        System.out.printf("Input map xSize %d, ySize %d\n", xSize, ySize);
-        System.out.printf("Shrinked map xSize %d, ySize %d\n", xSize / 2, ySize / 2);
+        System.out.printf("Input printableMap xSize %d, ySize %d\n", xSize, ySize);
+        System.out.printf("Shrinked printableMap xSize %d, ySize %d\n", xSize / 2, ySize / 2);
         if (threshold < 1) threshold = 1;
         else if (threshold > 4) threshold = 4;
 
