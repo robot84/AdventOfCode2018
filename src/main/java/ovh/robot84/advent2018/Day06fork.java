@@ -18,7 +18,7 @@ final static int COMMON = Integer.MAX_VALUE - 1;
 private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
         "src\\main\\resources\\day06input1.txt";
 private final static String MAP_FILE = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
-        "src\\main\\resources\\map.txt";
+        "src\\main\\resources\\printableMap.txt";
 int[][] mapa;
 boolean[][] freshMove;
 BufferedWriter wri;
@@ -82,8 +82,8 @@ private void star1start() {
         if (input.get(i).y > maxY) maxY = input.get(i).y;
     }
 
-    // maxX is the number of last field on map. but field '0' exist
-    // and must be counted if we want to store number of fields on map
+    // maxX is the number of last field on printableMap. but field '0' exist
+    // and must be counted if we want to store number of fields on printableMap
     maxX++;
     maxY++;
 
@@ -91,7 +91,7 @@ private void star1start() {
 
     mapa = new int[maxY][maxX];
     freshMove = new boolean[maxY][maxX];
-    System.out.printf("Allocated %,d B for map", Integer.BYTES * maxX * maxY);
+    System.out.printf("Allocated %,d B for printableMap", Integer.BYTES * maxX * maxY);
 
     openMap();
 
@@ -107,7 +107,7 @@ private void star1start() {
     }
 
     HelperMethods.printResult(sumValidPossesions());
-    System.out.println("Writing map. Please be patient...");
+    System.out.println("Writing printableMap. Please be patient...");
     writeMap();
     closeMap();
     System.exit(0);
@@ -219,7 +219,7 @@ void writeMap() {
     try {
         wri.write("\nMapa\n");
     } catch (IOException e) {
-        System.out.println("Exception: Cannot write to map file.");
+        System.out.println("Exception: Cannot write to printableMap file.");
         e.printStackTrace();
     }
 

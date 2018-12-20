@@ -46,7 +46,7 @@ void writeMap(Boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
     try {
         fileWriter.write("\n" + mapHeaderText + "\n");
     } catch (IOException e) {
-        System.out.println("Exception: Cannot write to map file " + this.mapFilePath);
+        System.out.println("Exception: Cannot write to printableMap file " + this.mapFilePath);
         e.printStackTrace();
     }
     for (int y = 0; y < mapYsize; y++) {
@@ -59,14 +59,14 @@ void writeMap(Boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
                 }
             } catch (IOException e) {
                 System.out.println("Exception: Cannot write value '" +
-                        mapa[y][x] + "' to map file " + this.mapFilePath);
+                        mapa[y][x] + "' to printableMap file " + this.mapFilePath);
                 e.printStackTrace();
             }
         }
         try {
             fileWriter.write("\n");
         } catch (IOException e) {
-            System.out.println("Exception: Cannot write new line character to map file " + this.mapFilePath);
+            System.out.println("Exception: Cannot write new line character to printableMap file " + this.mapFilePath);
             e.printStackTrace();
         }
     }
@@ -78,7 +78,7 @@ void writeMap(Boolean[][] mapa, String mapHeaderText) {
     try {
         fileWriter.write("\n" + mapHeaderText + "\n");
     } catch (IOException e) {
-        System.out.println("Exception: Cannot write to map file " + this.mapFilePath);
+        System.out.println("Exception: Cannot write to printableMap file " + this.mapFilePath);
         e.printStackTrace();
     }
     for (int y = 0; y < mapYsize; y++) {
@@ -91,14 +91,14 @@ void writeMap(Boolean[][] mapa, String mapHeaderText) {
                 }
             } catch (IOException e) {
                 System.out.println("Exception: Cannot write value '" +
-                        mapa[y][x] + "' to map file " + this.mapFilePath);
+                        mapa[y][x] + "' to printableMap file " + this.mapFilePath);
                 e.printStackTrace();
             }
         }
         try {
             fileWriter.write("\n");
         } catch (IOException e) {
-            System.out.println("Exception: Cannot write new line character to map file " + this.mapFilePath);
+            System.out.println("Exception: Cannot write new line character to printableMap file " + this.mapFilePath);
             e.printStackTrace();
         }
     }
@@ -110,7 +110,7 @@ void writeMap(boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
     try {
         fileWriter.write("\n" + mapHeaderText + "\n");
     } catch (IOException e) {
-        System.out.println("Exception: Cannot write to map file " + this.mapFilePath);
+        System.out.println("Exception: Cannot write to printableMap file " + this.mapFilePath);
         e.printStackTrace();
     }
     for (int y = 0; y < mapYsize; y++) {
@@ -123,14 +123,14 @@ void writeMap(boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
                 }
             } catch (IOException e) {
                 System.out.println("Exception: Cannot write value '" +
-                        mapa[y][x] + "' to map file " + this.mapFilePath);
+                        mapa[y][x] + "' to printableMap file " + this.mapFilePath);
                 e.printStackTrace();
             }
         }
         try {
             fileWriter.write("\n");
         } catch (IOException e) {
-            System.out.println("Exception: Cannot write new line character to map file " + this.mapFilePath);
+            System.out.println("Exception: Cannot write new line character to printableMap file " + this.mapFilePath);
             e.printStackTrace();
         }
     }
@@ -142,7 +142,7 @@ void writeMap(boolean[][] mapa, String mapHeaderText) {
     try {
         fileWriter.write("\n" + mapHeaderText + "\n");
     } catch (IOException e) {
-        System.out.println("Exception: Cannot write to map file " + this.mapFilePath);
+        System.out.println("Exception: Cannot write to printableMap file " + this.mapFilePath);
         e.printStackTrace();
     }
     for (int y = 0; y < mapYsize; y++) {
@@ -155,14 +155,14 @@ void writeMap(boolean[][] mapa, String mapHeaderText) {
                 }
             } catch (IOException e) {
                 System.out.println("Exception: Cannot write value '" +
-                        mapa[y][x] + "' to map file " + this.mapFilePath);
+                        mapa[y][x] + "' to printableMap file " + this.mapFilePath);
                 e.printStackTrace();
             }
         }
         try {
             fileWriter.write("\n");
         } catch (IOException e) {
-            System.out.println("Exception: Cannot write new line character to map file " + this.mapFilePath);
+            System.out.println("Exception: Cannot write new line character to printableMap file " + this.mapFilePath);
             e.printStackTrace();
         }
     }
@@ -174,7 +174,7 @@ void writeMap(Integer[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
     try {
         fileWriter.write("\n" + mapHeaderText + "\n");
     } catch (IOException e) {
-        System.out.println("Exception: Cannot write to map file " + this.mapFilePath);
+        System.out.println("Exception: Cannot write to printableMap file " + this.mapFilePath);
         e.printStackTrace();
     }
     for (int y = 0; y < mapXsize; y++) {
@@ -183,14 +183,14 @@ void writeMap(Integer[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
                 fileWriter.write((mapa[y][x] + '.'));
             } catch (IOException e) {
                 System.out.println("Exception: Cannot write value '" +
-                        mapa[y][x] + "' to map file " + this.mapFilePath);
+                        mapa[y][x] + "' to printableMap file " + this.mapFilePath);
                 e.printStackTrace();
             }
         }
         try {
             fileWriter.write("\n");
         } catch (IOException e) {
-            System.out.println("Exception: Cannot write new line character to map file " + this.mapFilePath);
+            System.out.println("Exception: Cannot write new line character to printableMap file " + this.mapFilePath);
             e.printStackTrace();
         }
     }
@@ -202,7 +202,7 @@ void writeMap(Integer[][] mapa, String mapHeaderText) {
     try {
         fileWriter.write("\n" + mapHeaderText + "\n");
     } catch (IOException e) {
-        System.out.println("Exception: Cannot write to map file " + this.mapFilePath);
+        System.out.println("Exception: Cannot write to printableMap file " + this.mapFilePath);
         e.printStackTrace();
     }
     for (int y = 0; y < mapXsize; y++) {
@@ -211,14 +211,14 @@ void writeMap(Integer[][] mapa, String mapHeaderText) {
                 fileWriter.write((mapa[y][x] + '.'));
             } catch (IOException e) {
                 System.out.println("Exception: Cannot write value '" +
-                        mapa[y][x] + "' to map file " + this.mapFilePath);
+                        mapa[y][x] + "' to printableMap file " + this.mapFilePath);
                 e.printStackTrace();
             }
         }
         try {
             fileWriter.write("\n");
         } catch (IOException e) {
-            System.out.println("Exception: Cannot write new line character to map file " + this.mapFilePath);
+            System.out.println("Exception: Cannot write new line character to printableMap file " + this.mapFilePath);
             e.printStackTrace();
         }
     }
@@ -231,8 +231,8 @@ boolean[][] shrinkTwice(boolean[][] map, int threshold) {
     int xSize = map[0].length;
     int ySize = map.length;
     boolean[][] shrinkedMap = new boolean[ySize / SHRINK_FACTOR][xSize / SHRINK_FACTOR];
-    System.out.printf("Input map xSize %d, ySize %d\n", xSize, ySize);
-    System.out.printf("Shrinked map xSize %d, ySize %d\n", xSize / 2, ySize / 2);
+    System.out.printf("Input printableMap xSize %d, ySize %d\n", xSize, ySize);
+    System.out.printf("Shrinked printableMap xSize %d, ySize %d\n", xSize / 2, ySize / 2);
     if (threshold < 1) threshold = 1;
     else if (threshold > 4) threshold = 4;
 

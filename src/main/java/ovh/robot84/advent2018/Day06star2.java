@@ -88,8 +88,8 @@ private void star1start() {
         if (input.get(i).y > maxY) maxY = input.get(i).y;
     }
 
-    // maxX is the number of last field on map. but field '0' exist
-    // and must be counted if we want to store number of fields on map
+    // maxX is the number of last field on printableMap. but field '0' exist
+    // and must be counted if we want to store number of fields on printableMap
     maxX++;
     maxY++;
 
@@ -97,11 +97,11 @@ private void star1start() {
 
     mapa = new int[maxY][maxX];
     //freshMove = new boolean[maxY][maxX];
-    System.out.printf("Allocated %,d B for map", Integer.BYTES * maxX * maxY);
+    System.out.printf("Allocated %,d B for printableMap", Integer.BYTES * maxX * maxY);
 
     openMap();
     HelperMethods.printResult(computingArea());
-    System.out.println("Writing map. Please be patient...");
+    System.out.println("Writing printableMap. Please be patient...");
     writeMap();
     closeMap();
     System.exit(0);
@@ -170,7 +170,7 @@ void writeMap() {
     try {
         wri.write("\nMapa\n");
     } catch (IOException e) {
-        System.out.println("Exception: Cannot write to map file.");
+        System.out.println("Exception: Cannot write to printableMap file.");
         e.printStackTrace();
     }
 

@@ -104,22 +104,21 @@ int threeArgOperation(ArrayList<Integer> instruction) {
 int threeArgOperation(int op, int arg1, int arg2, int arg3) {
     HashMap<String, Integer> opMap = new HashMap<String, Integer>();
     opMap.put("addr", 1);
-    opMap.put("addi", 2);
-    opMap.put("mulr", 3);
-    opMap.put("muli", 0);
-    opMap.put("banr", 4);
-    opMap.put("bani", 5);
-    opMap.put("borr", 6);
-    opMap.put("bori", 7);
-    opMap.put("setr", 8);
-    opMap.put("seti", 9);
-    opMap.put("gtir", 10);
-    opMap.put("gtri", 11);
-    opMap.put("gtrr", 12);
-    opMap.put("eqir", 13);
-    opMap.put("eqri", 14);
-    opMap.put("eqrr", 15);
-
+    opMap.put("addi", 13);
+    opMap.put("mulr", 15);
+    opMap.put("muli", 14);
+    opMap.put("banr", 0);
+    opMap.put("bani", 9);
+    opMap.put("borr", 8);
+    opMap.put("bori", 5);
+    opMap.put("setr", 3);
+    opMap.put("seti", 7);
+    opMap.put("gtir", 6);
+    opMap.put("gtri", 12);
+    opMap.put("gtrr", 4);
+    opMap.put("eqir", 10);
+    opMap.put("eqri", 2);
+    opMap.put("eqrr", 11);
     int imm1 = arg1;
     int imm2 = arg2;
     int rr1 = rejestry.get(arg1);
