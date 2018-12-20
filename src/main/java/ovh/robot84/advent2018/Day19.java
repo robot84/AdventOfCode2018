@@ -8,11 +8,8 @@ import java.util.regex.Pattern;
 
 
 public class Day19 {
-private static final Integer REGISTER_A = 1;
-private static final Integer REGISTER_B = 2;
-private static final Integer REGISTER_C = 3;
-private static final Integer REGISTER_D = 4;
-private static final Integer REGISTER_E = 5;
+private static final Integer REGISTER_WHICH_STORE_IP = 4;
+// TODO refactor in OOP style: Register rejestry, InstructionHelper.ConvertOpToMnemonic()
 HashMap<Integer, Integer> rejestry = new HashMap<Integer, Integer>();
 HashBiMap<String, Integer> opMap = HashBiMap.create();
 private Integer numberToRemove;
@@ -26,9 +23,9 @@ public static void main(String[] args) {
     Day19 day = new Day19();
     //Verbose.mute();
     Verbose.disablePrompts();
-    day.parsingProgramArguments(args, INPUT_FILE1);
+    day.parsingProgramArguments(args, INPUT_FILE2);
 
-    day.startStar001(INPUT_FILE1);
+    day.startStar001(INPUT_FILE2);
 }
 
 
@@ -80,8 +77,10 @@ int threeArgOperation(int op, int arg1, int arg2, int arg3) {
 
     int imm1 = arg1;
     int imm2 = arg2;
-    int rr1 = rejestry.get(arg1);
-    int rr2 = rejestry.get(arg2);
+    int rr1 = 0;
+    if (arg1 >= 0 && arg1 < rejestry.size()) rr1 = rejestry.get(arg1);
+    int rr2 = 0;
+    if (arg2 >= 0 && arg2 < rejestry.size()) rr2 = rejestry.get(arg2);
 
 
     switch (op) {
@@ -164,12 +163,15 @@ private void runEngine(ArrayList<ArrayList<Integer>> instructions) {
     ArrayList<Integer> instruction;
     int ip = 0;
 
-    for (int i = 0; i < instructions.size(); i++) {
+    while (ip < instructions.size()) {
         instruction = instructions.get(ip);
+        doAssigment(REGISTER_WHICH_STORE_IP, ip);
         Verbose.printf("ip=%d %s", ip, rejestry.toString());
         Verbose.printf(" %s %d %d %d", opCodeToMnemonic(instruction.get(0)),
                 instruction.get(1), instruction.get(2), instruction.get(3));
         runInstruction(instruction);
+        ip = rejestry.get(REGISTER_WHICH_STORE_IP);
+        ip++;
         Verbose.printf(" %s\n", rejestry.toString());
     }
 }
@@ -207,7 +209,7 @@ private void convertInputDataToMemoryDataStructures(String line, ArrayList<Integ
 
 
 private void initRegistersWithZeros() {
-    rejestry.put(0, 0);
+    rejestry.put(0, 1);
     rejestry.put(1, 0);
     rejestry.put(2, 0);
     rejestry.put(3, 0);
