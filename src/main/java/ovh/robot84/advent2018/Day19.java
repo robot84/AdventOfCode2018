@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 public class Day19 {
 private static final Integer REGISTER_WHICH_STORE_IP = 4;
+private static final int DIVIDER = 9_000_000;
 // TODO refactor in OOP style: Register rejestry, InstructionHelper.ConvertOpToMnemonic()
 HashMap<Integer, Integer> rejestry = new HashMap<Integer, Integer>();
 HashBiMap<String, Integer> opMap = HashBiMap.create();
@@ -149,30 +150,51 @@ void startStar001(String input_file) {
     MyReader myReader = new MyReader();
 
     myReader.open_file(input_file);
-    initRegistersWithZeros();
+    // for star1 use this:
+    //initRegistersWithZeros();
+    // for star2 use this:
+    initRegistersWithZerosForStart2();
     mnemonicToOpCodeTableInit(opMap);
 
     loadInputDataFromFile(myReader, instructions);
+    computeResult();
     runEngine(instructions);
     System.out.println("Rezult is: " + rejestry.get(0));
 
 }
 
 
+private void computeResult() {
+    int r0 = 0;
+    for (int r1 = 1; r1 <= 10551345; r1++) {
+        if (10551345 % r1 == 0) {
+            r0 = r0 + r1;
+            Verbose.printf("1051345%%%d==0, adding %d to result. result is: %d\n", r1, r1, r0);
+        }
+    }
+    System.out.println("Result is: " + r0);
+    System.exit(0);
+}
 private void runEngine(ArrayList<ArrayList<Integer>> instructions) {
     ArrayList<Integer> instruction;
     int ip = 0;
-
+    int ipForStar2 = 0;
+    ip = ipForStar2;
+    int count = 0;
     while (ip < instructions.size()) {
         instruction = instructions.get(ip);
         doAssigment(REGISTER_WHICH_STORE_IP, ip);
-        Verbose.printf("ip=%d %s", ip, rejestry.toString());
-        Verbose.printf(" %s %d %d %d", opCodeToMnemonic(instruction.get(0)),
-                instruction.get(1), instruction.get(2), instruction.get(3));
+        if (count % DIVIDER == 0) {
+            Verbose.printf("ip=%d %s", ip, rejestry.toString());
+            Verbose.printf(" %s %d %d %d", opCodeToMnemonic(instruction.get(0)),
+                    instruction.get(1), instruction.get(2), instruction.get(3));
+        }
         runInstruction(instruction);
         ip = rejestry.get(REGISTER_WHICH_STORE_IP);
         ip++;
-        Verbose.printf(" %s\n", rejestry.toString());
+        if (count % DIVIDER == 0)
+            Verbose.printf(" %s\n", rejestry.toString());
+        count++;
     }
 }
 
@@ -209,12 +231,32 @@ private void convertInputDataToMemoryDataStructures(String line, ArrayList<Integ
 
 
 private void initRegistersWithZeros() {
+    rejestry.put(0, 0);
+    rejestry.put(1, 0);
+    rejestry.put(2, 0);
+    rejestry.put(3, 0);
+    rejestry.put(4, 0);
+    rejestry.put(5, 0);
+}
+
+
+private void initRegistersWithZerosForStart2() {
     rejestry.put(0, 1);
     rejestry.put(1, 0);
     rejestry.put(2, 0);
     rejestry.put(3, 0);
     rejestry.put(4, 0);
     rejestry.put(5, 0);
+}
+
+
+private void initRegistersWithZerosForStart2a() {
+    rejestry.put(0, 1);
+    rejestry.put(1, 0);
+    rejestry.put(2, 10551340);
+    rejestry.put(3, 10551340);
+    rejestry.put(4, 3);
+    rejestry.put(5, 10551345);
 }
 
 
@@ -227,55 +269,4 @@ private void parsingProgramArguments(String[] args, String input_file) {
         HelperMethods.getInputFileFromWWW(Integer.valueOf(this.getClass().getSimpleName().substring(3)), input_file);
 }
 
-
-class ArrayListWithHeader {
-    HashMap<Integer, ArrayList<Integer>> array = new HashMap<>();
-
-
-    void clear() {
-        array.clear();
-    }
-
-
-    void add(int header, ArrayList<Integer> body) {
-        array.put(header, body);
-    }
-
-
-    ArrayList<Integer> get(int index) {
-        return array.get(index);
-    }
-
-
-    HashMap<Integer, ArrayList<Integer>> getMap() {
-        return array;
-    }
-
-
-    int maxSizeOfEntry() {
-        ArrayList<Integer> maxAl = new ArrayList<>();
-        for (int index = 0; index < 16; index++) {
-            if (array.containsKey(index)) {
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.println("maxSize iteration " + index);
-
-                array.get(index);
-                if (!array.get(index).isEmpty()) {
-                    int alSize = array.get(index).size();
-                    Verbose.setVerboseLevelForNextPrint(3);
-                    Verbose.println("Max in row: " + alSize);
-                    maxAl.add(alSize);
-                }
-
-            }
-        }
-        int max = -1;
-        if (!maxAl.isEmpty()) max = Collections.max(maxAl);
-        else {
-            System.out.println("Contratulation. Your basket is empty.");
-        }
-        Verbose.printf("Max Size of array's entry is %d\n", max);
-        return max;
-    }
-}
 } // end of class
