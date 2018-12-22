@@ -1,6 +1,7 @@
 package ovh.robot84.advent2018;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -37,53 +38,45 @@ public static void main(String[] args) {
 }
 
 
+/*
+After:
+ 6 minute - read the story
+ 13 min - first successful compilation and class FuelCell created
+15 min - 4 tests of class completed
+25 min - class FuelCell3x3Field implemented and first test passed
+29 min - added to class FuelCell3x3Field fields x,y and method getXY()
+33 min - tested new method
+35 - Star01 accomplished with full success :))
+
+ */
 private void star1start() {
-    String line = null;
 
-    /*        Read input         */
-    while ((line = myReader.get_line()) != null) {
-        Verbose.print("Line: " + line);
-            /*while ((c = myReader.read()) != -1) {
-                Verbose.print("!" + (char) c);
-            */
+    int MAP_X = 300;
+    int MAP_Y = 300;
 
-        /*
-        Parse input
-         */
+    FuelCell cell = new FuelCell(3, 5, 8);
+    System.out.println(cell.getPwr());
+    cell = new FuelCell(122, 79, 57);
+    System.out.println(cell.getPwr());
+    cell = new FuelCell(217, 196, 39);
+    System.out.println(cell.getPwr());
+    cell = new FuelCell(101, 153, 71);
+    System.out.println(cell.getPwr());
 
-           /*
-           // look out when input has [ ] symbols. Quote them! Then in trouble start with:
-           //Pattern p = Pattern.compile("\\s*(.*)\\s*");
-           Pattern p = Pattern.compile("^#\\s*(\\d+)\\s*@\\s*(\\d+),(\\d+):\\s*(\\d+)x(\\d+)$");
-            Matcher m = p.matcher(line);
-            if (m.matches()) {
-                for (int i = 1; i <= m.groupCount(); i++) {
-                    Verbose.printf("m.group(%s): %s\n", i, m.group(i));
-                }
-            }
-            */
+    ArrayList<FuelCell3x3Field> fields = new ArrayList<FuelCell3x3Field>();
 
-
-           /*
-            Pattern pa = Pattern.compile("(\\d+)");
-            Matcher ma = pa.matcher(line);
-            System.out.println("Using Matcher.Find();");
-            while (ma.find()) {
-                Verbose.print("m.find(): " + ma.group() + " ");
-                Verbose.printf("Start index: %d, end index: %d\n", ma.start(), ma.end());
-            }
-            */
-
-            /*
-            Pattern delimeter = Pattern.compile("([#@ ,:x])+");
-            Verbose.print("Using Pattern.split(); Matches:");
-            String[] finding = delimeter.split(line);
-            for (int i = 0; i < finding.length; i++) {
-                Verbose.printf("%d:%s\n", i, finding[i]);
-            }
-            */
+    for (int y = 1; y < MAP_Y - 1; y++) {
+        for (int x = 1; x < MAP_X - 1; x++) {
+            fields.add(new FuelCell3x3Field(x, y, 8141));
+        }
     }
+    FuelCell3x3Field max = Collections.max(fields);
+    System.out.printf("Rezult: %d @(%d,%d)\n", max.getTotalPwr(), max.getXY().getKey(), max.getXY().getValue());
+
+
 }
+
+
 
 
 private void parsingProgramArguments(String[] args) {
