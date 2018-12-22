@@ -198,7 +198,7 @@ private void runEngine(ArrayList<ArrayList<Integer>> instructions) {
     ArrayList<Integer> arrayList2 = new ArrayList();
     while (ip < instructions.size()) {
         if (ip == 30) triggered = false;
-        triggered = true;
+
         instruction = instructions.get(ip);
         doAssigment(REGISTER_WHICH_STORE_IP, Long.valueOf(ip));
         if (ip == 29) {

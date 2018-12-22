@@ -1,6 +1,7 @@
 package ovh.robot84.advent2018;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -33,57 +34,104 @@ public static void main(String[] args) {
     Day11 dayStar1 = new Day11(INPUT_FILE1);
     dayStar1.parsingProgramArguments(args);
     //Verbose.mute();
-    dayStar1.star1start();
+    //dayStar1.star1start();
+    dayStar1.star2start();
 }
 
 
+/*
+After:
+ 6 minute - read the story
+ 13 min - first successful compilation and class FuelCell created
+15 min - 4 tests of class completed
+25 min - class FuelCell3x3Field implemented and first test passed
+29 min - added to class FuelCell3x3Field fields x,y and method getXY()
+33 min - tested new method
+35 - Star01 accomplished with full success :))
+
+ */
 private void star1start() {
-    String line = null;
 
-    /*        Read input         */
-    while ((line = myReader.get_line()) != null) {
-        Verbose.print("Line: " + line);
-            /*while ((c = myReader.read()) != -1) {
-                Verbose.print("!" + (char) c);
-            */
+    int MAP_X = 300;
+    int MAP_Y = 300;
 
-        /*
-        Parse input
-         */
+    FuelCell cell = new FuelCell(3, 5, 8);
+    System.out.println(cell.getPwr());
+    cell = new FuelCell(122, 79, 57);
+    System.out.println(cell.getPwr());
+    cell = new FuelCell(217, 196, 39);
+    System.out.println(cell.getPwr());
+    cell = new FuelCell(101, 153, 71);
+    System.out.println(cell.getPwr());
 
-           /*
-           // look out when input has [ ] symbols. Quote them! Then in trouble start with:
-           //Pattern p = Pattern.compile("\\s*(.*)\\s*");
-           Pattern p = Pattern.compile("^#\\s*(\\d+)\\s*@\\s*(\\d+),(\\d+):\\s*(\\d+)x(\\d+)$");
-            Matcher m = p.matcher(line);
-            if (m.matches()) {
-                for (int i = 1; i <= m.groupCount(); i++) {
-                    Verbose.printf("m.group(%s): %s\n", i, m.group(i));
+    ArrayList<FuelCell3x3Field> fields = new ArrayList<FuelCell3x3Field>();
+
+    for (int y = 1; y < MAP_Y - 1; y++) {
+        for (int x = 1; x < MAP_X - 1; x++) {
+            fields.add(new FuelCell3x3Field(x, y, 8141));
+        }
+    }
+    FuelCell3x3Field max = Collections.max(fields);
+    System.out.printf("Rezult: %d @(%d,%d)\n", max.getTotalPwr(), max.getXY().getKey(), max.getXY().getValue());
+
+
+}
+
+/*
+After:
+15min - class expanded
+25min - waiting for end of long run
+35 min - first optimalization done
+48 min - run ends little bit faster. incorrect result :(
+50 min - second optimalization done
+60 min - third optimalization - clear max list when it reach 300 elements, not (300x300x300=27*10^6)
+85 min - forth opt. Now we .set() arraylist elements, not .add() them.
+100 min (10min) - fifth opt. no arraylist for counting max. no .clone. only static methods.
+        and still slow :( about 300 seconds
+105 min - test ended with success :) so let's put real data from our puzzle and wait...
+115 min - success :) Star02 completed
+ */
+
+
+private void star2start() {
+
+    int MAP_X = 300;
+    int MAP_Y = 300;
+    int localMaxPwr3 = 0, localMaxPwrX3 = 0, localMaxPwrY3 = 0, localMaxPwrSize3 = 0;
+
+    for (int size = 1; size <= MAP_X; size++) {
+        int localMaxPwr2 = 0, localMaxPwrX2 = 0, localMaxPwrY2 = 0, localMaxPwrSize2 = 0;
+        System.out.println("Size: " + size);
+        for (int y = 1; y < MAP_Y + 1 - size; y++) {
+            int localMaxPwr1 = 0, localMaxPwrX1 = 0, localMaxPwrY1 = 0, localMaxPwrSize1 = 0;
+            for (int x = 1; x < MAP_X + 1 - size; x++) {
+                // System.out.println("fileds.size(): "+fields.size()+" ("+x+","+y+")");
+                int newFieldPwr = FuelCellField.getTotalPwr(x, y, 8141, size);
+                if (localMaxPwr1 < newFieldPwr) {
+                    localMaxPwr1 = newFieldPwr;
+                    localMaxPwrX1 = x;
+                    localMaxPwrY1 = y;
+                    localMaxPwrSize1 = size;
                 }
             }
-            */
-
-
-           /*
-            Pattern pa = Pattern.compile("(\\d+)");
-            Matcher ma = pa.matcher(line);
-            System.out.println("Using Matcher.Find();");
-            while (ma.find()) {
-                Verbose.print("m.find(): " + ma.group() + " ");
-                Verbose.printf("Start index: %d, end index: %d\n", ma.start(), ma.end());
+            if (localMaxPwr2 < localMaxPwr1) {
+                localMaxPwr2 = localMaxPwr1;
+                localMaxPwrX2 = localMaxPwrX1;
+                localMaxPwrY2 = localMaxPwrY1;
+                localMaxPwrSize2 = localMaxPwrSize1;
             }
-            */
-
-            /*
-            Pattern delimeter = Pattern.compile("([#@ ,:x])+");
-            Verbose.print("Using Pattern.split(); Matches:");
-            String[] finding = delimeter.split(line);
-            for (int i = 0; i < finding.length; i++) {
-                Verbose.printf("%d:%s\n", i, finding[i]);
-            }
-            */
+        }
+        if (localMaxPwr3 < localMaxPwr2) {
+            localMaxPwr3 = localMaxPwr2;
+            localMaxPwrX3 = localMaxPwrX2;
+            localMaxPwrY3 = localMaxPwrY2;
+            localMaxPwrSize3 = localMaxPwrSize2;
+        }
     }
+    System.out.printf("!!! Rezult: %d @(%d,%d,%d)\n", localMaxPwr3, localMaxPwrX3, localMaxPwrY3, localMaxPwrSize3);
+
 }
+
 
 
 private void parsingProgramArguments(String[] args) {
