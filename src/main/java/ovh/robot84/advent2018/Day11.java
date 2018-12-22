@@ -34,7 +34,8 @@ public static void main(String[] args) {
     Day11 dayStar1 = new Day11(INPUT_FILE1);
     dayStar1.parsingProgramArguments(args);
     //Verbose.mute();
-    dayStar1.star1start();
+    //dayStar1.star1start();
+    dayStar1.star2start();
 }
 
 
@@ -76,6 +77,60 @@ private void star1start() {
 
 }
 
+/*
+After:
+15min - class expanded
+25min - waiting for end of long run
+35 min - first optimalization done
+48 min - run ends little bit faster. incorrect result :(
+50 min - second optimalization done
+60 min - third optimalization - clear max list when it reach 300 elements, not (300x300x300=27*10^6)
+85 min - forth opt. Now we .set() arraylist elements, not .add() them.
+100 min (10min) - fifth opt. no arraylist for counting max. no .clone. only static methods.
+        and still slow :( about 300 seconds
+105 min - test ended with success :) so let's put real data from our puzzle and wait...
+115 min - success :) Star02 completed
+ */
+
+
+private void star2start() {
+
+    int MAP_X = 300;
+    int MAP_Y = 300;
+    int localMaxPwr3 = 0, localMaxPwrX3 = 0, localMaxPwrY3 = 0, localMaxPwrSize3 = 0;
+
+    for (int size = 1; size <= MAP_X; size++) {
+        int localMaxPwr2 = 0, localMaxPwrX2 = 0, localMaxPwrY2 = 0, localMaxPwrSize2 = 0;
+        System.out.println("Size: " + size);
+        for (int y = 1; y < MAP_Y + 1 - size; y++) {
+            int localMaxPwr1 = 0, localMaxPwrX1 = 0, localMaxPwrY1 = 0, localMaxPwrSize1 = 0;
+            for (int x = 1; x < MAP_X + 1 - size; x++) {
+                // System.out.println("fileds.size(): "+fields.size()+" ("+x+","+y+")");
+                int newFieldPwr = FuelCellField.getTotalPwr(x, y, 8141, size);
+                if (localMaxPwr1 < newFieldPwr) {
+                    localMaxPwr1 = newFieldPwr;
+                    localMaxPwrX1 = x;
+                    localMaxPwrY1 = y;
+                    localMaxPwrSize1 = size;
+                }
+            }
+            if (localMaxPwr2 < localMaxPwr1) {
+                localMaxPwr2 = localMaxPwr1;
+                localMaxPwrX2 = localMaxPwrX1;
+                localMaxPwrY2 = localMaxPwrY1;
+                localMaxPwrSize2 = localMaxPwrSize1;
+            }
+        }
+        if (localMaxPwr3 < localMaxPwr2) {
+            localMaxPwr3 = localMaxPwr2;
+            localMaxPwrX3 = localMaxPwrX2;
+            localMaxPwrY3 = localMaxPwrY2;
+            localMaxPwrSize3 = localMaxPwrSize2;
+        }
+    }
+    System.out.printf("!!! Rezult: %d @(%d,%d,%d)\n", localMaxPwr3, localMaxPwrX3, localMaxPwrY3, localMaxPwrSize3);
+
+}
 
 
 
