@@ -14,7 +14,7 @@ private static final Integer REGISTER_WHICH_STORE_IP = 4;
 //private static final int DIVIDER = 9_000_000;
 private static final int DIVIDER = 1;
 // TODO refactor in OOP style: Register rejestry, InstructionHelper.ConvertOpToMnemonic()
-HashMap<Integer, Integer> rejestry = new HashMap<Integer, Integer>();
+HashMap<Integer, Long> rejestry = new HashMap<>();
 HashBiMap<String, Integer> opMap = HashBiMap.create();
 private Integer numberToRemove;
 
@@ -79,11 +79,11 @@ void mnemonicToOpCodeTableInit(HashBiMap<String, Integer> opMap) {
 
 int threeArgOperation(int op, int arg1, int arg2, int arg3) {
 
-    int imm1 = arg1;
-    int imm2 = arg2;
-    int rr1 = 0;
+    Long imm1 = Long.valueOf(arg1);
+    Long imm2 = Long.valueOf(arg2);
+    Long rr1 = 0L;
     if (arg1 >= 0 && arg1 < rejestry.size()) rr1 = rejestry.get(arg1);
-    int rr2 = 0;
+    Long rr2 = 0L;
     if (arg2 >= 0 && arg2 < rejestry.size()) rr2 = rejestry.get(arg2);
 //if(op==14) System.out.printf("muli: %d [%x] * %d [%x] = %d [%x]\n",rr1,rr1,imm2,imm2,rr1*imm2,((long)rr1)*imm2);
 
@@ -119,22 +119,22 @@ int threeArgOperation(int op, int arg1, int arg2, int arg3) {
             doAssigment(arg3, imm1);
             break;
         case 6:
-            doAssigment(arg3, imm1 > rr2 ? 1 : 0);
+            doAssigment(arg3, (long) (imm1 > rr2 ? 1 : 0));
             break;
         case 12:
-            doAssigment(arg3, rr1 > imm2 ? 1 : 0);
+            doAssigment(arg3, (long) (rr1 > imm2 ? 1 : 0));
             break;
         case 4:
-            doAssigment(arg3, rr1 > rr2 ? 1 : 0);
+            doAssigment(arg3, (long) (rr1 > rr2 ? 1 : 0));
             break;
         case 10:
-            doAssigment(arg3, imm1 == rr2 ? 1 : 0);
+            doAssigment(arg3, (long) (imm1 == rr2 ? 1 : 0));
             break;
         case 2:
-            doAssigment(arg3, rr1 == imm2 ? 1 : 0);
+            doAssigment(arg3, (long) (rr1 == imm2 ? 1 : 0));
             break;
         case 11:
-            doAssigment(arg3, rr1 == rr2 ? 1 : 0);
+            doAssigment(arg3, (long) (rr1 == rr2 ? 1 : 0));
             break;
         default:
             break;
@@ -143,7 +143,7 @@ int threeArgOperation(int op, int arg1, int arg2, int arg3) {
 }
 
 
-void doAssigment(int register, int value) {
+void doAssigment(int register, Long value) {
     rejestry.put(register, value);
 }
 
@@ -187,7 +187,7 @@ private void runEngine(ArrayList<ArrayList<Integer>> instructions) {
     int ipForStar2 = 0;
     //ip = ipForStar2;
     int count = 0;
-    int r2 = 0;
+    Long r2 = 0L;
     int min = Integer.MAX_VALUE;
     int max = 0;
     boolean triggered = false;
@@ -200,17 +200,17 @@ private void runEngine(ArrayList<ArrayList<Integer>> instructions) {
         if (ip == 30) triggered = false;
         triggered = true;
         instruction = instructions.get(ip);
-        doAssigment(REGISTER_WHICH_STORE_IP, ip);
+        doAssigment(REGISTER_WHICH_STORE_IP, Long.valueOf(ip));
         if (ip == 29) {
             triggered = true;
             newMin = false;
             newMax = false;
             if (rejestry.get(3) < min) {
-                min = rejestry.get(3);
+                min = Math.toIntExact(rejestry.get(3));
                 newMin = true;
             }
             if (rejestry.get(3) > max) {
-                max = rejestry.get(3);
+                max = Math.toIntExact(rejestry.get(3));
                 newMax = true;
             }
         }
@@ -222,7 +222,7 @@ private void runEngine(ArrayList<ArrayList<Integer>> instructions) {
         }
         r2 = rejestry.get(2);
         runInstruction(instruction);
-        ip = rejestry.get(REGISTER_WHICH_STORE_IP);
+        ip = Math.toIntExact(rejestry.get(REGISTER_WHICH_STORE_IP));
         ip++;
         if (f2.apply(count, triggered))
             Verbose.printf(" %s\n", rejestry.toString());
@@ -266,26 +266,27 @@ private void convertInputDataToMemoryDataStructures(String line, ArrayList<Integ
 
 private void initRegistersWithZerosForStar1() {
     //0=1, 1=1, 2=59, 3=16433800, 4=6, 5=0
-    rejestry.put(0, 1);
-    rejestry.put(1, 1);
-    rejestry.put(2, 59);
-    rejestry.put(3, 16433800);
-    rejestry.put(4, 6);
-    rejestry.put(5, 0);
+    rejestry.put(0, (long) 1);
+    rejestry.put(1, (long) 1);
+    rejestry.put(2, (long) 59);
+    rejestry.put(3, (long) 16433800);
+    rejestry.put(4, (long) 6);
+    rejestry.put(5, (long) 0);
 }
 
 
 private void initRegistersWithZeros() {
 
-    rejestry.put(0, 0);
-    rejestry.put(1, 0);
-    rejestry.put(2, 0);
-    rejestry.put(3, 0);
-    rejestry.put(4, 0);
-    rejestry.put(5, 0);
+    rejestry.put(0, (long) 0);
+    rejestry.put(1, (long) 0);
+    rejestry.put(2, (long) 0);
+    rejestry.put(3, (long) 0);
+    rejestry.put(4, (long) 0);
+    rejestry.put(5, (long) 0);
 }
 
 
+/*
 private void initRegistersWithZerosForStart2a() {
     rejestry.put(0, 1);
     rejestry.put(1, 0);
@@ -294,6 +295,7 @@ private void initRegistersWithZerosForStart2a() {
     rejestry.put(4, 3);
     rejestry.put(5, 10551345);
 }
+*/
 
 
 private void parsingProgramArguments(String[] args, String input_file) {
