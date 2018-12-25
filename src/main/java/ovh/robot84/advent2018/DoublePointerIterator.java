@@ -4,36 +4,36 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.function.Consumer;
 
-public class DoublePointerIterator implements ListIterator<Long> {
+public class DoublePointerIterator<E> implements ListIterator<E> {
 protected transient int modCount = 0;
-LinkedList<Long> list;
-transient Node<Long> first;
-transient Node<Long> last;
-private DoublePointerIterator.Node<Long> lastReturned;
-private DoublePointerIterator.Node<Long> next;
+LinkedList<E> list;
+transient Node<E> first;
+transient Node<E> last;
+private DoublePointerIterator.Node<E> lastReturned;
+private DoublePointerIterator.Node<E> next;
 private int nextIndex;
 private int expectedModCount = modCount;
 
 
-DoublePointerIterator(ListIterator<Long> listIterator, int index) {
+DoublePointerIterator(ListIterator<E> listIterator, int index) {
 //    this.list=list;
-    this.first = list;
+    //  this.first = list;
     // assert isPositionIndex(index);
     next = (index == list.size()) ? null : node(index);
     nextIndex = index;
 }
 
 
-Node<Long> node(int index) {
+Node<E> node(int index) {
     // assert isElementIndex(index);
     int size = list.size();
     if (index < (size >> 1)) {
-        Node<Long> x = first;
+        Node<E> x = first;
         for (int i = 0; i < index; i++)
             x = x.next;
         return x;
     } else {
-        Node<Long> x = last;
+        Node<E> x = last;
         for (int i = size - 1; i > index; i--)
             x = x.prev;
         return x;
@@ -48,7 +48,7 @@ public boolean hasNext() {
 
 
 @Override
-public Long next() {
+public E next() {
     return null;
 }
 
@@ -60,7 +60,7 @@ public boolean hasPrevious() {
 
 
 @Override
-public Long previous() {
+public E previous() {
     return null;
 }
 
@@ -84,24 +84,24 @@ public void remove() {
 
 
 @Override
-public void set(Long e) {
+public void set(E e) {
 
 }
 
 
 @Override
-public void add(Long e) {
+public void add(E e) {
 
 }
 
 
-private static class Node<Long> {
-    Long item;
-    DoublePointerIterator.Node<Long> next;
-    DoublePointerIterator.Node<Long> prev;
+private static class Node<E> {
+    E item;
+    DoublePointerIterator.Node<E> next;
+    DoublePointerIterator.Node<E> prev;
 
 
-    Node(DoublePointerIterator.Node<Long> prev, Long element, DoublePointerIterator.Node<Long> next) {
+    Node(DoublePointerIterator.Node<E> prev, E element, DoublePointerIterator.Node<E> next) {
         this.item = element;
         this.next = next;
         this.prev = prev;
