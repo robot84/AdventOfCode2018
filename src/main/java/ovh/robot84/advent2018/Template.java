@@ -2,6 +2,7 @@ package ovh.robot84.advent2018;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,11 +13,15 @@ import java.util.regex.Pattern;
  *
  * @author Robert Ząbkiewicz
  * @version 0.1.0
- * @since 2018-12-01
+ * @since 2018-12-24
  *
  * If you don't have or don't want to use Verbose class, you can
  * change all Verbose.printf() to System.out.printf()
  * and delete calls to other Verbose methods.
+ *
+ * WARNING:
+ * To compile this class:
+ * Please change MyClass to any class you want to us.
  */
 
 public class Template {
@@ -27,6 +32,7 @@ private final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\Adve
         "src\\main\\resources\\day08input2.txt";
 private final static int ARRAY_MAX_X = 2_000;
 private final static int ARRAY_MAX_Y = 2_000;
+List<MyClass> points4D = new ArrayList<MyClass>();
 private HashMap<Character, Integer> hm1 = new HashMap();
 private ArrayList<String> strings = new ArrayList<>();
 private ArrayList<Integer> integers = new ArrayList<Integer>();
@@ -64,12 +70,22 @@ private void star1start() {
          /*  // look out when input has [ ] symbols. Quote them! Then in trouble start with:
            //Pattern p = Pattern.compile("\\s*(.*)\\s*");
            Pattern p = Pattern.compile("^#\\s*(\\d+)\\s*@\\s*(\\d+),(\\d+):\\s*(\\d+)x(\\d+)$");
+            MyClass objectOfMyClass;
+        List<Integer> fieldOfObjectOfMyClass=new ArrayList<>();
+        Pattern p = Pattern.compile("(-?\\d+)\\s*\\p{Punct}(-?\\d+)\\p{Punct}(-?\\d+)\\s*\\p{Punct}(-?\\d+)");
             Matcher m = p.matcher(line);
             if (m.matches()) {
-            Verbose.println();
+            Verbose.print("Matched ");
                 for (int i = 1; i <= m.groupCount(); i++) {
-                    Verbose.printf("m.group(%s): %s\n", i, m.group(i));
+                    Verbose.printf("m.group(%s): \"%s\" \t", i, m.group(i));
+                    fieldOfObjectOfMyClass.add(Integer.valueOf(m.group(i)));
                 }
+                Verbose.println("");
+                objectOfMyClass=new objectOfMyClass(fieldOfObjectOfMyClass);
+                listOfObjectsOfMyClass.add(objectOfMyClass);
+            }
+    for(MyClass objectOfMyClass:listOfObjectsOfMyClass) Verbose.printf("::: %d %d %d %d\n",objectOfMyClass.getX(),objectOfMyClass.getY(),objectOfMyClass.getZ(),objectOfMyClass.getT());
+    for(MyClass objectOfMyClass:listOfObjectsOfMyClass) Verbose.printf("::: %s\n",objectOfMyClass.toString());
             }*/
 
 
