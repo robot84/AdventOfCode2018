@@ -52,7 +52,7 @@ private void star1start() {
 
     /*        Read input         */
     while ((line = myReader.get_line()) != null) {
-        Verbose.print("Line: " + line);
+        Verbose.println("Line: " + line);
             /*while ((c = myReader.read()) != -1) {
                 Verbose.print("!" + (char) c);
             */
