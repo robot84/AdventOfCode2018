@@ -1,9 +1,16 @@
 package ovh.robot84.advent2018;
 
+import ovh.robot84.advent2018.helpers.MeasureTape;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.Function;
+import java.util.function.IntConsumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
+
+
 
 /**
  * This class implements an application that
@@ -12,7 +19,7 @@ import java.util.regex.Pattern;
  *
  * @author Robert Ząbkiewicz
  * @version 0.1.0
- * @since 2018-12-01
+ * @since 2018-12-24
  * <p>
  * If you don't have or don't want to use Verbose class, you can
  * change all Verbose.printf() to System.out.printf()
@@ -48,7 +55,7 @@ public static void main(String[] args) {
 //...## => #
 private void star1start() {
     Verbose.disablePrompts();
-    StringBuffer field[] = new StringBuffer[1350];
+    StringBuffer field[] = new StringBuffer[1000];
     //field[0] = new StringBuffer("#..#.#..##......###...###");
     // field[0] = new StringBuffer("#...#..##.......####.#..###..#.##..########.#.#...#.#...###.#..###.###.#.#..#...#.#..##..#######.##");
     //int fieldSize=(field[0]).toString().length();
@@ -57,8 +64,10 @@ private void star1start() {
     ArrayList<String> rules = new ArrayList<>();
     ArrayList<Boolean> isPlant = new ArrayList<Boolean>();
     int shiftSize = 10;
+    int lenOfHeader = "gen: 001  ".length();
     int fieldExpansionLeft = 0;
     int fieldExpansionRight = 0;
+    int lastGeneration = 0;
     String line = null;
     field[0] = new StringBuffer(myReader.get_line());
     fieldSize = field[0].length();
@@ -82,7 +91,8 @@ private void star1start() {
         }
     }
     boolean hit = false;
-    measureTape(shiftSize);
+
+    MeasureTape.measureTapeType1(shiftSize + lenOfHeader, 160);
     Verbose.printf("FiledSize: %d\n", fieldSize);
 
     for (int shift = 0; shift < shiftSize; shift++) field[0].insert(0, ".");
@@ -90,9 +100,9 @@ private void star1start() {
     for (int shift = 0; shift < shiftSize; shift++) field[0].append(".");
     //for (int shift = 0; shift < shiftSize; shift++) isPlant.add(0,false);
 
-
-    for (int gen = 0; gen < 21; gen++) {
-        Verbose.printf("gen: %2d  %s\n", gen, field[gen].toString());
+    Stream a;
+    for (int gen = 0; gen <= lastGeneration; gen++) {
+        Verbose.printf("gen: %3d  %s\n", gen, field[gen].toString());
         StringBuffer nextGenField = new StringBuffer("");
         for (int shift = 0; shift < 2; shift++) nextGenField.append(".");
 
@@ -126,36 +136,33 @@ private void star1start() {
         field[gen + 1] = nextGenField;
         //Verbose.printf("nextGen: %s\n",field[gen+1]);
     }
-    measureTape(shiftSize);
+    MeasureTape.measureTapeType1(shiftSize + lenOfHeader, 160);
+
+    //result
     int sum = 0;
-    Verbose.printf("%s\n", field[20].toString());
+
+    Verbose.printf("Plants on positions: ");
     for (int index = 2; index < fieldSize + shiftSize + fieldExpansionRight + fieldExpansionLeft; index++) {
-        if (field[20].charAt(index) == '#') {
+        if (field[lastGeneration].charAt(index) == '#') {
 
             int position = (-fieldExpansionLeft + index - shiftSize);
             sum += (position);
             Verbose.printf("%d ", position);
+
         }
     }
-    System.out.println("Result: " + sum);
 
-}
-
-
-private void measureTape(int shiftSize) {
-    for (int shift = 0; shift < shiftSize + 9; shift++) Verbose.printf(" ");
-    //Verbose.printf("0         1");
-    for (int x = 0; x < 6; x++) {
-        Verbose.printf("%d", x);
-        for (int digit = 0; digit < 9; digit++) Verbose.printf(" ");
+    int numOfPlants = 0;
+    for (int index = 0; index < field[lastGeneration].length(); index++) {
+        if (field[lastGeneration].charAt(index) == '#') numOfPlants++;
     }
-    Verbose.printf("\n");
-    for (int shift = 0; shift < shiftSize + 9; shift++) Verbose.printf(" ");
-    for (int x = 0; x < 6; x++) {
-        Verbose.printf("0", x);
-        for (int digit = 0; digit < 9; digit++) Verbose.printf(" ");
-    }
-    Verbose.printf("\n");
+
+    System.out.println();
+    Verbose.printf("Num of plants: %d\n", numOfPlants);
+    System.out.println("Result for star01: " + sum);
+    Long result = 7025L + (91L * (50000000000L - 100L + 46L));
+    System.out.println("Result of star02: " + result);
+
 }
 
 
