@@ -54,7 +54,7 @@ private Day07star2(String input_file) {
 
 public static void main(String[] args) {
     Day07star2 dayStar1 = new Day07star2(INPUT_FILE2);
-    dayStar1.parsingProgramArguments(args);
+    HelperMethods.parsingProgramArguments(args);
     Verbose.mute();
     dayStar1.run();
 }
@@ -334,16 +334,6 @@ private void readInput() {
     Verbose.println("Counting num of lines in input file...");
     inSize = a;
     Verbose.println("Size of input array " + inSize + ". Number of input lines " + a + ".");
-}
-
-
-private void parsingProgramArguments(String[] args) {
-    System.out.println("Program ARGS num:" + args.length);
-    if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
-    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
-    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
-    if (args.length > 0 && args[0].equals("--create-input-file"))
-        HelperMethods.getInputFileFromWWW(Integer.valueOf(this.getClass().getSimpleName().substring(3)), INPUT_FILE1);
 }
 
 

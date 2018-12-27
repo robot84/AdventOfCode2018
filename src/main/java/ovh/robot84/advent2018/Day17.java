@@ -280,14 +280,7 @@ private void readInput(ArrayList<Clay> clays) {
 }
 
 
-private void parsingProgramArguments(String[] args) {
-    System.out.println("Program ARGS num:" + args.length + " ARGS:" + args);
-    if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
-    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
-    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
-    if (args.length > 0 && args[0].equals("--create-input-file"))
-        HelperMethods.getInputFileFromWWW(Integer.valueOf(this.getClass().getSimpleName().substring(3)), INPUT_FILE1);
-}
+
 
 
 class ClayCoordYComparator implements Comparator<Clay> {
@@ -431,7 +424,8 @@ class ThreePointsCoordinates {
 
 public static void main(String[] args) {
     Day17 dayStar1 = new Day17(INPUT_FILE1);
-    dayStar1.parsingProgramArguments(args);
+    HelperMethods.parsingProgramArguments(args, "dupa.txt", dayStar1);
+    HelperMethods.parsingProgramArguments(args);
     //Verbose.mute();
     Verbose.disablePrompts();
     dayStar1.star1start();

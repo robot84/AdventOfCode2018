@@ -21,7 +21,7 @@ public static void main(String[] args) {
     Day16 day = new Day16();
     //Verbose.mute();
     Verbose.disablePrompts();
-    day.parsingProgramArguments(args, INPUT_FILE1);
+    HelperMethods.parsingProgramArguments(args, INPUT_FILE1, day);
 
     //day.startStar01(INPUT_FILE1);
     //day.test();
@@ -348,14 +348,6 @@ void startStar01(String input_file) {
         Verbose.println("number of iterations: " + iterations);
         System.out.println("Rezult is: " + winningSamples);
     }
-}
-private void parsingProgramArguments(String[] args, String input_file) {
-    System.out.println("Program ARGS num:" + args.length + " ARGS:" + args);
-    if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
-    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
-    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
-    if (args.length > 0 && args[0].equals("--create-input-file"))
-        HelperMethods.getInputFileFromWWW(Integer.valueOf(this.getClass().getSimpleName().substring(3)), input_file);
 }
 
 

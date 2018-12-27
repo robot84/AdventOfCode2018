@@ -1,17 +1,11 @@
 package ovh.robot84.advent2018;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 /**
  * This class implements an application that
@@ -30,7 +24,6 @@ import java.util.stream.Stream;
 public class Day25 {
 final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
         "src\\main\\resources\\day25input2.txt";
-final static int ARRAY_MAX_X = 2_000;
 final static int ARRAY_MAX_Y = 2_000;
 private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
         "src\\main\\resources\\day25input2.txt";
@@ -46,7 +39,7 @@ private Day25(String input_file) {
 
 public static void main(String[] args) {
     Day25 dayStar1 = new Day25(INPUT_FILE1);
-    dayStar1.parsingProgramArguments(args);
+    HelperMethods.parsingProgramArguments(args);
     //Verbose.mute();
     try {
         dayStar1.star1start();
@@ -71,7 +64,7 @@ private void star1start() throws IOException {
 
     /*        Read input         */
     //
-    List<Point4D> points4D = new ArrayList<Point4D>();
+    List<Point4D> points4D = new ArrayList<>();
     int numOfConstelations = 0;
     int nuOfPoints = 0;
     while ((line = myReader.get_line()) != null) {
@@ -156,22 +149,14 @@ private void star1start() throws IOException {
 }
 
 
-private void parsingProgramArguments(String[] args) {
-    System.out.println("Program ARGS num:" + args.length + " ARGS:" + args);
-    if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
-    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
-    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
-    if (args.length > 0 && args[0].equals("--create-input-file"))
-        HelperMethods.getInputFileFromWWW(Integer.valueOf(this.getClass().getSimpleName().substring(3)), INPUT_FILE1);
-}
 
 
 }
 
 class Point4D {
-List<Integer> coordinates;
-boolean isInConstelation;
-int id;
+private List<Integer> coordinates;
+private boolean isInConstelation;
+private int id;
 
 
 public Point4D(List<Integer> coordinates, int id) {
@@ -219,8 +204,7 @@ public int getT() {
 
 @Override
 public String toString() {
-    String string = String.format("[ID:%d](%d,%d,%d,%d)", getID(), getX(), getY(), getZ(), getT());
-    return string;
+    return String.format("[ID:%d](%d,%d,%d,%d)", getID(), getX(), getY(), getZ(), getT());
 }
 
 

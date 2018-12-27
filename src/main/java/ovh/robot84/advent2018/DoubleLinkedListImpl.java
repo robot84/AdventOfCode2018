@@ -2,6 +2,7 @@ package ovh.robot84.advent2018;
 
 import java.util.NoSuchElementException;
 
+@SuppressWarnings({"ALL", "Duplicates"})
 public class DoubleLinkedListImpl<E> {
 
 private Node head;
@@ -72,6 +73,7 @@ public void addFirst(E element) {
  *
  * @param element
  */
+@SuppressWarnings("Duplicates")
 public void addLast(E element) {
 
     Node tmp = new Node(element, null, tail);

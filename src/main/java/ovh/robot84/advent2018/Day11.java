@@ -32,7 +32,7 @@ private Day11(String input_file) {
 
 public static void main(String[] args) {
     Day11 dayStar1 = new Day11(INPUT_FILE1);
-    dayStar1.parsingProgramArguments(args);
+    HelperMethods.parsingProgramArguments(args);
     //Verbose.mute();
     //dayStar1.star1start();
     dayStar1.star2start();
@@ -132,15 +132,5 @@ private void star2start() {
 
 }
 
-
-
-private void parsingProgramArguments(String[] args) {
-    System.out.println("Program ARGS num:" + args.length + " ARGS:" + args);
-    if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
-    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
-    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
-    if (args.length > 0 && args[0].equals("--create-input-file"))
-        HelperMethods.getInputFileFromWWW(Integer.valueOf(this.getClass().getSimpleName().substring(3)), INPUT_FILE1);
-}
 
 }

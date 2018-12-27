@@ -27,7 +27,7 @@ public static void main(String[] args) {
     Day21 day = new Day21();
     //Verbose.mute();
     Verbose.disablePrompts();
-    day.parsingProgramArguments(args, INPUT_FILE1);
+    HelperMethods.parsingProgramArguments(args, INPUT_FILE1, day);
 
     day.startStar001(INPUT_FILE1);
 }
@@ -297,14 +297,5 @@ private void initRegistersWithZerosForStart2a() {
 }
 */
 
-
-private void parsingProgramArguments(String[] args, String input_file) {
-    System.out.println("Program ARGS num:" + args.length + " ARGS:" + args);
-    if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
-    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
-    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
-    if (args.length > 0 && args[0].equals("--create-input-file"))
-        HelperMethods.getInputFileFromWWW(Integer.valueOf(this.getClass().getSimpleName().substring(3)), input_file);
-}
 
 } // end of class
