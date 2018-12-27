@@ -3,8 +3,9 @@
   <component name="CompilerConfiguration">
     <option name="BUILD_PROCESS_HEAP_SIZE" value="800" />
     <excludeFromCompile>
-      <file url="file://$PROJECT_DIR$/src/main/java/ovh/robot84/advent2018/DoublePointerInerator.java" />
+      <file url="file://$PROJECT_DIR$/src/main/java/ovh/robot84/advent2018/DoublePointerIterator.java" />
       <file url="file://$PROJECT_DIR$/src/main/java/ovh/robot84/advent2018/DoubleLinkedListImpl.java" />
+      <file url="file://$PROJECT_DIR$/src/main/java/ovh/robot84/advent2018/Template.java" />
     </excludeFromCompile>
     <wildcardResourcePatterns>
       <entry name="!?*.java" />
