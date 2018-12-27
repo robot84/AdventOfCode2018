@@ -3,11 +3,10 @@ package ovh.robot84.advent2018;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
 
 public class MapWriter {
-BufferedWriter fileWriter;
-String mapFilePath;
+private BufferedWriter fileWriter;
+private String mapFilePath;
 
 
 MapWriter(String path) {
@@ -20,7 +19,7 @@ void openMap() {
 }
 
 
-void openMap(String mapFilePath) {
+public void openMap(String mapFilePath) {
     this.mapFilePath = mapFilePath;
     fileWriter = null;
     try {
@@ -74,99 +73,11 @@ void writeMap(Boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
 
 
 void writeMap(Boolean[][] mapa, String mapHeaderText) {
-    int mapXsize = mapa[0].length, mapYsize = mapa.length;
-    try {
-        fileWriter.write("\n" + mapHeaderText + "\n");
-    } catch (IOException e) {
-        System.out.println("Exception: Cannot write to printableMap file " + this.mapFilePath);
-        e.printStackTrace();
-    }
-    for (int y = 0; y < mapYsize; y++) {
-        for (int x = 0; x < mapXsize; x++) {
-            try {
-                if (!mapa[y][x])
-                    fileWriter.write(('.'));
-                else {
-                    fileWriter.write(('X'));
-                }
-            } catch (IOException e) {
-                System.out.println("Exception: Cannot write value '" +
-                        mapa[y][x] + "' to printableMap file " + this.mapFilePath);
-                e.printStackTrace();
-            }
-        }
-        try {
-            fileWriter.write("\n");
-        } catch (IOException e) {
-            System.out.println("Exception: Cannot write new line character to printableMap file " + this.mapFilePath);
-            e.printStackTrace();
-        }
-    }
+    final int mapXsize = mapa[0].length, mapYsize = mapa.length;
+    writeMap(mapa, mapXsize, mapYsize, mapHeaderText);
 }
 
 
-@Deprecated
-void writeMap(boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText) {
-    try {
-        fileWriter.write("\n" + mapHeaderText + "\n");
-    } catch (IOException e) {
-        System.out.println("Exception: Cannot write to printableMap file " + this.mapFilePath);
-        e.printStackTrace();
-    }
-    for (int y = 0; y < mapYsize; y++) {
-        for (int x = 0; x < mapXsize; x++) {
-            try {
-                if (!mapa[y][x])
-                    fileWriter.write(('.'));
-                else {
-                    fileWriter.write(('X'));
-                }
-            } catch (IOException e) {
-                System.out.println("Exception: Cannot write value '" +
-                        mapa[y][x] + "' to printableMap file " + this.mapFilePath);
-                e.printStackTrace();
-            }
-        }
-        try {
-            fileWriter.write("\n");
-        } catch (IOException e) {
-            System.out.println("Exception: Cannot write new line character to printableMap file " + this.mapFilePath);
-            e.printStackTrace();
-        }
-    }
-}
-
-
-void writeMap(boolean[][] mapa, String mapHeaderText) {
-    int mapXsize = mapa[0].length, mapYsize = mapa.length;
-    try {
-        fileWriter.write("\n" + mapHeaderText + "\n");
-    } catch (IOException e) {
-        System.out.println("Exception: Cannot write to printableMap file " + this.mapFilePath);
-        e.printStackTrace();
-    }
-    for (int y = 0; y < mapYsize; y++) {
-        for (int x = 0; x < mapXsize; x++) {
-            try {
-                if (!mapa[y][x])
-                    fileWriter.write(('.'));
-                else {
-                    fileWriter.write(('X'));
-                }
-            } catch (IOException e) {
-                System.out.println("Exception: Cannot write value '" +
-                        mapa[y][x] + "' to printableMap file " + this.mapFilePath);
-                e.printStackTrace();
-            }
-        }
-        try {
-            fileWriter.write("\n");
-        } catch (IOException e) {
-            System.out.println("Exception: Cannot write new line character to printableMap file " + this.mapFilePath);
-            e.printStackTrace();
-        }
-    }
-}
 
 
 @Deprecated
@@ -199,37 +110,15 @@ void writeMap(Integer[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
 
 void writeMap(Integer[][] mapa, String mapHeaderText) {
     int mapXsize = mapa[0].length, mapYsize = mapa.length;
-    try {
-        fileWriter.write("\n" + mapHeaderText + "\n");
-    } catch (IOException e) {
-        System.out.println("Exception: Cannot write to printableMap file " + this.mapFilePath);
-        e.printStackTrace();
-    }
-    for (int y = 0; y < mapXsize; y++) {
-        for (int x = 0; x < mapYsize; x++) {
-            try {
-                fileWriter.write((mapa[y][x] + '.'));
-            } catch (IOException e) {
-                System.out.println("Exception: Cannot write value '" +
-                        mapa[y][x] + "' to printableMap file " + this.mapFilePath);
-                e.printStackTrace();
-            }
-        }
-        try {
-            fileWriter.write("\n");
-        } catch (IOException e) {
-            System.out.println("Exception: Cannot write new line character to printableMap file " + this.mapFilePath);
-            e.printStackTrace();
-        }
-    }
+    writeMap(mapa, mapXsize, mapYsize, mapHeaderText);
 }
 
 
 boolean[][] shrinkTwice(boolean[][] map, int threshold) {
     final int SHRINK_FACTOR = 2;
-    int density = 0;
-    int xSize = map[0].length;
-    int ySize = map.length;
+    int density;
+    final int xSize = map[0].length;
+    final int ySize = map.length;
     boolean[][] shrinkedMap = new boolean[ySize / SHRINK_FACTOR][xSize / SHRINK_FACTOR];
     System.out.printf("Input printableMap xSize %d, ySize %d\n", xSize, ySize);
     System.out.printf("Shrinked printableMap xSize %d, ySize %d\n", xSize / 2, ySize / 2);
@@ -243,8 +132,7 @@ boolean[][] shrinkTwice(boolean[][] map, int threshold) {
             if (map[y * 2 + 1][x * 2]) density++;
             if (map[y * 2][x * 2 + 1]) density++;
             if (map[y * 2 + 1][x * 2 + 1]) density++;
-            if (density >= threshold) shrinkedMap[y][x] = true;
-            else shrinkedMap[y][x] = false;
+            shrinkedMap[y][x] = density >= threshold;
         }
     }
     return shrinkedMap;
