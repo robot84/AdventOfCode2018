@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  *
  * @author Robert Ząbkiewicz
  * @version 0.1.0
- * @since 2018-12-01
+ * @since 2018-12-21
  */
 public class Day17 {
 final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
@@ -49,13 +49,7 @@ private Day17(String input_file) {
 }
 
 
-public static void main(String[] args) {
-    Day17 dayStar1 = new Day17(INPUT_FILE1);
-    dayStar1.parsingProgramArguments(args);
-    //Verbose.mute();
-    Verbose.disablePrompts();
-    dayStar1.star1start();
-}
+
 
 
 private void star1start() {
@@ -434,4 +428,12 @@ class ThreePointsCoordinates {
     }
 }
 
+
+public static void main(String[] args) {
+    Day17 dayStar1 = new Day17(INPUT_FILE1);
+    dayStar1.parsingProgramArguments(args);
+    //Verbose.mute();
+    Verbose.disablePrompts();
+    dayStar1.star1start();
+}
 }
