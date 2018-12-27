@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class Day02NewCode {
+public class Day02 {
 final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\src\\main\\resources\\day02input1.txt";
 final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\src\\main\\resources\\day02input2.txt";
 
@@ -18,16 +18,16 @@ int hits2 = 0;
 int hits3 = 0;
 
 
-Day02NewCode(String input_file) {
+Day02(String input_file) {
     myReader.open_file(input_file);
 }
 
 
 public static void main(String[] args) {
-    Day02NewCode day03Star1 = new Day02NewCode(INPUT_FILE1);
+    Day02 day03Star1 = new Day02(INPUT_FILE1);
     //Day02NewCode day03Star2=new Day02NewCode(INPUT_FILE2);
     day03Star1.star1start();
-    //day03Star2.star2start();
+    day03Star1.star2start();
 
 }
 
@@ -44,32 +44,15 @@ void initializeCollection(Collection collection, int collectionSize) {
 }
 
 
-void initializeCharKeyHashMap(HashMap hashMap, int initializer) {
-    final int charactersInAlphabet = 26;
-    final char firstLetterInAlphabet = 'a';
 
-    for (int i = 0; i < charactersInAlphabet; i++) {
-        hashMap.put((char) (firstLetterInAlphabet + i), initializer);
-        System.out.print(hashMap.get((char) (firstLetterInAlphabet + i)));
-    }
-}
-
-
-void printCharKeyHashMap(HashMap hashMap) {
-    final int charactersInAlphabet = 26;
-    final char firstLetterInAlphabet = 'a';
-    for (int i = 0; i < charactersInAlphabet; i++) {
-        System.out.print(hashMap.get((char) (firstLetterInAlphabet + i)));
-    }
-}
 
 
 void doForEachLineOfInput() {
     while ((s = myReader.read_string(" ")) != null) {
-        initializeCharKeyHashMap(hm1, 0);
+        HelperMethods.initializeCharKeyHashMap(hm1, 0);
         System.out.println("Input string: " + s);
         forEachCharOfString(s);
-        printCharKeyHashMap(hm1);
+        HelperMethods.printCharKeyHashMap(hm1);
         if (hm1.containsValue(2)) hits2++;
         if (hm1.containsValue(3)) hits3++;
     }

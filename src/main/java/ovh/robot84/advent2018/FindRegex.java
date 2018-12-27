@@ -34,7 +34,7 @@ static String[] findRegex(String regex, String parsedLine) {
  * @param line - String when we search for numbers
  * @return Array with all integer numbers found.
  */
-static Integer[] findAllNumbers(String line) {
+static Integer[] findAllNumbersInLine(String line) {
     String[] foundByFindRegexMethod;
     foundByFindRegexMethod = FindRegex.findRegex("(\\d+)", line);
     Integer[] numbers = new Integer[foundByFindRegexMethod.length];

@@ -57,7 +57,7 @@ void star1start() {
     String line;
     Fabric fabric = new Fabric();
     while ((line = myReader.get_line()) != null) {
-        elfs.add(new Elf(HelperMethods.findAllNumbersInLine(line)));
+        elfs.add(new Elf(FindRegex.findAllNumbersInLine(line)));
     }
 
     System.out.printf("number of Elfs read: " + elfs.size());

@@ -64,7 +64,7 @@ private void star1start() {
     System.out.printf("After %d iteration galaxy started to raise. Galaxy area: %d\n", iteration, galaxyArea);
     System.out.printf("Ending with galaxy with %d stars, dimensions %dx%d and area of %d\n",
             galaxy.countStars(), galaxy.getYdimension(), galaxy.getXdimension(), galaxy.getArea());
-    MapUtils mapUtils = new MapUtils();
+
     //boolean[][]compressedMap=mapUtils.shrinkTwice(galaxy.createBooleanMap(), 1);
 
     //mapWriter.writeMap(compressedMap,"MY GALAXY (and not a Samsung ;)");
@@ -178,8 +178,8 @@ class Galaxy {
     }
 
 
-    boolean[][] createBooleanMap() {
-        boolean[][] map = new boolean[getYdimension() + 1][getXdimension() + 1];
+    Boolean[][] createBooleanMap() {
+        Boolean[][] map = new Boolean[getYdimension() + 1][getXdimension() + 1];
         for (int i = 0; i < getYdimension(); i++) {
             Arrays.fill(map[i], false);
         }
@@ -191,7 +191,7 @@ class Galaxy {
 
 
     void printGalaxyMap() {
-        boolean[][] map = createBooleanMap();
+        Boolean[][] map = createBooleanMap();
         for (int y = 0; y < getYdimension(); y++) {
             for (int x = 0; x < getXdimension(); x++) {
                 if (map[y][x]) System.out.print("X");
@@ -207,37 +207,5 @@ class Galaxy {
     }
 }
 
-class MapUtils {
-
-    boolean[][] shrinkTwice(boolean[][] map, int threshold) {
-        final int SHRINK_FACTOR = 2;
-        int density = 0;
-        int xSize = map[0].length;
-        int ySize = map.length;
-        boolean[][] shrinkedMap = new boolean[ySize / SHRINK_FACTOR][xSize / SHRINK_FACTOR];
-        System.out.printf("Input printableMap xSize %d, ySize %d\n", xSize, ySize);
-        System.out.printf("Shrinked printableMap xSize %d, ySize %d\n", xSize / 2, ySize / 2);
-        if (threshold < 1) threshold = 1;
-        else if (threshold > 4) threshold = 4;
-
-        for (int y = 0; y < ySize / SHRINK_FACTOR; y++) {
-            for (int x = 0; x < xSize / SHRINK_FACTOR; x++) {
-                density = 0;
-                if (map[y * 2][x * 2]) density++;
-                if (map[y * 2 + 1][x * 2]) density++;
-                if (map[y * 2][x * 2 + 1]) density++;
-                if (map[y * 2 + 1][x * 2 + 1]) density++;
-                if (density >= threshold) shrinkedMap[y][x] = true;
-                else shrinkedMap[y][x] = false;
-            }
-        }
-        return shrinkedMap;
-    }
-
-
-    boolean[][] shrinkTwice(boolean[][] map) {
-        return shrinkTwice(map, 2);
-    }
-}
 
 }
