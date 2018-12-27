@@ -14,23 +14,22 @@ import java.util.*;
 public class HelperMethods {
 
 public static void parsingProgramArguments(String[] args) {
-    System.out.println("Program ARGS num:" + args.length + " ARGS:" + args);
-    if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
-    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
-    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
-    //if (args.length > 0 && args[0].equals("--create-input-file"))
-    //HelperMethods.getInputFileFromWWW(Integer.valueOf(this.getClass().getSimpleName().substring(3)), INPUT_FILE1);
+    parsingVerbosityLevel(args);
 }
 
 
 public static void parsingProgramArguments(String[] args, String input_file, Object clas) {
-    System.out.println("Program ARGS num:" + args.length + " ARGS:" + args);
-    if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
-    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
-    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
+    parsingVerbosityLevel(args);
     if (args.length > 0 && args[0].equals("--create-input-file"))
         HelperMethods.getInputFileFromWWW(Integer.valueOf(clas.getClass().getSimpleName().substring(3)), input_file);
 
+}
+
+
+private static void parsingVerbosityLevel(String[] args) {
+    if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
+    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
+    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
 }
 
 public static void printResult(String result) {
@@ -105,16 +104,6 @@ public static void useBuiltCookieForAllSites(CookieHandler cookieHandler) {
     CookieHandler.setDefault(cookieHandler);
 }
 
-
-public static Integer[] findAllNumbersInLine(String line) {
-    String[] foundByFindRegexMethod;
-    foundByFindRegexMethod = FindRegex.findRegex("(\\d+)", line);
-    Integer[] numbers = new Integer[foundByFindRegexMethod.length];
-    for (int i = 0; i < numbers.length; i++) {
-        numbers[i] = Integer.valueOf(foundByFindRegexMethod[i]);
-    }
-    return numbers;
-}
 
 
 public static String getCurrentTime() {
@@ -191,7 +180,7 @@ public void initializeCollection(Collection collection, int collectionSize) {
 }
 
 
-public void initializeCharKeyHashMap(HashMap hashMap, int initializer) {
+public static void initializeCharKeyHashMap(HashMap hashMap, int initializer) {
     final int charactersInAlphabet = 26;
     final char firstLetterInAlphabet = 'a';
 
@@ -202,7 +191,7 @@ public void initializeCharKeyHashMap(HashMap hashMap, int initializer) {
 }
 
 
-public void printCharKeyHashMap(HashMap hashMap) {
+public static void printCharKeyHashMap(HashMap hashMap) {
     final int charactersInAlphabet = 26;
     final char firstLetterInAlphabet = 'a';
     for (int i = 0; i < charactersInAlphabet; i++) {
