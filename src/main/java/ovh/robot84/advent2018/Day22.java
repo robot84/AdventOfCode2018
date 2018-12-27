@@ -2,7 +2,9 @@ package ovh.robot84.advent2018;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.time.format.TextStyle.NARROW;
 
@@ -31,10 +33,10 @@ private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\Adve
 private final static String INPUT_FILE2 = "C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\" +
         "src\\main\\resources\\day08input2.txt";
 private final static int ARRAY_MAX_X = 2_0;
-private final static int ARRAY_MAX_Y = 2_0;
-private static final int ROCKY = 1;
-private static final int WET = 2;
-private static final int NARROW = 3;
+private final static int ARRAY_MAX_Y = 7_05;
+private static final int ROCKY = 0;
+private static final int WET = 1;
+private static final int NARROW = 2;
 List<MyRegion> points4D = new ArrayList<MyRegion>();
 private HashMap<Character, Integer> hm1 = new HashMap();
 private ArrayList<String> strings = new ArrayList<>();
@@ -66,8 +68,11 @@ target: 15,700
  */
 private void star1start() {
     String line = null;
+    int targetX = 15, targetY = 700, caveDepth = 4848;
 
-    MyCave myCave = new MyCave(510);
+
+//    MyCave myCave = new MyCave(510,10,10);
+    MyCave myCave = new MyCave(caveDepth, targetX, targetY);
     MyRegion regio, regioNorth = null, regioWest = null;
     for (int y = 0; y < ARRAY_MAX_Y - 1; y++) {
 
@@ -75,17 +80,18 @@ private void star1start() {
             if (y != 0) regioNorth = myCave.regions.get(ARRAY_MAX_X * (y - 1) + x);
             if (x != 0) regioWest = myCave.regions.get(ARRAY_MAX_X * y + x - 1);
             if (x == 0 && y == 0)
-                myCave.addRegion(regio = new MyRegion(x, y, 10, 10, 0, 0, 510));
+                myCave.addRegion(regio = new MyRegion(x, y, targetX, targetY, 0, 0, caveDepth));
             else if (x == 0)
-                myCave.addRegion(regio = new MyRegion(x, y, 10, 10, regioNorth.getEroLv(), 0, 510));
+                myCave.addRegion(regio = new MyRegion(x, y, targetX, targetY, regioNorth.getEroLv(), 0, caveDepth));
             else if (y == 0)
-                myCave.addRegion(regio = new MyRegion(x, y, 10, 10, 0, regioWest.getEroLv(), 510));
+                myCave.addRegion(regio = new MyRegion(x, y, targetX, targetY, 0, regioWest.getEroLv(), caveDepth));
             else
-                myCave.addRegion(regio = new MyRegion(x, y, 10, 10, regioNorth.getEroLv(), regioWest.getEroLv(), 510));
+                myCave.addRegion(regio = new MyRegion(x, y, targetX, targetY, regioNorth.getEroLv(), regioWest.getEroLv(), caveDepth));
             Verbose.println(regio.toString());
         }
 
     }
+    System.out.println("Risk " + myCave.getRisk());
 
 
 }
@@ -107,11 +113,31 @@ private void parsingProgramArguments(String[] args) {
 private class MyCave {
     int eroLvl1, eroLvl2;
     int caveDepth;
+    int targetX;
+    int targetY;
     List<MyRegion> regions = new ArrayList<>();
 
 
-    MyCave(int caveDepth) {
+    MyCave(int caveDepth, int targetX, int targetY) {
         this.caveDepth = caveDepth;
+        this.targetX = targetX;
+        this.targetY = targetY;
+    }
+
+
+    int getRisk() {
+        IntSummaryStatistics summary = regions
+                .stream()
+                .filter(
+                        reg -> reg.isInRiskTerrain() == true
+                )
+                .collect(
+                        Collectors
+                                .summarizingInt(MyRegion::getType)
+                );
+
+        return (int) summary.getSum();
+
     }
 
 
@@ -193,6 +219,10 @@ private class MyRegion {
     }
 
 
+    int getType() {
+        return type;
+    }
+
     String typeToString(int type) {
         if (type == ROCKY) return "ROCKY";
         else if (type == WET) return "WET";
@@ -206,6 +236,12 @@ private class MyRegion {
 
         String string = String.format("[(%d,%d) %d %d %s]", x, y, geoIndex, eroLv, this.typeToString(type));
         return string;
+    }
+
+
+    public boolean isInRiskTerrain() {
+        if (x <= targetX && y <= targetY) return true;
+        return false;
     }
 }
 }
