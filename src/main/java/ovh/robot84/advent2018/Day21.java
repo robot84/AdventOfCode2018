@@ -215,7 +215,7 @@ private void runEngine(ArrayList<ArrayList<Integer>> instructions) {
             }
         }
         //if((rejestry.get(2)) > 0x7FFFFE && rejestry.get(2)!=r2) triggered = true;
-        if (f2.apply(count, triggered)) {
+        if (f3.apply(count, triggered, newMin)) {
             Verbose.printf("ip=%d [0x%x] [0X%X] %s", ip, rejestry.get(2), rejestry.get(3), rejestry.toString());
             Verbose.printf(" %s %d %d %d", opCodeToMnemonic(instruction.get(0)),
                     instruction.get(1), instruction.get(2), instruction.get(3));
@@ -224,8 +224,8 @@ private void runEngine(ArrayList<ArrayList<Integer>> instructions) {
         runInstruction(instruction);
         ip = Math.toIntExact(rejestry.get(REGISTER_WHICH_STORE_IP));
         ip++;
-        if (f2.apply(count, triggered))
-            Verbose.printf(" %s\n", rejestry.toString());
+        /*if (f2.apply(count, triggered))
+            Verbose.printf(" %s\n", rejestry.toString());*/
         count++;
     }
 }
