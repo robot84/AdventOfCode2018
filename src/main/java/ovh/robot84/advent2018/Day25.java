@@ -68,8 +68,7 @@ private void star1start() throws IOException {
     int numOfConstelations = 0;
     int nuOfPoints = 0;
     while ((line = myReader.get_line()) != null) {
-        Verbose.setVerboseLevelForNextPrint(3);
-        Verbose.println("Line: " + line);
+        Verbose.println(3, "Line: " + line);
             /*while ((c = myReader.read()) != -1) {
                 Verbose.print("!" + (char) c);
             */
@@ -96,11 +95,9 @@ private void star1start() throws IOException {
         Pattern p = Pattern.compile("(-?\\d+)\\s*\\p{Punct}(-?\\d+)\\p{Punct}(-?\\d+)\\s*\\p{Punct}(-?\\d+)");
         Matcher m = p.matcher(line);
         if (m.matches()) {
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.print("matched");
+            Verbose.print(3, "matched");
             for (int i = 1; i <= m.groupCount(); i++) {
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.printf("m.group(%s): \"%s\" \t", i, m.group(i));
+                Verbose.printf(3, "m.group(%s): \"%s\" \t", i, m.group(i));
                 coordinate.add(Integer.valueOf(m.group(i)));
             }
             Verbose.println("");

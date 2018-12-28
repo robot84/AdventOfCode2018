@@ -78,14 +78,12 @@ void createGalaxy(Galaxy galaxy) {
     String line = null;
     /*        Read input         */
     while ((line = myReader.get_line()) != null) {
-        Verbose.setVerboseLevelForNextPrint(3);
-        Verbose.println("Line: " + line);
+        Verbose.println(3, "Line: " + line);
         Pattern p = Pattern.compile("^position=<\\s*(-?\\d+),\\s*(-?\\d+)> velocity=<\\s*(-?\\d+),\\s*(-?\\d+)>$");
         Matcher m = p.matcher(line);
         if (m.matches()) {
             for (int i = 1; i <= m.groupCount(); i++) {
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.printf("m.group(%s): %s %d\n", i, m.group(i), Integer.valueOf(m.group(i)));
+                Verbose.printf(3, "m.group(%s): %s %d\n", i, m.group(i), Integer.valueOf(m.group(i)));
             }
             galaxy.addStar(new Star(Integer.valueOf(m.group(1)), Integer.valueOf(m.group(2)),
                     Integer.valueOf(m.group(3)), Integer.valueOf(m.group(4))));

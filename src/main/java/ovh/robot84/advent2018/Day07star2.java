@@ -129,13 +129,11 @@ private void checkIsHeDoneWithHisWork(int workerNum) {
     if (workerWillBeIdleAfterSeconds[workerNum] <= 0) {
         result.add(workerWorkingOn[workerNum]);
         removeLetterAndAllReferencesToItFromVariables(workerWorkingOn[workerNum]);
-        Verbose.setVerboseLevelForNextPrint(1);
-        Verbose.printf("%c", workerWorkingOn[workerNum]);
+        Verbose.printf(1, "%c", workerWorkingOn[workerNum]);
         workerIdle[workerNum] = true;
         workerWorkingOn[workerNum] = (int) '.';
     } else {
-        Verbose.setVerboseLevelForNextPrint(2);
-        Verbose.printf("%d_", workerWillBeIdleAfterSeconds[workerNum]);
+        Verbose.printf(2, "%d_", workerWillBeIdleAfterSeconds[workerNum]);
 
     }
 
@@ -144,34 +142,28 @@ private void checkIsHeDoneWithHisWork(int workerNum) {
 
 private void giveWorkerWorkIfPossible(int workerNum) {
     {
-        Verbose.setVerboseLevelForNextPrint(3);
-        Verbose.printf("Worker %d is idle.\n", workerNum);
+        Verbose.printf(3, "Worker %d is idle.\n", workerNum);
 
         LOOP_01_HEAD:
         while (entryPointListIterator.hasNext()) {
             int ep;
             ep = entryPointListIterator.next();
             entryPointListIterator.remove();
-            Verbose.setVerboseLevelForNextPrint(2);
-            Verbose.printf("Oh, yes! We have letter %c for worker %d\n", ep, workerNum);
+            Verbose.printf(2, "Oh, yes! We have letter %c for worker %d\n", ep, workerNum);
             boolean isSomebodyWorkingOnit = false;
             for (int j = 0; j < workers; j++) {
                 if (workerWorkingOn[j] == ep) {
                     isSomebodyWorkingOnit = true;
-                    Verbose.setVerboseLevelForNextPrint(2);
-                    Verbose.printf("Ktos pracuje na literze %c. Nie daje jej nikomu.\n", ep);
+                    Verbose.printf(2, "Ktos pracuje na literze %c. Nie daje jej nikomu.\n", ep);
                     continue LOOP_01_HEAD;
                 }
             }
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.printf("It looks like nobody is working on letter %c\n", ep);
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.printf("Worker %d, come here. I have work for you.\n", workerNum);
+            Verbose.printf(3, "It looks like nobody is working on letter %c\n", ep);
+            Verbose.printf(3, "Worker %d, come here. I have work for you.\n", workerNum);
             workerIdle[workerNum] = false;
             workerWorkingOn[workerNum] = ep;
             workerWillBeIdleAfterSeconds[workerNum] = ep - 'A' + REAL_WORK_TIME;
-            Verbose.setVerboseLevelForNextPrint(2);
-            Verbose.printf("worker %d will work for %d seconds on letter %c (%d)\n", workerNum, workerWillBeIdleAfterSeconds[workerNum] + 1, ep, ep);
+            Verbose.printf(2, "worker %d will work for %d seconds on letter %c (%d)\n", workerNum, workerWillBeIdleAfterSeconds[workerNum] + 1, ep, ep);
             break LOOP_01_HEAD;
         }
 
@@ -180,8 +172,7 @@ private void giveWorkerWorkIfPossible(int workerNum) {
 
 
 private void removeLetterAndAllReferencesToItFromVariables(int letter) {
-    Verbose.setVerboseLevelForNextPrint(2);
-    Verbose.printf("Work on letter %c done. deleting all references to this letter\n", letter);
+    Verbose.printf(2, "Work on letter %c done. deleting all references to this letter\n", letter);
     //noinspection SuspiciousMethodCalls
     alphabet.remove((Object) letter);
     alphabetSize--;
@@ -206,11 +197,9 @@ private void removeLetterAndAllReferencesToItFromVariables(int letter) {
         in[i][1] = in3[i][1];
     }
 
-    Verbose.setVerboseLevelForNextPrint(3);
-    Verbose.println("A->B means: A is dependency of B");
+    Verbose.println(3, "A->B means: A is dependency of B");
     for (int i = 0; i < inSize; i++) {
-        Verbose.setVerboseLevelForNextPrint(3);
-        Verbose.printf("%c->%c\n", in[i][0], in[i][1]);
+        Verbose.printf(3, "%c->%c\n", in[i][0], in[i][1]);
     }
 
     workDoneInThisSecond = true;
@@ -228,22 +217,19 @@ private ArrayList<Integer> findEntryPoints() {
         When there are many entry points possible - we want to choose most first
         in alphabetical order
          */
-    Verbose.setVerboseLevelForNextPrint(2);
-    Verbose.println("Looking for entry point letter");
+    Verbose.println(2, "Looking for entry point letter");
     int entryPoint = NOT_AN_ENTRY_POINT;
     ArrayList<Integer> entryPoints = new ArrayList<Integer>();
     HERE:
     for (int letter = 0; letter < alphabetSize; letter++) {
         for (int i = 0; i < inSize; i++) {
             if (alphabet.get(letter) == in[i][1]) {
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.printf("%c is not an entry point\n", alphabet.get(letter));
+                Verbose.printf(3, "%c is not an entry point\n", alphabet.get(letter));
                 continue HERE;
             }
         }
         entryPoints.add((alphabet.get(letter)));
-        Verbose.setVerboseLevelForNextPrint(2);
-        Verbose.printf("%c IS the entry point for workers\n", (alphabet.get(letter)));
+        Verbose.printf(2, "%c IS the entry point for workers\n", (alphabet.get(letter)));
     }
     Collections.sort(entryPoints);
 
@@ -279,8 +265,7 @@ private void buildSetOfInputSymbols() {
     Verbose.println("Building set of input symbols (an alphabet)...");
     for (int i = 0; i < inSize; i++) {
         for (int j = 0; j < 2; j++) {
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.printf("Parsing %d \n", in[i][j]);
+            Verbose.printf(3, "Parsing %d \n", in[i][j]);
             if (!alphabet.contains(in[i][j])) {
                 alphabet.add(in[i][j]);
                 Verbose.printf("Adding %d to alphabet\n", in[i][j]);
@@ -294,16 +279,11 @@ private void buildSetOfInputSymbols() {
 
     Verbose.printf("Alphabet size is %d \n", alphabet.size());
 
-    Verbose.setVerboseLevelForNextPrint(1);
-    Verbose.printf("Displaying alphabet\n");
-    Verbose.setVerboseLevelForNextPrint(1);
+    Verbose.printf(1, "Displaying alphabet\n");
     for (Integer b : alphabet) {
-        Verbose.setVerboseLevelForNextPrint(1);
-        Verbose.printf("%c", b);
+        Verbose.printf(1, "%c", b);
     }
-
-    Verbose.setVerboseLevelForNextPrint(1);
-    Verbose.printf("\n");
+    Verbose.printf(1, "\n");
 
 }
 
@@ -314,19 +294,16 @@ private void readInput() {
     int a = 0;
     Verbose.println("Mapping Input file to memory data structure (array)...");
     while ((line = myReader.get_line()) != null) {
-        Verbose.setVerboseLevelForNextPrint(2);
-        Verbose.print("Line: " + line);
+        Verbose.print(2, "Line: " + line);
         Pattern p = Pattern.compile("Step (\\w) must be finished before step (\\w) can begin.");
         Matcher m = p.matcher(line);
         if (m.matches()) {
             c3 = (m.group(1).charAt(0));
             c4 = (m.group(2).charAt(0));
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.printf("c3 %s c4 %s\n", c3, c4);
+            Verbose.printf(3, "c3 %s c4 %s\n", c3, c4);
             in[a][0] = c3;
             in[a][1] = c4;
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.printf("c3 %s c4 %s\n", in[a][0], in[a][1]);
+            Verbose.printf(3, "c3 %s c4 %s\n", in[a][0], in[a][1]);
         }
         a++;
     }

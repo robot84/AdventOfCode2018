@@ -138,8 +138,7 @@ private void star1start() {
     }
 
     for (int i = 0; i < players; i++) {
-        Verbose.setVerboseLevelForNextPrint(1);
-        Verbose.printf("Player %d has score %d\n", i + 1, score.get(i));
+        Verbose.printf(1, "Player %d has score %d\n", i + 1, score.get(i));
     }
     System.out.println("Rezult: " + Collections.max(score));
     System.out.println("Ile razy mielismy magiczny kamien? " + counter);

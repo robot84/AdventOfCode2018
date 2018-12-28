@@ -247,8 +247,7 @@ void makeWater(int x, int y, boolean horizontalSymbol) {
 private void readInput(ArrayList<Clay> clays) {
     String line = null;
     while ((line = myReader.get_line()) != null) {
-        Verbose.setVerboseLevelForNextPrint(3);
-        Verbose.print("Line: " + line);
+        Verbose.print(3, "Line: " + line);
 
         ArrayList<Integer> al = new ArrayList<>();
         Pattern p1 = Pattern.compile("y=(\\d+),\\s*x=(\\d+)..(\\d+)");
@@ -258,8 +257,7 @@ private void readInput(ArrayList<Clay> clays) {
 
 
             for (int i = 1; i <= m.groupCount(); i++) {
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.printf("m.group(%s): %s\n", i, m.group(i));
+                Verbose.printf(3, "m.group(%s): %s\n", i, m.group(i));
                 al.add(Integer.valueOf(m.group(i)));
             }
             clays.add(new Clay(al.get(0), al.get(1), al.get(2), false));
@@ -269,8 +267,7 @@ private void readInput(ArrayList<Clay> clays) {
                 al.clear();
 
                 for (int i = 1; i <= m.groupCount(); i++) {
-                    Verbose.setVerboseLevelForNextPrint(3);
-                    Verbose.printf("m.group(%s): %s\n", i, m.group(i));
+                    Verbose.printf(3, "m.group(%s): %s\n", i, m.group(i));
                     al.add(Integer.valueOf(m.group(i)));
                 }
                 clays.add(new Clay(al.get(0), al.get(1), al.get(2), true));
