@@ -2,12 +2,15 @@ package ovh.robot84.advent2018;
 
 import ovh.robot84.advent2018.helpers.MeasureTape;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.function.Function;
-import java.util.function.IntConsumer;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -43,7 +46,7 @@ private Day12(String input_file) {
 }
 
 
-public static void main(String[] args) {
+public static void main(String[] args) throws IOException {
     Day12 dayStar1 = new Day12(INPUT_FILE2);
     HelperMethods.parsingProgramArguments(args);
     //Verbose.mute();
@@ -53,7 +56,7 @@ public static void main(String[] args) {
 
 // #..#.#..##......###...###
 //...## => #
-private void star1start() {
+private void star1start() throws IOException {
     Verbose.disablePrompts();
     StringBuffer field[] = new StringBuffer[1000];
     //field[0] = new StringBuffer("#..#.#..##......###...###");
@@ -62,6 +65,7 @@ private void star1start() {
     int fieldSize;
     //="#...#..##.......####.#..###..#.##..########.#.#...#.#...###.#..###.###.#.#..#...#.#..##..#######.##".length();
     ArrayList<String> rules = new ArrayList<>();
+    Stream<String> rulesStream;
     ArrayList<Boolean> isPlant = new ArrayList<Boolean>();
     int shiftSize = 10;
     int lenOfHeader = "gen: 001  ".length();
@@ -71,20 +75,36 @@ private void star1start() {
     String line = null;
     field[0] = new StringBuffer(myReader.get_line());
     fieldSize = field[0].length();
+
+    Stream<String> allRulesStream = Files.lines(Paths.get(INPUT_FILE2));
+    List<String> inputList = allRulesStream.collect(Collectors.toList());
+    String header = inputList.get(0);
+    inputList.remove(0);
+    allRulesStream = inputList.stream();
+
+    /*allRulesStream.peek(rule -> {
+
+                Verbose.print(3,"Line: " + rule);
+            });*/
+
+    Stream<String> fullPotRulesStream = allRulesStream.peek(rule -> {
+        System.out.println("Line: " + rule);
+    }).filter(s -> s.charAt(9) == '#');
+    System.out.println(fullPotRulesStream.count());
+
+
+
+
+
     while ((line = myReader.get_line()) != null) {
-        Verbose.setVerboseLevelForNextPrint(3);
-        Verbose.print("Line: " + line);
+        Verbose.print(3, "Line: " + line);
 
         //...## => #
         // look out when input has [ ] symbols. Quote them! Then in trouble start with:
         Pattern p = Pattern.compile("(.+) => (.)");
         Matcher m = p.matcher(line);
         if (m.matches()) {
-
-            for (int i = 1; i <= m.groupCount(); i++) {
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.printf("m.group(%s): %s\n", i, m.group(i));
-            }
+            HelperMethods.printPatternMatchedGroups(m);
             rules.add(m.group(1));
             if ((m.group(2)).equals("#")) isPlant.add(true);
             else isPlant.add(false);
@@ -95,22 +115,24 @@ private void star1start() {
     MeasureTape.measureTapeType1(shiftSize + lenOfHeader, 160);
     Verbose.printf("FiledSize: %d\n", fieldSize);
 
-    for (int shift = 0; shift < shiftSize; shift++) field[0].insert(0, ".");
+    Stream<String> dotStream = Stream.generate(() -> ".").limit(shiftSize);
+    Stream<String> dotStream2 = Stream.generate(() -> ".").limit(shiftSize);
+    Stream fieldStream = Stream.of(field[0]);
+    Stream fieldStream2 = Stream.concat(dotStream, fieldStream);
+    Stream fieldStream3 = Stream.concat(fieldStream2, dotStream2);
+    Stream<String> nextFieldStream;
 
-    for (int shift = 0; shift < shiftSize; shift++) field[0].append(".");
-    //for (int shift = 0; shift < shiftSize; shift++) isPlant.add(0,false);
-
-    Stream a;
     for (int gen = 0; gen <= lastGeneration; gen++) {
         Verbose.printf("gen: %3d  %s\n", gen, field[gen].toString());
         StringBuffer nextGenField = new StringBuffer("");
-        for (int shift = 0; shift < 2; shift++) nextGenField.append(".");
+        nextFieldStream = Stream.empty();
+        //for (int shift = 0; shift < 2; shift++) nextGenField.append(".");
+        nextFieldStream = Stream.concat(nextFieldStream, Stream.of(".."));
 
         for (int index = 0; index < fieldSize + shiftSize + fieldExpansionRight + fieldExpansionLeft; index++) {
             hit = false;
             for (int rule = 0; rule < rules.size(); rule++) {
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.printf("%s %s|", field[gen].substring(index, index + 5));//,rules.get(rule));
+                Verbose.printf(3, "%s %s|", field[gen].substring(index, index + 5));//,rules.get(rule));
                 if (field[gen].substring(index, index + 5).equals(rules.get(rule))) {
                     hit = true;
                     if (isPlant.get(rule)) {
@@ -130,8 +152,7 @@ private void star1start() {
             if (!hit) nextGenField.append(".");
         }
         for (int shift = 0; shift < shiftSize; shift++) nextGenField.append(".");
-        Verbose.setVerboseLevelForNextPrint(3);
-        Verbose.printf("nextGen: (%s)\n", nextGenField.toString());
+        Verbose.printf(3, "nextGen: (%s)\n", nextGenField.toString());
 
         field[gen + 1] = nextGenField;
         //Verbose.printf("nextGen: %s\n",field[gen+1]);
