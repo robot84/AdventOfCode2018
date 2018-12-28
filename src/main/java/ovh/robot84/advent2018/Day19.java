@@ -148,7 +148,7 @@ void doAssigment(int register, int value) {
 void startStar001(String input_file) {
     ArrayList<ArrayList<Integer>> instructions = new ArrayList<ArrayList<Integer>>();
     MyReader myReader = new MyReader();
-
+    Verbose.enableVerbose(1);
     myReader.open_file(input_file);
     // for star1 use this:
     //initRegistersWithZeros();
@@ -203,8 +203,9 @@ private void loadInputDataFromFile(MyReader myReader, ArrayList<ArrayList<Intege
     String line1;
     while ((line1 = myReader.get_line()) != null) {
         ArrayList<Integer> instructionFromLine = new ArrayList<>();
-        Verbose.setVerboseLevelForNextPrint(2);
-        Verbose.println("Line1: " + line1);
+
+
+        Verbose.println(2, "Line1: " + line1);
         convertInputDataToMemoryDataStructures(line1, instructionFromLine);
         instructions.add(instructionFromLine);
     }
@@ -222,8 +223,7 @@ private void convertInputDataToMemoryDataStructures(String line, ArrayList<Integ
     if (m2.matches()) {
         instructionFromLine.add(mnemonicToOpCode(m2.group(1)));
         for (int i = 2; i <= m2.groupCount(); i++) {
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.printf("m2.group(%s): %s\n", i, m2.group(i));
+            Verbose.printf(3, "m2.group(%s): %s\n", i, m2.group(i));
             instructionFromLine.add(Integer.valueOf(m2.group(i)));
         }
     }
