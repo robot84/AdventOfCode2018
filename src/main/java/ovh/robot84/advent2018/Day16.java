@@ -205,14 +205,12 @@ void startStar02(String input_file) {
         while ((line1 = myReader.get_line()) != null) {
             int successfullOpCodesNum = 0;
             ArrayList<Integer> instructionFromLine = new ArrayList<>();
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.println("Line1: " + line1);
+            Verbose.println(3, "Line1: " + line1);
 
             Matcher m2 = p2.matcher(line1);
             if (m2.matches()) {
                 for (int i = 1; i <= m2.groupCount(); i++) {
-                    Verbose.setVerboseLevelForNextPrint(3);
-                    Verbose.printf("m2.group(%s): %s\n", i, m2.group(i));
+                    Verbose.printf(3, "m2.group(%s): %s\n", i, m2.group(i));
                     instructionFromLine.add(Integer.valueOf(m2.group(i)));
                 }
             }
@@ -251,39 +249,32 @@ void startStar01(String input_file) {
             ArrayList<Integer> before = new ArrayList<>();
             ArrayList<Integer> instructionFromLine = new ArrayList<>();
             ArrayList<Integer> after = new ArrayList<>();
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.println("Line1: " + line1);
+            Verbose.println(3, "Line1: " + line1);
             String line2 = myReader.get_line();
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.println("Line2: " + line2);
+            Verbose.println(3, "Line2: " + line2);
             String line3 = myReader.get_line();
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.println("Line3: " + line3);
+            Verbose.println(3, "Line3: " + line3);
             String line4 = myReader.get_line();
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.println("Line4: " + line4);
+            Verbose.println(3, "Line4: " + line4);
 
             Matcher m1 = p1.matcher(line1);
             if (m1.matches()) {
                 for (int i = 1; i <= m1.groupCount(); i++) {
-                    Verbose.setVerboseLevelForNextPrint(3);
-                    Verbose.printf("m1.group(%s): %s\n", i, m1.group(i));
+                    Verbose.printf(3, "m1.group(%s): %s\n", i, m1.group(i));
                     before.add(Integer.valueOf(m1.group(i)));
                 }
             }
             Matcher m2 = p2.matcher(line2);
             if (m2.matches()) {
                 for (int i = 1; i <= m2.groupCount(); i++) {
-                    Verbose.setVerboseLevelForNextPrint(3);
-                    Verbose.printf("m2.group(%s): %s\n", i, m2.group(i));
+                    Verbose.printf(3, "m2.group(%s): %s\n", i, m2.group(i));
                     instructionFromLine.add(Integer.valueOf(m2.group(i)));
                 }
             }
             Matcher m3 = p3.matcher(line3);
             if (m3.matches()) {
                 for (int i = 1; i <= m3.groupCount(); i++) {
-                    Verbose.setVerboseLevelForNextPrint(3);
-                    Verbose.printf("m3.group(%s): %s\n", i, m3.group(i));
+                    Verbose.printf(3, "m3.group(%s): %s\n", i, m3.group(i));
                     after.add(Integer.valueOf(m3.group(i)));
                 }
             }
@@ -321,8 +312,7 @@ void startStar01(String input_file) {
             }
             if (successfullOpCodesNum > 0) {
                 instructionFromLine.set(0, oryginalOpCode);
-                //Verbose.setVerboseLevelForNextPrint(3);
-                //Verbose.println(instructionFromLine.toString());
+                //Verbose.println(3,instructionFromLine.toString());
                 //System.out.printf("Opcode mapping: (original) -> (our)  %d -> ",oryginalOpCode);
                 if (oryginalOpCode != 4 && oryginalOpCode != 8 && oryginalOpCode != 12 &&
                         oryginalOpCode != 13 && oryginalOpCode != 14 && oryginalOpCode != 15) {
@@ -335,15 +325,13 @@ void startStar01(String input_file) {
                                 && opCode != 6 && opCode != 3 && opCode != 0) Verbose.printf("%d ", opCode);
                     Verbose.printf("\n");
                 }
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.printf("star02winning iteration: %d", iterations);
+                Verbose.printf(3, "star02winning iteration: %d", iterations);
 
 
             }
             //instructions.add(instructionFromLine);
             iterations++;
-            Verbose.setVerboseLevelForNextPrint(3);
-            Verbose.println("-------");
+            Verbose.println(3, "-------");
         }
         Verbose.println("number of iterations: " + iterations);
         System.out.println("Rezult is: " + winningSamples);
@@ -379,14 +367,12 @@ class ArrayListWithHeader {
         ArrayList<Integer> maxAl = new ArrayList<>();
         for (int index = 0; index < 16; index++) {
             if (array.containsKey(index)) {
-                Verbose.setVerboseLevelForNextPrint(3);
-                Verbose.println("maxSize iteration " + index);
+                Verbose.println(3, "maxSize iteration " + index);
 
                 array.get(index);
                 if (!array.get(index).isEmpty()) {
                     int alSize = array.get(index).size();
-                    Verbose.setVerboseLevelForNextPrint(3);
-                    Verbose.println("Max in row: " + alSize);
+                    Verbose.println(3, "Max in row: " + alSize);
                     maxAl.add(alSize);
                 }
 
