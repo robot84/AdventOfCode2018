@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
 
 public class HelperMethods {
 
@@ -28,8 +29,8 @@ public static void parsingProgramArguments(String[] args, String input_file, Obj
 
 private static void parsingVerbosityLevel(String[] args) {
     if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
-    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableTwoLevelVerbose();
-    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableThreeLevelVerbose();
+    if (args.length > 0 && args[0].equals("-vv")) Verbose.enableVerbose(2);
+    if (args.length > 0 && args[0].equals("-vvv")) Verbose.enableVerbose(3);
 }
 
 public static void printResult(String result) {
@@ -145,6 +146,13 @@ public static Integer minInArray(ArrayList<Integer> someData) {
     return min;
 }
 
+
+public static void printPatternMatchedGroups(Matcher m) {
+    for (int i = 1; i <= m.groupCount(); i++) {
+        Verbose.setVerboseLevelForNextPrint(3);
+        Verbose.printf("m.group(%s): %s\n", i, m.group(i));
+    }
+}
 
 public Integer sumInArray(ArrayList<Integer> someData) {
     /* sum of values on list */
