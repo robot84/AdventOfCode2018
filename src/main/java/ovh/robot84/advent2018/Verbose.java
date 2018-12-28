@@ -6,7 +6,7 @@ package ovh.robot84.advent2018;
  *
  * @author Robert Ząbkiewicz
  * @version 0.2.0
- * @since 2018-12-01
+ * @since 2018-12-29
  * <p>
  */
 public class Verbose {
@@ -218,6 +218,7 @@ private static void printInColor(String text) {
 }
 
 
+@Deprecated
 public static void setVerboseLevelForNextPrint(int verboseLevel) {
     if(isVerboseLevelValid(verboseLevel))
         Verbose.verboseLevelForNextPrintF = verboseLevel;
