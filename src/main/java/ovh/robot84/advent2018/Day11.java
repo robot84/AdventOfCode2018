@@ -1,5 +1,10 @@
 package ovh.robot84.advent2018;
 
+import ovh.robot84.advent2018.helpers.FuelCell3x3Field;
+import ovh.robot84.advent2018.helpers.FuelCellField;
+import ovh.robot84.advent2018.helpers.HelperMethods;
+import ovh.robot84.advent2018.helpers.MyReader;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -55,20 +60,20 @@ private void star1start() {
     int MAP_X = 300;
     int MAP_Y = 300;
 
-    FuelCell cell = new FuelCell(3, 5, 8);
+    ovh.robot84.advent2018.helpers.FuelCell cell = new ovh.robot84.advent2018.helpers.FuelCell(3, 5, 8);
     System.out.println(cell.getPwr());
-    cell = new FuelCell(122, 79, 57);
+    cell = new ovh.robot84.advent2018.helpers.FuelCell(122, 79, 57);
     System.out.println(cell.getPwr());
-    cell = new FuelCell(217, 196, 39);
+    cell = new ovh.robot84.advent2018.helpers.FuelCell(217, 196, 39);
     System.out.println(cell.getPwr());
-    cell = new FuelCell(101, 153, 71);
+    cell = new ovh.robot84.advent2018.helpers.FuelCell(101, 153, 71);
     System.out.println(cell.getPwr());
 
-    ArrayList<FuelCell3x3Field> fields = new ArrayList<FuelCell3x3Field>();
+    ArrayList<ovh.robot84.advent2018.helpers.FuelCell3x3Field> fields = new ArrayList<ovh.robot84.advent2018.helpers.FuelCell3x3Field>();
 
     for (int y = 1; y < MAP_Y - 1; y++) {
         for (int x = 1; x < MAP_X - 1; x++) {
-            fields.add(new FuelCell3x3Field(x, y, 8141));
+            fields.add(new ovh.robot84.advent2018.helpers.FuelCell3x3Field(x, y, 8141));
         }
     }
     FuelCell3x3Field max = Collections.max(fields);

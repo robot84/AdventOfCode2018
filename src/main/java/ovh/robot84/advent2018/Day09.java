@@ -1,5 +1,7 @@
 package ovh.robot84.advent2018;
 
+import ovh.robot84.advent2018.helpers.*;
+
 import java.util.*;
 
 /**

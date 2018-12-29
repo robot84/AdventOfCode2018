@@ -1,6 +1,9 @@
 package ovh.robot84.advent2018;
 
 import javafx.util.Pair;
+import ovh.robot84.advent2018.helpers.HelperMethods;
+import ovh.robot84.advent2018.helpers.MyReader;
+import ovh.robot84.advent2018.helpers.Verbose;
 
 import java.util.ArrayList;
 import java.util.Collections;

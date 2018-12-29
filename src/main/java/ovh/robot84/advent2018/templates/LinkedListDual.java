@@ -23,7 +23,7 @@
  *
  */
 
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.templates;
 
 import java.util.*;
 import java.util.function.Consumer;

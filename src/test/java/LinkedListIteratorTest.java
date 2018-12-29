@@ -1,5 +1,3 @@
-package ovh.robot84.advent2018;
-
 import java.util.*;
 
 

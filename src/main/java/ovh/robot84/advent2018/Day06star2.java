@@ -1,5 +1,9 @@
 package ovh.robot84.advent2018;
 
+import ovh.robot84.advent2018.helpers.HelperMethods;
+import ovh.robot84.advent2018.helpers.MyReader;
+import ovh.robot84.advent2018.helpers.Verbose;
+
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;

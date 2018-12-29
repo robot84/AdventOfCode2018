@@ -1,5 +1,7 @@
 package ovh.robot84.advent2018;
 
+import ovh.robot84.advent2018.helpers.MyReader;
+
 import java.util.ArrayList;
 
 public class Day01 {
@@ -13,7 +15,7 @@ public static void main(String[] args) {
 
 
 private void start() {
-    MyReader myReader = new MyReader();
+    ovh.robot84.advent2018.helpers.MyReader myReader = new ovh.robot84.advent2018.helpers.MyReader();
     myReader.open_file("C:\\Users\\qtcj47\\IdeaProjects\\AdventOfCode2018\\src\\main\\resources\\day01input1.txt");
 
     String s;
@@ -33,7 +35,7 @@ private void star2start() {
 
     int result = 0;
     hits.add(result);
-    MyReader myReader;
+    ovh.robot84.advent2018.helpers.MyReader myReader;
     while (true) {
         myReader = new MyReader();
         myReader.open_file("C:\\Users\\qtcj47\\IdeaProjects\\" +

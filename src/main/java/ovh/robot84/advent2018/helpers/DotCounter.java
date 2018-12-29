@@ -1,4 +1,4 @@
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.helpers;
 
 public class DotCounter {
 private String dotSymbol = ".";
@@ -7,38 +7,38 @@ private int intervalInMiliSec = 500;
 private boolean started;
 
 
-DotCounter() {
+public DotCounter() {
 }
 
 
-DotCounter(int intervalInMiliSec) {
+public DotCounter(int intervalInMiliSec) {
     this.intervalInMiliSec = intervalInMiliSec;
 }
 
 
-DotCounter(int intervalInMiliSec, String dotSymbol) {
+public DotCounter(int intervalInMiliSec, String dotSymbol) {
     this.intervalInMiliSec = intervalInMiliSec;
     this.dotSymbol = dotSymbol;
 }
 
 
-DotCounter(String dotSymbol) {
+public DotCounter(String dotSymbol) {
     this.dotSymbol = dotSymbol;
 }
 
 
-void start() {
+public void start() {
     start = System.nanoTime();
     started = true;
 }
 
 
-void stop() {
+public void stop() {
     started = false;
 }
 
 
-boolean check() {
+public boolean check() {
 
     if ((started == true) &
             ((System.nanoTime() - start) / 1_000_000 > intervalInMiliSec)) {

@@ -1,4 +1,4 @@
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.helpers;
 
 import java.util.LinkedList;
 import java.util.ListIterator;

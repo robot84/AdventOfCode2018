@@ -1,4 +1,4 @@
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.helpers;
 
 import org.apache.commons.io.FileUtils;
 

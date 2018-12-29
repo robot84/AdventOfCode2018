@@ -1,4 +1,4 @@
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.helpers;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -12,7 +12,7 @@ public class FindRegex {
  * @return String[] table with all matched occurencies of pattern regex in parsedLine
  * If nothing found, you are able to check this state by checking if returned var.length==0
  */
-static String[] findRegex(String regex, String parsedLine) {
+public static String[] findRegex(String regex, String parsedLine) {
     ArrayList<String> result = new ArrayList<>();
     Pattern patternCompiled = Pattern.compile(regex);
     Matcher matcher = patternCompiled.matcher(parsedLine);
@@ -34,7 +34,7 @@ static String[] findRegex(String regex, String parsedLine) {
  * @param line - String when we search for numbers
  * @return Array with all integer numbers found.
  */
-static Integer[] findAllNumbersInLine(String line) {
+public static Integer[] findAllNumbersInLine(String line) {
     String[] foundByFindRegexMethod;
     foundByFindRegexMethod = FindRegex.findRegex("(\\d+)", line);
     Integer[] numbers = new Integer[foundByFindRegexMethod.length];

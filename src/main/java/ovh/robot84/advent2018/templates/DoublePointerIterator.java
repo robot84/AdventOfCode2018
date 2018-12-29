@@ -1,8 +1,7 @@
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.templates;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
-import java.util.function.Consumer;
 
 public class DoublePointerIterator<E> implements ListIterator<E> {
 protected transient int modCount = 0;

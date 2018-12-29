@@ -1,4 +1,4 @@
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.helpers;
 
 /**
  * This class implements 3-severity-level console message printer

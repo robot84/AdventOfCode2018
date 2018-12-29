@@ -1,5 +1,10 @@
 package ovh.robot84.advent2018;
 
+import ovh.robot84.advent2018.helpers.DotCounter;
+import ovh.robot84.advent2018.helpers.HelperMethods;
+import ovh.robot84.advent2018.helpers.MyReader;
+import ovh.robot84.advent2018.helpers.Verbose;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,7 +18,7 @@ private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\Adve
 HashMap<Character, Integer> hm1 = new HashMap();
 ArrayList<String> boxID = new ArrayList<>();
 String s;
-private MyReader myReader = new MyReader();
+private ovh.robot84.advent2018.helpers.MyReader myReader = new MyReader();
 
 
 private Day05(String input_file) {
@@ -24,8 +29,8 @@ private Day05(String input_file) {
 public static void main(String[] args) {
     Day05 dayStar1 = new Day05(INPUT_FILE1);
     System.out.println("ARGS:" + args.length);
-    if (args.length > 0 && args[0].equals("-v")) Verbose.enableVerbose();
-    Verbose.disableVerbose();
+    if (args.length > 0 && args[0].equals("-v")) ovh.robot84.advent2018.helpers.Verbose.enableVerbose();
+    ovh.robot84.advent2018.helpers.Verbose.disableVerbose();
     dayStar1.star1start();
 }
 
@@ -101,7 +106,7 @@ private void star1start() {
         // Verbose.printf("%c LEN: %d\n", c1 + i, out.toString().length());
         //System.out.flush();
 
-        DotCounter dotCounter = new DotCounter(250, "!.");
+        ovh.robot84.advent2018.helpers.DotCounter dotCounter = new DotCounter(250, "!.");
         dotCounter.start();
 
         long startGlobal = System.nanoTime();
@@ -130,7 +135,7 @@ private void star1start() {
     for (int i = 0; i < results.size(); i++) {
         if (results.get(i) < min) min = results.get(i);
     }
-    HelperMethods.printResult(min);
+    ovh.robot84.advent2018.helpers.HelperMethods.printResult(min);
     HelperMethods.printResult("Literka: " + (char) ('a' + results.indexOf(min)));
 
 }

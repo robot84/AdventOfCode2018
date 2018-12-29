@@ -1,5 +1,9 @@
 package ovh.robot84.advent2018;
 
+import ovh.robot84.advent2018.helpers.HelperMethods;
+import ovh.robot84.advent2018.helpers.MyReader;
+import ovh.robot84.advent2018.helpers.Verbose;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,7 +30,7 @@ private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\Adve
         "src\\main\\resources\\day08input1.txt";
 HashMap<Character, Integer> hm1 = new HashMap();
 ArrayList<String> boxID = new ArrayList<>();
-private MyReader myReader = new MyReader();
+private ovh.robot84.advent2018.helpers.MyReader myReader = new MyReader();
 
 
 private Day14(String input_file) {

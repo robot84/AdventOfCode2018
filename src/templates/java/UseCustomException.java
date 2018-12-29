@@ -1,5 +1,3 @@
-package ovh.robot84.advent2018;
-
 public class UseCustomException {
 
 MyException newExc = new MyException("This is a custom exception");

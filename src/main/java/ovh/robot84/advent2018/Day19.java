@@ -1,6 +1,9 @@
 package ovh.robot84.advent2018;
 
 import com.google.common.collect.HashBiMap;
+import ovh.robot84.advent2018.helpers.HelperMethods;
+import ovh.robot84.advent2018.helpers.MyReader;
+import ovh.robot84.advent2018.helpers.Verbose;
 
 import java.util.*;
 import java.util.regex.Matcher;

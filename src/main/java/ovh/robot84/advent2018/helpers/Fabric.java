@@ -1,4 +1,4 @@
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.helpers;
 
 import javafx.util.Pair;
 
@@ -18,7 +18,7 @@ public final static int FABRIC_MAX_Y = 10_000;
 int[][] fabric = new int[FABRIC_MAX_Y][FABRIC_MAX_X];
 
 
-void addToFabric(int fromLeft, int fromTop, int width, int height) {
+public void addToFabric(int fromLeft, int fromTop, int width, int height) {
     for (int y = fromTop; y < fromTop + height; y++) {
         for (int x = fromLeft; x < fromLeft + width; x++) {
             this.fabric[y][x]++;
@@ -27,12 +27,12 @@ void addToFabric(int fromLeft, int fromTop, int width, int height) {
 }
 
 
-void addToFabric(Elf elf) {
+public void addToFabric(Elf elf) {
     addToFabric(elf.fromLeft, elf.fromTop, elf.width, elf.height);
 }
 
 
-boolean isElfOverlappingWithAnotherInFabric(Elf elf) {
+public boolean isElfOverlappingWithAnotherInFabric(Elf elf) {
     for (int y = elf.fromTop; y < (elf.fromTop + elf.height); y++) {
         for (int x = elf.fromLeft; x < (elf.fromLeft + elf.width); x++) {
             if (this.fabric[y][x] > 1) return true;
@@ -42,7 +42,7 @@ boolean isElfOverlappingWithAnotherInFabric(Elf elf) {
 }
 
 
-int numOfFabricFieldWithTwoOrMoreElfs() {
+public int numOfFabricFieldWithTwoOrMoreElfs() {
     int count = 0;
     for (int y = 0; y < FABRIC_MAX_Y; y++) {
         for (int x = 0; x < FABRIC_MAX_X; x++) {
@@ -89,7 +89,7 @@ public Integer getField(int lineNum, int fieldInLineNum) {
 }
 
 
-Pair<Integer, Integer> getMaxWithIndex(int line) {
+public Pair<Integer, Integer> getMaxWithIndex(int line) {
     // PT 2 ms
     int maxValue = 0;
     int maxAtIndex = 0;
@@ -105,7 +105,7 @@ Pair<Integer, Integer> getMaxWithIndex(int line) {
 }
 
 
-int getMaxValue(int line) {
+public int getMaxValue(int line) {
     int valueMax = 0;
     for (int index = 0, valueNew = 0; index < this.FABRIC_MAX_X; index++) {
         valueNew = this.getField(line, index);
@@ -117,7 +117,7 @@ int getMaxValue(int line) {
 }
 
 
-int getIndexForMaxValue(int line, int valueMax) {
+public int getIndexForMaxValue(int line, int valueMax) {
     // PT 1.5ms @ metoda2B(metoda2A(fabric))
     for (int index = 0, valueNew = 0, indexMax = 0; index < Fabric.FABRIC_MAX_X; index++) {
         valueNew = this.getField(line, index);

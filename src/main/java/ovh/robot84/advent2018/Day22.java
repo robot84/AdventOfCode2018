@@ -1,12 +1,14 @@
 package ovh.robot84.advent2018;
 
+import ovh.robot84.advent2018.helpers.HelperMethods;
+import ovh.robot84.advent2018.helpers.MyReader;
+import ovh.robot84.advent2018.helpers.Verbose;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.time.format.TextStyle.NARROW;
 
 /**
  * This class implements an application that

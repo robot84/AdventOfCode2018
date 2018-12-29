@@ -1,5 +1,9 @@
 package ovh.robot84.advent2018;
 
+import ovh.robot84.advent2018.helpers.HelperMethods;
+import ovh.robot84.advent2018.helpers.MyReader;
+import ovh.robot84.advent2018.helpers.Verbose;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -22,7 +26,7 @@ private final static String INPUT_FILE1 = "C:\\Users\\qtcj47\\IdeaProjects\\Adve
         "src\\main\\resources\\day08input1.txt";
 HashMap<Character, Integer> hm1 = new HashMap();
 ArrayList<String> boxID = new ArrayList<>();
-private MyReader myReader = new MyReader();
+private ovh.robot84.advent2018.helpers.MyReader myReader = new MyReader();
 
 
 private Day08star02(String input_file) {
@@ -43,7 +47,7 @@ private void star1start() {
 
     /*        Read input         */
     if ((line = myReader.get_line()) != null) {
-        Verbose.print("Line: " + line);
+        ovh.robot84.advent2018.helpers.Verbose.print("Line: " + line);
     }
 
     Scanner scanner = new Scanner(line);
@@ -63,15 +67,15 @@ private int readNode(Scanner scanner) {
 
     if (scanner.hasNextInt()) numOfChilds = scanner.nextInt();
     else System.out.println("ERROR: End of input in readNode()");
-    Verbose.printf("numOfchilds: %d ", numOfChilds);
+    ovh.robot84.advent2018.helpers.Verbose.printf("numOfchilds: %d ", numOfChilds);
     if (scanner.hasNextInt()) numOfMetadata = scanner.nextInt();
     else System.out.println("ERROR: End of input in readNode()");
-    Verbose.printf("Number of metadata fields: %d\n", numOfMetadata);
+    ovh.robot84.advent2018.helpers.Verbose.printf("Number of metadata fields: %d\n", numOfMetadata);
 
     for (int childNum = 0; childNum < numOfChilds; childNum++) {
         childValue.add(readNode(scanner));
     }
-    Verbose.printf("sumOfMedata+=readNode(scanner): %d", sumOfMedata);
+    ovh.robot84.advent2018.helpers.Verbose.printf("sumOfMedata+=readNode(scanner): %d", sumOfMedata);
     if (numOfChilds == 0)
         for (int metadataNum = 0; metadataNum < numOfMetadata; metadataNum++) {
             if (scanner.hasNextInt()) sumOfMedata += scanner.nextInt();
@@ -80,7 +84,7 @@ private int readNode(Scanner scanner) {
     else {
         for (int metadataNum = 0; metadataNum < numOfMetadata; metadataNum++) {
             if (scanner.hasNextInt()) indexOfChild.add(scanner.nextInt());
-            else Verbose.println("ERROR: End of input in readNode()");
+            else ovh.robot84.advent2018.helpers.Verbose.println("ERROR: End of input in readNode()");
         }
         for (Integer child : indexOfChild) if (child > 0 && child <= numOfChilds) sumOfMedata += childValue.get(child);
     }

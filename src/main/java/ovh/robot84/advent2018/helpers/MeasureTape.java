@@ -1,7 +1,5 @@
 package ovh.robot84.advent2018.helpers;
 
-import ovh.robot84.advent2018.Verbose;
-
 import java.util.function.Function;
 import java.util.function.IntConsumer;
 

@@ -22,7 +22,7 @@
  *
  *
  */
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.helpers;
 
 
 @FunctionalInterface
@@ -34,7 +34,7 @@ public interface ThreeArgFunction<T, U, V, R> {
  * @param t the function argument
  * @return the function result
  */
-R apply(T t, U u, V v);
+public R apply(T t, U u, V v);
 
 
 }

@@ -1,35 +1,35 @@
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.helpers;
 
 import javafx.util.Pair;
 
 public class FuelCellField implements Comparable<FuelCellField>, Cloneable {
 
 int totalPwr;
-FuelCell cell;
+ovh.robot84.advent2018.helpers.FuelCell cell;
 int x, y;
 int size = 3;
 
 
-FuelCellField() {
+public FuelCellField() {
     initiate(1, 1, 1, 1);
 }
 
 
-FuelCellField(int x, int y, int sn) {
+public FuelCellField(int x, int y, int sn) {
     initiate(x, y, sn);
 }
 
 
-FuelCellField(int x, int y, int sn, int size) {
+public FuelCellField(int x, int y, int sn, int size) {
     initiate(x, y, sn, size);
 }
 
 
-static int getTotalPwr(int x, int y, int sn, int size) {
+public static int getTotalPwr(int x, int y, int sn, int size) {
     int totalPwr = 0;
     for (int y1 = 0; y1 < size; y1++) {
         for (int x1 = 0; x1 < size; x1++) {
-            totalPwr += FuelCell.getPwr(x + x1, y + y1, sn);
+            totalPwr += ovh.robot84.advent2018.helpers.FuelCell.getPwr(x + x1, y + y1, sn);
         }
     }
     return totalPwr;
@@ -47,28 +47,28 @@ public void initiate(int x, int y, int sn, int size) {
     for (int y1 = 0; y1 < size; y1++) {
         for (int x1 = 0; x1 < size; x1++) {
             //cell = new FuelCell(x + x1, y + y1, sn);
-            totalPwr += FuelCell.getPwr(x + x1, y + y1, sn);
+            totalPwr += ovh.robot84.advent2018.helpers.FuelCell.getPwr(x + x1, y + y1, sn);
         }
     }
 }
 
 
-int getTotalPwr() {
+public int getTotalPwr() {
     return totalPwr;
 }
 
 
-int getX() {
+public int getX() {
     return this.x;
 }
 
 
-int getY() {
+public int getY() {
     return this.y;
 }
 
 
-Pair<Integer, Integer> getXY() {
+public Pair<Integer, Integer> getXY() {
     return new Pair(x, y);
 }
 

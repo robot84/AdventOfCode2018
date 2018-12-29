@@ -1,6 +1,7 @@
 package ovh.robot84.advent2018;
 
-import java.util.ArrayList;
+import ovh.robot84.advent2018.helpers.FindRegex;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

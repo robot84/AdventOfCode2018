@@ -1,5 +1,10 @@
 package ovh.robot84.advent2018;
 
+import ovh.robot84.advent2018.helpers.Elf;
+import ovh.robot84.advent2018.helpers.Fabric;
+import ovh.robot84.advent2018.helpers.FindRegex;
+import ovh.robot84.advent2018.helpers.MyReader;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -72,8 +77,9 @@ void star1start() {
     System.out.println("star 2 result");
     for (Elf elf : elfs)
         if (!fabric.isElfOverlappingWithAnotherInFabric(elf))
-            System.out.println("Elf " + elf.elfID + " not overlaps on fabric");
+            System.out.println("Elf " + elf.getElfID() + " not overlaps on fabric");
 }
 
 
 }
+

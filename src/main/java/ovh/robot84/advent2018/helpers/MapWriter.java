@@ -1,4 +1,4 @@
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.helpers;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -9,12 +9,12 @@ private BufferedWriter fileWriter;
 private String mapFilePath;
 
 
-MapWriter(String path) {
+public MapWriter(String path) {
     mapFilePath = path;
 }
 
 
-void openMap() {
+public void openMap() {
     if (mapFilePath != null) openMap(mapFilePath);
 }
 
@@ -30,7 +30,7 @@ public void openMap(String mapFilePath) {
 }
 
 
-void closeMap() {
+public void closeMap() {
 
     try {
         fileWriter.close();
@@ -41,7 +41,7 @@ void closeMap() {
 
 
 @Deprecated
-void writeMap(Boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText) {
+public void writeMap(Boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText) {
     try {
         fileWriter.write("\n" + mapHeaderText + "\n");
     } catch (IOException e) {
@@ -72,7 +72,7 @@ void writeMap(Boolean[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
 }
 
 
-void writeMap(Boolean[][] mapa, String mapHeaderText) {
+public void writeMap(Boolean[][] mapa, String mapHeaderText) {
     final int mapXsize = mapa[0].length, mapYsize = mapa.length;
     writeMap(mapa, mapXsize, mapYsize, mapHeaderText);
 }
@@ -81,7 +81,7 @@ void writeMap(Boolean[][] mapa, String mapHeaderText) {
 
 
 @Deprecated
-void writeMap(Integer[][] mapa, int mapXsize, int mapYsize, String mapHeaderText) {
+public void writeMap(Integer[][] mapa, int mapXsize, int mapYsize, String mapHeaderText) {
     try {
         fileWriter.write("\n" + mapHeaderText + "\n");
     } catch (IOException e) {
@@ -108,13 +108,13 @@ void writeMap(Integer[][] mapa, int mapXsize, int mapYsize, String mapHeaderText
 }
 
 
-void writeMap(Integer[][] mapa, String mapHeaderText) {
+public void writeMap(Integer[][] mapa, String mapHeaderText) {
     int mapXsize = mapa[0].length, mapYsize = mapa.length;
     writeMap(mapa, mapXsize, mapYsize, mapHeaderText);
 }
 
 
-boolean[][] shrinkTwice(boolean[][] map, int threshold) {
+public boolean[][] shrinkTwice(boolean[][] map, int threshold) {
     final int SHRINK_FACTOR = 2;
     int density;
     final int xSize = map[0].length;
@@ -139,7 +139,7 @@ boolean[][] shrinkTwice(boolean[][] map, int threshold) {
 }
 
 
-boolean[][] shrinkTwice(boolean[][] map) {
+public boolean[][] shrinkTwice(boolean[][] map) {
     return shrinkTwice(map, 2);
 }
 

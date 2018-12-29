@@ -1,10 +1,11 @@
-package ovh.robot84.advent2018;
+package ovh.robot84.advent2018.templates;
+
+import ovh.robot84.advent2018.helpers.MyReader;
+import ovh.robot84.advent2018.helpers.Verbose;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * This class implements an application that
